@@ -1,0 +1,112 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="LaLombriz.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%: Page.Title %> - LaLombriz</title>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Estilos/MasterStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server"></asp:ScriptManager>
+        <header class="header" id="#header">
+            <div id="menu-container">
+                <nav class="navbar navbar-expand-lg navbar-light navbar-estilo">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <img src="../Recursos/cupcake.png" alt="" width="80" height="70">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav ml-auto" id="navbar-options">
+                                <a class="nav-link active menuClass" href="#">Inicio</a>
+                                <a class="nav-link active menuClass" href="#">Menu</a>
+                                <a class="nav-link active menuClass" href="#">Pedidos</a>
+                                <a class="nav-link active menuClass" href="#">Cotizaciones</a>
+                                <a class="nav-link active menuClass" href="#">Galería</a>
+                                <button type="button" class="botones-registros" data-bs-toggle="modal" data-bs-target="#singIn">
+                                    <asp:label runat="server" Text="Iniciar sesión" ID="lblOptions"></asp:label>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div id="content-container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+        <footer>
+            <div id="footer-container">
+                <p>Este es el footer</p>
+            </div>
+        </footer>
+        <!-- Modal/Pop up -->
+        <div class="modal fade" id="singIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="singInTitle">Iniciar Sesión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtCorreoI" class="form-control" placeholder="name@example.com" ></asp:TextBox>
+                            <label for="txtCorreoI">Correo electrónico</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtContraseniaI" class="form-control" placeholder="contraseña" ></asp:TextBox>
+                            <label for="txtContraseniaI">Contraseña</label>
+                        </div>
+                        <p><label>¿No tiene una cuenta?</label> <button type="button" style="border:none; color:#0d6efd;background-color:transparent;"data-bs-toggle="modal" data-bs-target="#signUp" data-bs-dismiss="modal">Crear una</button></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <asp:Button runat="server" ID="btnIngresar" Text="Ingresar" class="btn btn-primary" OnClick="btnIngresarOnClick"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signUpTitle">Registrarse</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtNombreUser" class="form-control" placeholder="Nombre de usuario" ></asp:TextBox>
+                            <label for="txtNombreUser">Nombre de usuario</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtCorreroRegistro" class="form-control" placeholder="name@example.com" ></asp:TextBox>
+                            <label for="txtCorreoRegistro">Correo electrónico</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtNoTel" class="form-control" placeholder="Número telefónico" ></asp:TextBox>
+                            <label for="txtNoTel">Número telefónico</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtPasswordRegistro" class="form-control" placeholder="Contraseña" ></asp:TextBox>
+                            <label for="txtPasswordRegistro">Contraseña</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <asp:Button runat="server" ID="btnRegistrar" Text="Registrarse" class="btn btn-primary" OnClick="btnIngresarOnClick"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" ></script>
+</body>
+</html>

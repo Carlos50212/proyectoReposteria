@@ -1,0 +1,89 @@
+﻿body {
+    background-image:url(../Recursos/Fondo.jpg);
+}
+/*Estilos header*/
+.header {
+    position: absolute;
+    background-color: black;
+    width: 100%;
+}
+.header a{
+    margin-left:10px;
+}
+.navbar-light .navbar-toggler-icon {
+    background-image: url(../Recursos/menu.png);
+}
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    background: rebeccapurple;
+}
+.navbar-estilo{
+    background-color:black;
+}
+.botones-registros {
+    width: 97%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    margin-left: 12px;
+    margin-bottom: 5px;
+}
+.botones-registros:hover{
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+}
+.btn-outline-secondary {
+    color: #ffffff;
+    border-color: #ffffff;
+}
+.btn-outline-secondary:hover {
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+}
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show > .nav-link {
+    color:white;
+}
+.navbar-light .navbar-nav .nav-link {
+    text-align: center;
+}
+#menu-container {
+    margin: 0px 10px;
+}
+/*Estilos place holder*/
+#content-container {
+    padding-top: 110px;
+    height:500px;
+    background-color: lightcoral;
+}
+/*Estilos footer*/
+#footer-container{
+    width:100%;
+    height:200px;
+    background-color:lightblue;
+}
+/*Responsive desing menu*/
+@media(min-width:992px) {
+    .header{
+        width:80%;
+        margin-left:10%;
+    }
+    .menuClass{
+        width:120px;
+        height:50px;
+    }
+    .navbar-collapse {
+        width: auto;
+        padding-right:30px;
+    }
+    #content-container, #footer-container {
+        width: 80%;
+        margin: 0px auto;
+    }
+    .botones-registros {
+        margin-left: 10px;
+        width: 150px;
+        height: 50px;
+        padding-bottom: 10px;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    }
+}
