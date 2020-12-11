@@ -17,16 +17,16 @@
             <div id="menu-container">
                 <nav class="navbar navbar-expand-lg navbar-light navbar-estilo">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">
-                            <img src="../Recursos/cupcake.png" alt="" width="80" height="70">
+                        <a class="navbar-brand" href="Inicio.aspx">
+                            <img src="../Recursos/cupcake.png" alt="" width="50" height="50">
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ml-auto" id="navbar-options">
-                                <a class="nav-link active menuClass" href="#">Inicio</a>
-                                <a class="nav-link active menuClass" href="#">Menu</a>
+                                <a class="nav-link active menuClass" href="Inicio.aspx">Inicio</a>
+                                <a class="nav-link active menuClass" href="Menu.aspx">Menu</a>
                                 <a class="nav-link active menuClass" href="#">Pedidos</a>
                                 <a class="nav-link active menuClass" href="#">Cotizaciones</a>
                                 <a class="nav-link active menuClass" href="#">Galería</a>

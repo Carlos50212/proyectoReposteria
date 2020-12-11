@@ -1,0 +1,97 @@
+﻿body {
+}
+/*Menu opciones*/
+/*Estilos botones*/
+.containerOptions {
+    margin: 0px 30px;
+}
+
+.btnOptions {
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+    border-bottom: 2px solid;
+}
+    .btnOptions a {
+        display: block;
+        text-decoration: none;
+        height: 100%;
+        width: 100%;
+        color: white;
+        background-image: linear-gradient(#e66465, #9198e5);
+        background-position: 50% 60%;
+        background-repeat: no-repeat;
+        background-size: 0% 4px;
+        transition-property: background-size color;
+        transition-duration: 0.3s, 0.3s;
+    }
+/*Boton pasteles*/
+#cakeBefore {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/btnCake.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+/*Boton Macarons*/
+#burgerBefore {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/btnMacarons.jpeg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+/*Boton Mesas*/
+#packBefore {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/btnPack.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+/*Boton otros*/
+#otherBefore {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/btnOther.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+/*Responsive desing opciones*/
+@media(min-width:768px) {
+    #opctionsContainer {
+        padding: 0px 40px;
+    }
+
+    #cakeBefore {
+        height: 70%;
+        width: 35%;
+    }
+
+    #burgerBefore {
+        width: 65%;
+        height: 40%;
+    }
+
+    #packBefore {
+        height: 30%;
+        width: 60%;
+    }
+
+    #otherBefore {
+        width: 40%;
+        height: 60%;
+    }
+
+    .btnOptions {
+        border-bottom: none;
+    }
+    a:hover, a:focus {
+        color: #FFB6C1;
+        background-size: 25% 4px;
+    }
+}

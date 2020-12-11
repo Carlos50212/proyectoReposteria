@@ -1,5 +1,5 @@
 ﻿body {
-    background-image:url(../Recursos/Fondo.jpg);
+    
 }
 /*Estilos header*/
 .header {
@@ -52,23 +52,24 @@
 /*Estilos place holder*/
 #content-container {
     padding-top: 110px;
-    height:500px;
-    background-color: lightcoral;
+    background-color: #E9E6E6;
+    padding-bottom:30px;
 }
 /*Estilos footer*/
 #footer-container{
     width:100%;
     height:200px;
-    background-color:lightblue;
+    color:white;
+    background-color:black;
 }
 /*Responsive desing menu*/
-@media(min-width:992px) {
+@media(min-width:992px){
     .header{
         width:80%;
         margin-left:10%;
     }
     .menuClass{
-        width:120px;
+        width:100px;
         height:50px;
     }
     .navbar-collapse {
@@ -87,3 +88,10 @@
         transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
     }
 }
+@media(min-width:770px) {
+    #content-container {
+        min-height: 780px;
+        padding: 110px 50px;
+    }
+}
+
