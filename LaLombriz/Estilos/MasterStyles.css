@@ -1,11 +1,9 @@
-﻿body {
-    
-}
-/*Estilos header*/
+﻿/*Estilos header*/
 .header {
-    position: absolute;
     background-color: black;
     width: 100%;
+    z-index: 2;
+    position: relative;
 }
 .header a{
     margin-left:10px;
@@ -51,9 +49,8 @@
 }
 /*Estilos place holder*/
 #content-container {
-    padding-top: 110px;
     background-color: #E9E6E6;
-    padding-bottom:30px;
+    padding-bottom: 30px;
 }
 /*Estilos footer*/
 #footer-container{
@@ -86,12 +83,6 @@
         height: 50px;
         padding-bottom: 10px;
         transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-    }
-}
-@media(min-width:770px) {
-    #content-container {
-        min-height: 780px;
-        padding: 110px 50px;
     }
 }
 

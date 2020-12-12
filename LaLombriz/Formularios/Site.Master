@@ -13,7 +13,7 @@
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server"></asp:ScriptManager>
-        <header class="header" id="#header">
+        <header class="header" id="header">
             <div id="menu-container">
                 <nav class="navbar navbar-expand-lg navbar-light navbar-estilo">
                     <div class="container-fluid">

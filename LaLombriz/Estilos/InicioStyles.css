@@ -1,0 +1,95 @@
+﻿.containerOptions {
+    margin: 0px 30px;
+}
+#welcomeText {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/bienvenida.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    height: 250px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 70px;
+}
+#welcomeText h1{
+    line-height:125px;
+    font-family: Cambria;
+    color:white;
+}
+#welcomeText p{
+    font-family: Cambria;
+    color:white;
+}
+.btnOptions {
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+    border-bottom: 2px solid;
+}
+.btnOptions a {
+    display: block;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    color: white;
+    background-image: linear-gradient(#e66465, #9198e5);
+    background-position: 50% 60%;
+    background-repeat: no-repeat;
+    background-size: 0% 4px;
+    transition-property: background-size color;
+    transition-duration: 0.3s, 0.3s;
+}
+#btnMenu {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/menuOption.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+#btnPedidos {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/pedidosOption.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+#btnCotizacion {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/cotizacionOption.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+#btnGaleria {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/galeriaOption.jpg);
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    font-size: 50px;
+    font-family: Cambria;
+}
+/*Responsive desing*/
+@media(min-width:768px) {
+    #btnMenu {
+        width: 65%;
+    }
+    #btnPedidos {
+        width: 35%;
+    }
+    #btnCotizacion {
+        width: 40%;
+    }
+    #btnGaleria {
+        width: 60%;
+    }
+    .btnOptions {
+        border-bottom: none;
+    }
+    a:hover, a:focus {
+        color: #FFB6C1;
+        background-size: 25% 4px;
+    }
+}

@@ -1,9 +1,7 @@
-﻿body {
-}
-/*Menu opciones*/
+﻿/*Menu opciones*/
 /*Estilos botones*/
 .containerOptions {
-    margin: 0px 30px;
+    margin: 10px 30px;
 }
 
 .btnOptions {
@@ -26,6 +24,9 @@
         transition-duration: 0.3s, 0.3s;
     }
 /*Boton pasteles*/
+#second-container {
+    padding-top: 53px;
+}
 #cakeBefore {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/btnCake.jpg);
     background-size: cover;
@@ -63,28 +64,20 @@
 }
 /*Responsive desing opciones*/
 @media(min-width:768px) {
-    #opctionsContainer {
-        padding: 0px 40px;
-    }
-
     #cakeBefore {
-        height: 70%;
         width: 35%;
     }
 
     #burgerBefore {
         width: 65%;
-        height: 40%;
     }
 
     #packBefore {
-        height: 30%;
         width: 60%;
     }
 
     #otherBefore {
         width: 40%;
-        height: 60%;
     }
 
     .btnOptions {

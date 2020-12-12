@@ -14,5 +14,29 @@ namespace LaLombriz.Formularios
             productsContainer.Visible = false;
             //optionsContainer.Visible = false;
         }
+        //Boton pasteles
+        public void btnCakeOnClick(object sender, EventArgs e)
+        {
+            optionsContainer.Visible = false;
+            productsContainer.Visible = true;
+        }
+        //Boton macarons
+        public void btnBurgerOnClick(object sender, EventArgs e)
+        {
+            optionsContainer.Visible = false;
+            productsContainer.Visible = true;
+        }
+        //Boton mesas de dulces
+        public void btnPackOnClick(object sender,EventArgs e)
+        {
+            optionsContainer.Visible = false;
+            productsContainer.Visible = true;
+        }
+        //Boton otros
+        public void btnOtherOnClick(object sender, EventArgs e)
+        {
+            optionsContainer.Visible = false;
+            productsContainer.Visible = true;
+        }
     }
 }
