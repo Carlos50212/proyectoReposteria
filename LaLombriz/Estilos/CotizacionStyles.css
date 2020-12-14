@@ -1,0 +1,14 @@
+﻿#cotizacion-container {
+    margin: 0px 30px;
+    padding-top: 50px;
+}
+#description-container{
+    padding-top:50px;
+}
+#txtResponsive{
+    width:100%;
+}
+#btn-container{
+    text-align:right;
+    padding-top:30px;
+}

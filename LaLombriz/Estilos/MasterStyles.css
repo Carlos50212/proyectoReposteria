@@ -49,6 +49,7 @@
 }
 /*Estilos place holder*/
 #content-container {
+    min-height: 703px;
     background-color: #E9E6E6;
     padding-bottom: 30px;
 }

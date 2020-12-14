@@ -13,5 +13,25 @@ namespace LaLombriz.Formularios
         {
 
         }
+        //Boton menu
+        public void btnMenuOnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("Menu.aspx");
+        }
+        //Boton pedidos
+        public void btnPedidosOnClick(object sender, EventArgs e)
+        {
+
+        }
+        //Boton cotizacion
+        public void btnCotizacionOnClick(object sender,EventArgs e)
+        {
+            Response.Redirect("Cotizaciones.aspx");
+        }
+        //Boton galeria
+        public void btnGaleriaOnClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

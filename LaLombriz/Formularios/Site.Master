@@ -8,6 +8,10 @@
     <title><%: Page.Title %> - LaLombriz</title>
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!--SweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <link href="../Estilos/MasterStyles.css" rel="stylesheet" />
 </head>
 <body>
@@ -26,9 +30,9 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ml-auto" id="navbar-options">
                                 <a class="nav-link active menuClass" href="Inicio.aspx">Inicio</a>
-                                <a class="nav-link active menuClass" href="Menu.aspx">Menu</a>
+                                <a class="nav-link active menuClass" href="Menu.aspx">Menú</a>
                                 <a class="nav-link active menuClass" href="#">Pedidos</a>
-                                <a class="nav-link active menuClass" href="#">Cotizaciones</a>
+                                <a class="nav-link active menuClass" href="Cotizaciones.aspx">Cotizaciones</a>
                                 <a class="nav-link active menuClass" href="#">Galería</a>
                                 <button type="button" class="botones-registros" data-bs-toggle="modal" data-bs-target="#singIn">
                                     <asp:label runat="server" Text="Iniciar sesión" ID="lblOptions"></asp:label>

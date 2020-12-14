@@ -7,16 +7,16 @@
             <p>Empresa 100% mexicana, dedicada a la elaboración y venta de</p>
         </div>
         <div id="btnMenu" class="col-xs-12 col-md-6 btnOptions">
-            <asp:LinkButton runat="server" ID="btnMenuOption" Text="Menu"></asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnMenuOption" Text="Menú" OnClick="btnMenuOnClick"></asp:LinkButton>
         </div>
         <div id="btnPedidos" class="col-xs-12 col-md-6 btnOptions">
-            <asp:LinkButton runat="server" ID="btnPedidosOption" Text="Pedidos"></asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnPedidosOption" Text="Pedidos" OnClick="btnPedidosOnClick"></asp:LinkButton>
         </div>
         <div id="btnCotizacion" class="col-xs-12 col-md-6 btnOptions">
-            <asp:LinkButton runat="server" ID="btnCotizacionOption" Text="Cotización"></asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnCotizacionOption" Text="Cotización" OnClick="btnCotizacionOnClick"></asp:LinkButton>
         </div>
         <div id="btnGaleria" class="col-xs-12 col-md-6 btnOptions">
-            <asp:LinkButton runat="server" ID="btnGaleriaOption" Text="Galería"></asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnGaleriaOption" Text="Galería" OnClick="btnGaleriaOnClick"></asp:LinkButton>
         </div>
     </div>
 </asp:Content>
