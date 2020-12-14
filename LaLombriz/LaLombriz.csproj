@@ -162,6 +162,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Clases\Pedidos.cs" />
+    <Compile Include="Clases\Productos.cs" />
+    <Compile Include="Clases\ProductosPedidos.cs" />
+    <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Formularios\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
