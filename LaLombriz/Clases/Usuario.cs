@@ -24,7 +24,7 @@ namespace LaLombriz.Clases
         public int Id { set { id = value; } get { return id; } }
         public string Nombre { set { nombre = value; } get { return nombre; } }
         public string Correo { set { correo = value; } get { return correo; } }
-        public string Telefono { set { telefono = value; } get { return telefono; } }
+        public int Telefono { set { telefono = value; } get { return telefono; } }
 
 
     }
