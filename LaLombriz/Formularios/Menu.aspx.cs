@@ -9,6 +9,7 @@ namespace LaLombriz.Formularios
 {
     public partial class Menu : System.Web.UI.Page
     {
+        private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
         protected void Page_Load(object sender, EventArgs e)
         {
             productsContainer.Visible = false;
@@ -17,23 +18,26 @@ namespace LaLombriz.Formularios
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
         {
-            optionsContainer.Visible = false;
-            productsContainer.Visible = true;
+            showSecondForm();
+            //ArrayList que almacena todos los datos obtenidos de la consulta 
+
         }
         //Boton macarons
         public void btnBurgerOnClick(object sender, EventArgs e)
         {
-            optionsContainer.Visible = false;
-            productsContainer.Visible = true;
+            showSecondForm();
         }
         //Boton mesas de dulces
         public void btnPackOnClick(object sender,EventArgs e)
         {
-            optionsContainer.Visible = false;
-            productsContainer.Visible = true;
+            showSecondForm();
         }
         //Boton otros
         public void btnOtherOnClick(object sender, EventArgs e)
+        {
+            showSecondForm();
+        }
+        public void showSecondForm()
         {
             optionsContainer.Visible = false;
             productsContainer.Visible = true;
