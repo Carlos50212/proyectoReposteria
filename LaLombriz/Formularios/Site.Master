@@ -104,7 +104,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <asp:Button runat="server" ID="btnRegistrar" Text="Registrarse" class="btn btn-primary" OnClick="btnIngresarOnClick"/>
+                        <asp:Button runat="server" ID="btnRegistrar" Text="Registrarse" class="btn btn-primary" OnClick="btnRegistrarOnClick"/>
                     </div>
                 </div>
             </div>
