@@ -21,7 +21,7 @@ namespace LaLombriz
         }
         public void btnRegistrarOnClick(object sender, EventArgs e)
         {
-            Usuario usuario = new Usuario(1,txtNombreUser.Text,txtCorreroRegistro.Text,txtPasswordRegistro.Text,txtNoTel.Text);
+            Usuario usuario = new Usuario(txtNombreUser.Text,txtCorreroRegistro.Text,txtPasswordRegistro.Text,txtNoTel.Text);
             if (usuario.createUser(strConnection))
             {
                 Response.Write("Bien");
