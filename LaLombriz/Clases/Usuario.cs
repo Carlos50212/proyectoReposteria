@@ -8,23 +8,23 @@ namespace LaLombriz.Clases
 {
     public class Usuario
     {
-        private int id;
+        
         private string nombre;
         private string correo;
         private string pass;
         private string telefono;
 
         public Usuario() { }  //constructor vacio
-        public Usuario (int id, string nombre, string correo,string pass, string telefono)  //constructor sobrecargado
+        public Usuario (string nombre, string correo,string pass, string telefono)  //constructor sobrecargado
         {
-            this.id = id;
+            
             this.nombre = nombre;
             this.correo = correo;
             this.pass = pass;
             this.telefono = telefono;
         }
         //getters y setters, atributos 
-        public int Id { set { id = value; } get { return id; } }
+        
         public string Nombre { set { nombre = value; } get { return nombre; } }
         public string Correo { set { correo = value; } get { return correo; } }
         public string Pass { set { pass = value; } get { return pass; } }
@@ -33,7 +33,7 @@ namespace LaLombriz.Clases
         public bool createUser(string strConnection)
         {
             //Sentencia
-            string query = "INSERT INTO usuarios(`id_usuario`, `nombre_usuario`, `correo`, `password`, `telefono`) VALUES (" + this.id+", '"+this.nombre+"', '"+this.correo+"', '"+this.pass+"', '"+this.telefono+"')";
+            string query = "INSERT INTO usuarios(`id_usuario`, `nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('', '"+this.nombre+"', '"+this.correo+"', '"+this.pass+"', '"+this.telefono+"')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
