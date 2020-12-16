@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LaLombriz.Clases;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +21,17 @@ namespace LaLombriz.Formularios
         public void btnCakeOnClick(object sender, EventArgs e)
         {
             showSecondForm();
+            ArrayList arrayData = new ArrayList();
+            Productos producto = new Productos();
+            arrayData=producto.getProductsName(strConnection);
+            if (arrayData.Count != 0)
+            {
+                Response.Write("Hay datos");
+            }
+            else
+            {
+                Response.Write("ERROR");
+            }
             //ArrayList que almacena todos los datos obtenidos de la consulta 
 
         }
