@@ -20,7 +20,30 @@
                 </div>
             </div>
             <div runat="server" id="productsContainer">
-                <p>Productos de la seleccion</p>
+                <div id="selection-container">
+                    <asp:Table runat="server" ID="tbtProduct">
+                        <asp:TableRow>
+                            <asp:TableCell>Productos</asp:TableCell>
+                            <asp:TableCell>Tamaño</asp:TableCell>
+                            <asp:TableCell>Descripción</asp:TableCell>
+                            <asp:TableCell>Precio</asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:DropDownList runat="server" ID="ddlProducts"></asp:DropDownList>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:DropDownList runat="server" ID="ddlSize"></asp:DropDownList> 
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Button runat="server" ID="btnDescription" Text="Descripción"/>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label runat="server" ID="lblCost">HOLA</asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </div>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,17 +23,26 @@ namespace LaLombriz.Formularios
         {
             showSecondForm();
             ArrayList arrayData = new ArrayList();
+            ArrayList arraySize = new ArrayList();
             Productos producto = new Productos();
-            arrayData=producto.getProductsName(strConnection);
+            arrayData=producto.getProducts(strConnection,1,15);
+            arraySize =producto.getSize(strConnection,1,15);
             if (arrayData.Count != 0)
             {
                 Response.Write("Hay datos");
+                for(int contObject = 0; contObject < arrayData.Count; contObject++)
+                {
+                    ddlProducts.Items.Add(arrayData[contObject].ToString());
+                }
+                for(int contSize = 0; contSize < arraySize.Count; contSize++)
+                {
+                    ddlSize.Items.Add(arraySize[contSize].ToString());
+                }
             }
             else
             {
                 Response.Write("ERROR");
             }
-            //ArrayList que almacena todos los datos obtenidos de la consulta 
 
         }
         //Boton macarons
@@ -54,6 +64,28 @@ namespace LaLombriz.Formularios
         {
             optionsContainer.Visible = false;
             productsContainer.Visible = true;
+        }
+        //Metodo para mostrar tabla de productos
+        public void drawTable(DropDownList ddlProducts,DropDownList ddlSize,bool product)
+        {
+            /*
+            if (product)
+            {
+                DataTable tableProduct = new DataTable();
+                tableProduct.Columns.Add("Productos", typeof(DropDownList));
+                tableProduct.Columns.Add("Descripción", typeof(string));
+                tableProduct.Columns.Add("Tamaño", typeof(DropDownList));
+                tableProduct.Columns.Add("Precio", typeof(string));
+                DataRow row = tableProduct.NewRow();
+                row = tableProduct.NewRow();
+                row["Productos"] = ddlProducts;
+                row["Descripción"] = "_";
+                row["Tamaño"] = ddlSize;
+                row["Precio"] = "_";
+                tableProduct.Rows.Add(row);
+                tbtSelection.DataSource = tableProduct;
+                tbtSelection.DataBind();
+            }*/
         }
     }
 }

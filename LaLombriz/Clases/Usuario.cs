@@ -50,6 +50,7 @@ namespace LaLombriz.Clases
                 return true;
             }catch(Exception e)
             {
+                Console.WriteLine("Error " + e);
                 return false;
             }
         }

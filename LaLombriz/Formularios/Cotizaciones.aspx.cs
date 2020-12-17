@@ -74,6 +74,7 @@ namespace LaLombriz.Formularios
                 return true;
             }catch(Exception e)
             {
+                Console.WriteLine("ERROR " + e);
                 return false;
             }
         }

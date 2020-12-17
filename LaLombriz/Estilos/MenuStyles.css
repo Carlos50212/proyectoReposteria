@@ -3,7 +3,6 @@
 .containerOptions {
     margin: 10px 30px;
 }
-
 .btnOptions {
     height: 300px;
     text-align: center;
@@ -61,6 +60,11 @@
     background-position: center center;
     font-size: 50px;
     font-family: Cambria;
+}
+/*ESTILOS MENU SELECCIÓN*/
+#selection-container{
+    width:100%;
+    overflow:scroll;
 }
 /*Responsive desing opciones*/
 @media(min-width:768px) {

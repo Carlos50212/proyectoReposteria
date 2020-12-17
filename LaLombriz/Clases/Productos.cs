@@ -32,10 +32,10 @@ namespace LaLombriz.Clases
         public string Descripcion { set { descripcion = value; } get { return descripcion; } }
         public string Tamanio { set { tamanio = value; } get { return tamanio; } }
         public float Precio { set { precio = value;  } get { return precio; } }
-        //Metodos 
-        public ArrayList getProductsName(string strConnection)
+        //Metodo para traer productos
+        public ArrayList getProducts(string strConnection,int min,int max)
         {
-            string query = "SELECT nombre_producto FROM `productos` WHERE tamanio='chico' and (id_producto>0 AND ID_PRODUCTO<16)";
+            string query = "SELECT DISTINCT nombre_producto FROM `productos` WHERE id_producto BETWEEN "+min+" AND "+max+"";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
@@ -64,9 +64,46 @@ namespace LaLombriz.Clases
             catch(Exception e)
             {
                 //Mensjae de error
-                Console.WriteLine("Error");
+                Console.WriteLine("Error"+e);
                 return arrayObjects;
             }
         }
+        public ArrayList getSize(string strConnection,int min, int max)
+        {
+            string query = "SELECT DISTINCT tamanio FROM `productos` WHERE id_producto BETWEEN " + min + " AND " + max + "";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            ArrayList arrayObjects = new ArrayList();
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        arrayObjects.Add(reader.GetString(0));
+                    }
+                }
+                else
+                {
+                    //Mensaje de error al usuario
+                    Console.WriteLine("No hay datos en la tabla");
+                }
+                dbConnection.Close();
+                return arrayObjects;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error"+e);
+                return arrayObjects;
+            }
+        }
+
+       
     }
 }
