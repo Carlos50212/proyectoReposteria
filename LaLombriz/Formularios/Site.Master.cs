@@ -25,10 +25,12 @@ namespace LaLombriz
             if (usuario.createUser(strConnection))
             {
                 Response.Write("Bien");
+                // añadir mensaje modal de registro correcto 
             }
             else
             {
                 Response.Write("No bien");
+                //añadir mensaje modal de fallo en el registro
             }
         }
     }
