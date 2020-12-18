@@ -21,28 +21,42 @@
             </div>
             <div runat="server" id="productsContainer">
                 <div id="selection-container">
-                    <asp:Table runat="server" ID="tbtProduct">
-                        <asp:TableRow>
-                            <asp:TableCell>Productos</asp:TableCell>
-                            <asp:TableCell>Tamaño</asp:TableCell>
-                            <asp:TableCell>Descripción</asp:TableCell>
-                            <asp:TableCell>Precio</asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell>
-                                <asp:DropDownList runat="server" ID="ddlProducts"></asp:DropDownList>
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:DropDownList runat="server" ID="ddlSize"></asp:DropDownList> 
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:Button runat="server" ID="btnDescription" Text="Descripción"/>
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:Label runat="server" ID="lblCost">HOLA</asp:Label>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>
+                    <h1>¡Selecciona tus productos!</h1>
+                    <div id="buttons-container">
+                        <div id="backOption">
+                            <asp:Button runat="server" ID="btnBack" class="btn btn-primary" Text="Regresar" />
+                        </div>
+                        <div id="addOption">
+                            <asp:Button runat="server" ID="btnCarrito" class="btn btn-primary" Text="Carrito  " />
+                        </div>
+                    </div>
+                    <div id="table-container">
+                        <Table ID="tbtProduct" class="table">
+                            <tr>
+                                <th>Productos</th>
+                                <th>Tamaño</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <asp:DropDownList runat="server" ID="ddlProducts" class="btn btn-secondary dropdown-toggle"></asp:DropDownList>
+                                </th>
+                                <th>
+                                    <asp:DropDownList runat="server" ID="ddlSize" class="btn btn-secondary dropdown-toggle"></asp:DropDownList>
+                                </th>
+                                <th>
+                                    <asp:Button runat="server" ID="btnDescription" Text="Ver" class="btn btn-link" />
+                                </th>
+                                <th>
+                                    <asp:Label runat="server" ID="lblCost">$0.0</asp:Label>
+                                </th>
+                                <th style="border:0;">
+                                    <asp:Button runat="server" ID="btnAdd" Text="Agregar" CssClass="btn btn-light" />
+                                </th>
+                            </tr>
+                        </Table>
+                    </div>
                 </div>
             </div>
         </div>

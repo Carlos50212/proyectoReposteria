@@ -29,7 +29,6 @@ namespace LaLombriz.Formularios
             arraySize =producto.getSize(strConnection,1,15);
             if (arrayData.Count != 0)
             {
-                Response.Write("Hay datos");
                 for(int contObject = 0; contObject < arrayData.Count; contObject++)
                 {
                     ddlProducts.Items.Add(arrayData[contObject].ToString());
