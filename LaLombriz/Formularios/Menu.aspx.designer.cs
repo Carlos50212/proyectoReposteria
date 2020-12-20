@@ -69,66 +69,66 @@ namespace LaLombriz.Formularios
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl productsContainer;
 
         /// <summary>
-        /// Control btnBack.
+        /// Control btnSeeCarOption.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::System.Web.UI.WebControls.LinkButton btnSeeCarOption;
 
         /// <summary>
-        /// Control btnCarrito.
+        /// Control tableCake.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCarrito;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableCake;
 
         /// <summary>
-        /// Control ddlProducts.
+        /// Control tbtSmallSizeG.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProducts;
+        protected global::System.Web.UI.WebControls.GridView tbtSmallSizeG;
 
         /// <summary>
-        /// Control ddlSize.
+        /// Control tbtMediumSizeP.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSize;
+        protected global::System.Web.UI.WebControls.GridView tbtMediumSizeP;
 
         /// <summary>
-        /// Control btnDescription.
+        /// Control tbtBigSizeP.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDescription;
+        protected global::System.Web.UI.WebControls.GridView tbtBigSizeP;
 
         /// <summary>
-        /// Control lblCost.
+        /// Control lblHeader.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCost;
+        protected global::System.Web.UI.WebControls.Label lblHeader;
 
         /// <summary>
-        /// Control btnAdd.
+        /// Control lblDescription.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAdd;
+        protected global::System.Web.UI.WebControls.Label lblDescription;
     }
 }

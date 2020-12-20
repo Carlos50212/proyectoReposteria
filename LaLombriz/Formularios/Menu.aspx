@@ -20,45 +20,92 @@
                 </div>
             </div>
             <div runat="server" id="productsContainer">
-                <div id="selection-container">
+                <div  id="selectionContainer">
                     <h1>¡Selecciona tus productos!</h1>
-                    <div id="buttons-container">
-                        <div id="backOption">
-                            <asp:Button runat="server" ID="btnBack" class="btn btn-primary" Text="Regresar" />
-                        </div>
-                        <div id="addOption">
-                            <asp:Button runat="server" ID="btnCarrito" class="btn btn-primary" Text="Carrito  " />
-                        </div>
+                    <div id="cart-container">
+                        <asp:LinkButton runat="server" ID="btnSeeCarOption" CssClass="linkCart">
+                            <img src="../Recursos/cart.png" alt="" width="45" height="40" class="d-inline-block align-top">
+                            (0)
+                        </asp:LinkButton>
                     </div>
-                    <div id="table-container">
-                        <Table ID="tbtProduct" class="table">
-                            <tr>
-                                <th>Productos</th>
-                                <th>Tamaño</th>
-                                <th>Descripción</th>
-                                <th>Precio</th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <asp:DropDownList runat="server" ID="ddlProducts" class="btn btn-secondary dropdown-toggle"></asp:DropDownList>
-                                </th>
-                                <th>
-                                    <asp:DropDownList runat="server" ID="ddlSize" class="btn btn-secondary dropdown-toggle"></asp:DropDownList>
-                                </th>
-                                <th>
-                                    <asp:Button runat="server" ID="btnDescription" Text="Ver" class="btn btn-link" />
-                                </th>
-                                <th>
-                                    <asp:Label runat="server" ID="lblCost">$0.0</asp:Label>
-                                </th>
-                                <th style="border:0;">
-                                    <asp:Button runat="server" ID="btnAdd" Text="Agregar" CssClass="btn btn-light" />
-                                </th>
-                            </tr>
-                        </Table>
+                    <div  runat="server" id="tableCake" class="row">
+                        <div id="smallSize-container" class="col-xs-12 col-md-6">
+                            <h1 style="font-style: oblique">Chico</h1>
+                            <asp:GridView runat="server" ID="tbtSmallSizeG" AutoGenerateColumns="false" class="table table-dark table-striped" OnRowCommand="selecRowCommand">
+                                <Columns>
+                                    <asp:BoundField DataField="producto" HeaderText="Producto" />
+                                    <asp:BoundField DataField="precio" HeaderText="Precio" />
+                                    <asp:TemplateField HeaderText="Descripción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModalButton" class='btn btn-link' CommandArgument="<%#Container.DataItemIndex%>" CommandName="seeSmall" Text="Ver"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Opción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModalAdd" data-bs-toggle='modal' class='btn btn-link' data-bs-target='#showDescription' CommandName="addSmallCake" Text="Agregar" OnClientClick="return false;"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <div id="mediumSize-container" class="col-xs-12 col-md-6">
+                            <h1 style="font-style: oblique">Mediano</h1>
+                            <asp:GridView runat="server" ID="tbtMediumSizeP" AutoGenerateColumns="false" class="table table-dark table-striped" OnRowCommand="selecRowCommand">
+                                <Columns>
+                                    <asp:BoundField DataField="producto" HeaderText="Producto" />
+                                    <asp:BoundField DataField="precio" HeaderText="Precio" />
+                                    <asp:TemplateField HeaderText="Descripción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModal"  class='btn btn-link' CommandArgument="<%#Container.DataItemIndex%>" CommandName="seeMediumCake" Text="Ver" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Opción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModalAdd" data-bs-toggle='modal' class='btn btn-link' data-bs-target='#showDescription' CommandName="addMediumCake" Text="Agregar" OnClientClick="return false;"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <div id="bigSize-container" class="col-xs-12 col-md-12">
+                            <h1 style="font-style: oblique">Grande</h1>
+                            <asp:GridView runat="server" ID="tbtBigSizeP" AutoGenerateColumns="false" class="table table-dark table-striped" OnRowCommand="selecRowCommand">
+                                <Columns>
+                                    <asp:BoundField DataField="producto" HeaderText="Producto" />
+                                    <asp:BoundField DataField="precio" HeaderText="Precio" />
+                                    <asp:TemplateField HeaderText="Descripción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModal"  class='btn btn-link'  CommandArgument="<%#Container.DataItemIndex%>" CommandName="seeBigCake" Text="Ver"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Opción">
+                                        <ItemTemplate>
+                                            <asp:Button  runat="server" ID="btnModalAdd" data-bs-toggle='modal' class='btn btn-link' data-bs-target='#showDescription' CommandName="addBigCake" Text="Agregar" OnClientClick="return false;"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+     <div class="modal fade" id="showDescription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="singInTitle"><asp:Label runat="server" ID="lblHeader"></asp:Label></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Descripción</label>
+                        <asp:Label runat="server" ID="lblDescription"></asp:Label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </asp:Content>
