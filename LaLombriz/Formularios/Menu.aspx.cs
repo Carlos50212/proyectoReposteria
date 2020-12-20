@@ -160,6 +160,7 @@ namespace LaLombriz.Formularios
         }
         public void showDescription(string nombre,string description)
         {
+            Response.Write("HOLA");
             ClientScript.RegisterStartupScript(this.GetType(), "description", "<script>Swal.fire({title: '"+nombre+"',text: '"+description+"'})</script>");
         }
     }
