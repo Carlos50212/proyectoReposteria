@@ -35,31 +35,52 @@
             </div>
         </div>
     </div>
-     <div class="modal fade" id="selectOptions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <asp:Label runat="server" ID="lblNameProduct" Text="Título" style="font-weight:bold; font-size:large;"></asp:Label>
-                        <input type="hidden" name="hidden" id="hidden" value="" />
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="selectOptions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:Label runat="server" ID="lblNameProduct" Text="Título" Style="font-weight: bold; font-size: large;"></asp:Label>
+                    <input type="hidden" name="hidden" id="hidden" value="" />
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <asp:TextBox runat="server" ID="txtTamanio" class="form-control" placeholder="Tamaño"></asp:TextBox>
+                        <label for="txtTamanio">Tamaño</label>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtTamanio" class="form-control" placeholder="Tamaño" ></asp:TextBox>
-                            <label for="txtTamanio">Tamaño</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtCantidad" class="form-control" placeholder="1" ></asp:TextBox>
-                            <label for="txtCantidad">Cantidad</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <asp:TextBox runat="server" ID="txtCantidad" class="form-control" placeholder="1"></asp:TextBox>
+                        <label for="txtCantidad">Cantidad</label>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <asp:Button runat="server" ID="btnAddCart" Text="Agregar" class='btn btn-primary' OnClick="btnAddOnClick"/>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <asp:Button runat="server" ID="btnAddCart" Text="Agregar" class='btn btn-primary' OnClick="btnAddOnClick" />
                 </div>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="selectOptionsPack" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:Label runat="server" ID="lblPackTitle" Text="Título" Style="font-weight: bold; font-size: large;"></asp:Label>
+                    <input type="hidden" name="hiddenPack" id="hiddenPack" value="" />
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <asp:TextBox runat="server" ID="TextBox2" class="form-control" placeholder="1"></asp:TextBox>
+                        <label for="txtCantidad">Cantidad</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <asp:Button runat="server" ID="Button1" Text="Agregar" class='btn btn-primary' OnClick="btnAddPackOnClick" />
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Funcion para mostrar modal y obtener producto que se seleccionó-->
     <script>
         function getID(comp) {
@@ -68,6 +89,14 @@
             document.getElementById('hidden').value = log2;
             $('#<%=lblNameProduct.ClientID%>').text(log2);
             $('#selectOptions').modal('show');
+        }
+        function getIDPack(comp) {
+            var idBtn = comp.id
+            var idBtnT = idBtn.split('_').join(' ');
+            console.log(idBtnT);
+            document.getElementById('hiddenPack').value = idBtnT;
+            $('#<%=lblPackTitle.ClientID%>').text(idBtnT);
+            $('#selectOptionsPack').modal('show');
         }
     </script>
 </asp:Content>

@@ -9,6 +9,7 @@ namespace LaLombriz.Formularios
     {
         private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
         private static List<string> productsName = new List<string>();
+        private static List<string> descriptionProduct = new List<string>();
         private static Dictionary<string, string> pricestProduct = new Dictionary<string, string>();
         private static Dictionary<string, Dictionary<string,string>> productsInfo = new Dictionary<string, Dictionary<string, string>>();
         protected void Page_Load(object sender, EventArgs e)
@@ -44,7 +45,7 @@ namespace LaLombriz.Formularios
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
             }
-            drawInterface();
+            drawInterface(0,descriptionProduct);
         }
         //Boton macarons
         public void btnBurgerOnClick(object sender, EventArgs e)
@@ -71,12 +72,35 @@ namespace LaLombriz.Formularios
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
             }
-            drawInterface();
+            drawInterface(0,descriptionProduct);
         }
         //Boton mesas de dulces
         public void btnPackOnClick(object sender,EventArgs e)
         {
+            clearCollections();
             showSecondForm();
+            productsName = getProducts(52, 56);
+            descriptionProduct = getDescriptionProducts(52, 56);
+            if (productsName.Count > 0 && descriptionProduct.Count>0)
+            {
+                foreach (string product in productsName)
+                {
+                    pricestProduct = getPricesProduct(product);
+                    if (pricestProduct.Count > 0)
+                    {
+                        productsInfo.Add(product, pricestProduct);
+                    }
+                    else
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                    }
+                }
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+            }
+            drawInterface(2,descriptionProduct);
         }
         //Boton otros
         public void btnOtherOnClick(object sender, EventArgs e)
@@ -89,6 +113,12 @@ namespace LaLombriz.Formularios
             string hiddenValue = Request.Form["hidden"];
             Response.Write(hiddenValue);
         }
+        //Boton modal tiendas de dulces
+        public void btnAddPackOnClick(object sender, EventArgs e)
+        {
+            string hiddenValue = Request.Form["hiddenPack"];
+            Response.Write(hiddenValue);
+        }
         public void showSecondForm()
         {
             optionsContainer.Visible = false;
@@ -99,10 +129,12 @@ namespace LaLombriz.Formularios
             productsName.Clear();
             productsInfo.Clear();
             pricestProduct.Clear();
+            descriptionProduct.Clear();
         }
         //Método para mostrar productos
-        public void drawInterface()
+        public void drawInterface(int numProduct,List<string>descriptions)
         {
+            int contProduct = 0;
             StringBuilder sb = new StringBuilder();
             foreach(KeyValuePair<string,Dictionary<string,string>> product in productsInfo)
             {
@@ -112,13 +144,31 @@ namespace LaLombriz.Formularios
                 sb.Append("</div>");
                 sb.Append("<div id='info-container' class='productContainer col-xs-12 col-md-6'>");
                 sb.Append("<h2>" + product.Key + "</h2>");
-                sb.Append("<h4>Precios</h4>");
-                sb.Append("</br>");
-                foreach (KeyValuePair<string,string> prices in product.Value)
+                if (numProduct == 1 || numProduct==2)
                 {
-                    sb.Append("<span style='float:left'>" + prices.Key+"</span><span style='float:right'>"+prices.Value+ "</span></br></br>");
+                    sb.Append("<h4>Descripción</h4>");
+                    sb.Append("<p style='text-align:justify;'>"+descriptions[contProduct]+"</p>");
+                    contProduct++;
                 }
-                sb.Append("<button id='"+nameImage+ "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
+                if (numProduct == 0 || numProduct == 1)
+                {
+                    sb.Append("<h4>Precios</h4>");
+                    sb.Append("</br>");
+                    foreach (KeyValuePair<string, string> prices in product.Value)
+                    {
+                        sb.Append("<span style='float:left'>" + prices.Key + "</span><span style='float:right'>" + prices.Value + "</span></br></br>");
+                    }
+                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
+                }
+                else
+                {
+                    sb.Append("<h4>Precio</h4>");
+                    foreach (KeyValuePair<string, string> prices in product.Value)
+                    {
+                        sb.Append("<p>" + prices.Value + "</p>");
+                    }
+                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getIDPack(this)'>Agregar</button>");
+                }
                 sb.Append("</div>");
                 sb.Append("</div>");
                 ltProduct.Text = sb.ToString();
@@ -143,7 +193,6 @@ namespace LaLombriz.Formularios
                     while (reader.Read())
                     {
                         listProduct.Add(reader.GetString(0));
-                        //listProduct.Add(new Productos(Convert.ToInt32(reader.GetString(0)), reader.GetString(1), reader.GetString(2),reader.GetString(3),float.Parse(reader.GetString(4),CultureInfo.InvariantCulture.NumberFormat)));
                     }
                 }
                 dbConnection.Close();
@@ -184,6 +233,37 @@ namespace LaLombriz.Formularios
             {
                 Console.WriteLine("Error " + e);
                 return listCost;
+            }
+        }
+        //Metodo para traer descripciones de productos
+        public List<string> getDescriptionProducts(int min,int max)
+        {
+            string query = "SELECT DISTINCT DESCRIPCION FROM `productos` WHERE (id_producto BETWEEN " + min + " AND " + max + ")";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            List<string> listDescription = new List<string>();
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        listDescription.Add(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return listDescription;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return listDescription;
             }
         }
     }

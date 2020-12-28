@@ -80,7 +80,7 @@
 }
 .infoProduct {
     margin-top:20px;
-    min-height: 350px;
+    min-height: 400px;
     padding: 0px 20px;
 }
 .btnContainer{
@@ -94,7 +94,7 @@
     background-size: cover;
     position: relative;
     background-position: center center;
-    min-height:350px;
+    min-height:400px;
 }
 /*Responsive desing opciones*/
 @media(min-width:768px) {
