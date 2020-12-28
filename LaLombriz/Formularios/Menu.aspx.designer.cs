@@ -78,57 +78,48 @@ namespace LaLombriz.Formularios
         protected global::System.Web.UI.WebControls.LinkButton btnSeeCarOption;
 
         /// <summary>
-        /// Control tableCake.
+        /// Control ltProduct.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableCake;
+        protected global::System.Web.UI.WebControls.Literal ltProduct;
 
         /// <summary>
-        /// Control tbtSmallSizeG.
+        /// Control lblNameProduct.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView tbtSmallSizeG;
+        protected global::System.Web.UI.WebControls.Label lblNameProduct;
 
         /// <summary>
-        /// Control tbtMediumSizeP.
+        /// Control txtTamanio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView tbtMediumSizeP;
+        protected global::System.Web.UI.WebControls.TextBox txtTamanio;
 
         /// <summary>
-        /// Control tbtBigSizeP.
+        /// Control txtCantidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView tbtBigSizeP;
+        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
-        /// Control lblHeader.
+        /// Control btnAddCart.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHeader;
-
-        /// <summary>
-        /// Control lblDescription.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescription;
+        protected global::System.Web.UI.WebControls.Button btnAddCart;
     }
 }
