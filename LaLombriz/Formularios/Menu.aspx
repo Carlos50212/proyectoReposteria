@@ -30,6 +30,7 @@
                     </div>
                     <div id="products" class="row">
                         <asp:Literal ID="ltProduct" runat="server"></asp:Literal>
+                        <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>
                     </div>
                 </div>
             </div>
@@ -45,8 +46,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <asp:TextBox runat="server" ID="txtTamanio" class="form-control" placeholder="Tamaño"></asp:TextBox>
-                        <label for="txtTamanio">Tamaño</label>
+                        <asp:DropDownList runat="server" ID="ddlTamanio" CssClass="form-control"></asp:DropDownList>
                     </div>
                     <div class="form-floating mb-3">
                         <asp:TextBox runat="server" ID="txtCantidad" class="form-control" placeholder="1"></asp:TextBox>
