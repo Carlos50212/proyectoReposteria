@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Services;
 
 namespace LaLombriz.Formularios
 {
     public partial class Menu : System.Web.UI.Page
     {
         private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
+        private static string product, size, quantityProduct;
         private static List<string> productsName = new List<string>();
         private static List<string> descriptionProduct = new List<string>();
         private static Dictionary<string, string> pricestProduct = new Dictionary<string, string>();
@@ -23,6 +25,15 @@ namespace LaLombriz.Formularios
                 productsContainer.Visible = false;
                 //tableCake.Visible = false;
             }
+        }
+        //Metodo para traer productos seleccionados desde el lado del cliente
+        [WebMethod]
+        public static string getInformationSelected(string nameProduct,string sizeSelected,string quantity)
+        {
+            product = nameProduct;
+            size = sizeSelected;
+            quantityProduct = quantity;
+            return "Correct";
         }
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
@@ -180,7 +191,7 @@ namespace LaLombriz.Formularios
         {
             //Trae producto que se seleccionó
             string hiddenValue = Request.Form["hidden"];
-            Response.Write(hiddenValue);
+            Response.Write("Nombre producto: "+product+" Tamaño seleccionado: "+size+" Cantidad: "+quantityProduct);
         }
         //Boton modal tiendas de dulces
         public void btnAddPackOnClick(object sender, EventArgs e)
@@ -208,7 +219,7 @@ namespace LaLombriz.Formularios
         //Método para mostrar productos
         public void drawInterface(int numProduct,List<string>descriptions)
         {
-            int contProduct = 0;
+            int contProduct = 0,contTamanio=0;
             StringBuilder sb = new StringBuilder();
             foreach(KeyValuePair<string,Dictionary<string,string>> product in productsInfo)
             {
@@ -231,11 +242,24 @@ namespace LaLombriz.Formularios
                 {
                     sb.Append("<h4>Precios</h4>");
                     sb.Append("</br>");
+                    //sb.Append("<form id='formSize'>");
                     foreach (KeyValuePair<string, string> prices in product.Value)
                     {
-                        sb.Append("<span style='float:left'>" + prices.Key + "</span><span style='float:right'>" + prices.Value + "</span></br></br>");
+                        sb.Append("<span style='float:left'>");
+                        sb.Append("<input class='form-check-input' type='radio' name='"+nameImage+"' id='"+nameImage+""+contTamanio+"' value='"+prices.Key+"'>");
+                        sb.Append("<label class='form-check-label' for='"+nameImage+""+contTamanio+"'>");
+                        sb.Append("&nbsp"+prices.Key);
+                        sb.Append("</label></span>");
+                        sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
+                        contTamanio++;
+                        //sb.Append("<span style='float:left'>" + prices.Key + "</span><span style='float:right'>" + prices.Value + "</span></br></br>");
                     }
-                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
+                    //sb.Append("</form>");
+                    sb.Append("<h4>Cantidad</h4>");
+                    sb.Append("<input type='number' id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    //sb.Append("<asp:LinkButton  runat ='server' ID='"+nameImage+ "' class='btn btn-primary' OnClientClick='getID(this)'>Agregar</asp:LinkButton>");
+                    //sb.Append("<asp:Button runat='server' ID='"+nameImage+"'  Text='Agregar' class='btn btn-primary' OnClientClick='getID(this)' />");
+                    sb.Append("<button id='"+nameImage+"' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
                 }
                 else
                 {
@@ -245,6 +269,8 @@ namespace LaLombriz.Formularios
                     {
                         sb.Append("<p>" + prices.Value + "</p>");
                     }
+                    sb.Append("<h4>Cantidad</h4>");
+                    sb.Append("<input type='number' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getIDPack(this)'>Agregar</button>");
                 }
                 sb.Append("</div>");

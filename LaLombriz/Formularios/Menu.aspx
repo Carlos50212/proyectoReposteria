@@ -84,8 +84,31 @@
     <!--Funcion para mostrar modal y obtener producto que se seleccionó-->
     <script>
         function getID(comp) {
+            /*Traemos los valores de los componentes*/
             var log = comp.id
             var log2 = log.split('_').join(' ');
+            /*RadioButton seleccionado */
+            var sizeSelect = $('input:radio[name=' + log + ']:checked').val();
+            var quantity = $('#'+log +'Quantity').val();
+            console.log("Producto seleccionado: "+log2);
+            console.log("Tamaño seleccionado: " + sizeSelect);
+            console.log("Cantidad solicitada: " + quantity);
+            /*Función ajax para mandar los datos obtenidos del lado del cliente, al lado del servidor */
+            $.ajax({
+                type: "POST",                                              // tipo de request que estamos generando
+                url: 'Menu.aspx/getInformationSelected',                    // URL al que vamos a hacer el pedido
+                data: "{nameProduct: '" + log2 + "', sizeSelected: '" + sizeSelect + "', quantity: '" + quantity + "'}", // data es un arreglo JSON que contiene los parámetros que van a ser recibidos por la función del servidor
+                contentType: "application/json; charset=utf-8",            // tipo de contenido
+                dataType: "json",                                          // formato de transmición de datos
+                async: true,                                               // si es asincrónico o no
+                success: function (resultado) {                            // función que va a ejecutar si el pedido fue exitoso
+                    console.log(resultado);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) { // función que va a ejecutar si hubo algún tipo de error en el pedido
+                    var error = eval("(" + XMLHttpRequest.responseText + ")");
+                    alert(error.Message);
+                }
+            });
             document.getElementById('hidden').value = log2;
             $('#<%=lblNameProduct.ClientID%>').text(log2);
             $('#selectOptions').modal('show');
