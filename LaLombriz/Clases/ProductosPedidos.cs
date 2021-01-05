@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +9,19 @@ namespace LaLombriz.Clases
 {
     public class ProductosPedidos
     {
-        private Usuario usuarios;
-        private Productos[] producto;
+        private PedidosCliente pedido;
+        private Usuario usuario;
+        private ArrayList productos;
 
         public ProductosPedidos() { }
-        public ProductosPedidos(Usuario usuarios,Productos[] producto)
+        public ProductosPedidos(PedidosCliente pedido,Usuario usuario,ArrayList productos)
         {
-            this.usuarios = usuarios;
-            this.producto = producto;
+            this.pedido = pedido;
+            this.usuario = usuario;
+            this.productos = productos;
         }
-        public Usuario Usuarios{ set { this.usuarios = value; } get{ return usuarios; }}
-        public Productos[] Producto{ set { this.producto = value;} get { return producto; }}
+        public PedidosCliente Pedido { set { this.pedido = value; } get { return pedido; } }
+        public Usuario Usuario{ set { this.usuario = value; } get{ return usuario; }}
+        public ArrayList Productos{ set { this.productos = value;} get { return productos; }}
     }
 }

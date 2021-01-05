@@ -21,7 +21,7 @@ namespace LaLombriz.Formularios
         //Boton pedidos
         public void btnPedidosOnClick(object sender, EventArgs e)
         {
-
+            Response.Redirect("Pedidos.aspx");
         }
         //Boton cotizacion
         public void btnCotizacionOnClick(object sender,EventArgs e)

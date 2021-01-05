@@ -41,6 +41,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label runat="server" ID="lblNameProduct" Text="Título" Style="font-weight: bold; font-size: large;"></asp:Label>
+                    <!--Quitar hidden-->
                     <input type="hidden" name="hidden" id="hidden" value="" />
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -65,6 +66,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label runat="server" ID="lblPackTitle" Text="Título" Style="font-weight: bold; font-size: large;"></asp:Label>
+                    <!--Quitar hidden-->
                     <input type="hidden" name="hiddenPack" id="hiddenPack" value="" />
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -76,7 +78,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <asp:Button runat="server" ID="Button1" Text="Agregar" class='btn btn-primary' OnClick="btnAddPackOnClick" />
+                    <asp:Button runat="server" ID="Button1" Text="Agregar" class='btn btn-primary' OnClick="btnAddOnClick" />
                 </div>
             </div>
         </div>
@@ -109,6 +111,8 @@
                     alert(error.Message);
                 }
             });
+
+
             document.getElementById('hidden').value = log2;
             $('#<%=lblNameProduct.ClientID%>').text(log2);
             $('#selectOptions').modal('show');
@@ -116,7 +120,27 @@
         function getIDPack(comp) {
             var idBtn = comp.id
             var idBtnT = idBtn.split('_').join(' ');
-            console.log(idBtnT);
+            var quantity = $('#' + idBtn + 'Quantity').val();
+            console.log("Producto seleccionado: " + idBtnT);
+            console.log("Cantidad solicitada: " + quantity);
+
+            /*Función ajax para mandar los datos obtenidos del lado del cliente, al lado del servidor */
+            $.ajax({
+                type: "POST",                                              // tipo de request que estamos generando
+                url: 'Menu.aspx/getInformationSelected',                    // URL al que vamos a hacer el pedido
+                data: "{nameProduct: '" + idBtnT + "', sizeSelected: '', quantity: '" + quantity + "'}", // data es un arreglo JSON que contiene los parámetros que van a ser recibidos por la función del servidor
+                contentType: "application/json; charset=utf-8",            // tipo de contenido
+                dataType: "json",                                          // formato de transmición de datos
+                async: true,                                               // si es asincrónico o no
+                success: function (resultado) {                            // función que va a ejecutar si el pedido fue exitoso
+                    console.log(resultado);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) { // función que va a ejecutar si hubo algún tipo de error en el pedido
+                    var error = eval("(" + XMLHttpRequest.responseText + ")");
+                    alert(error.Message);
+                }
+            });
+
             document.getElementById('hiddenPack').value = idBtnT;
             $('#<%=lblPackTitle.ClientID%>').text(idBtnT);
             $('#selectOptionsPack').modal('show');

@@ -123,9 +123,9 @@ namespace LaLombriz.Formularios
             clearCollections();
             showSecondForm();
             //Se traen los productos "normales" aquellos que no tengan descripción.
-            productsName = getProducts(30,44);
+            productsName = getProducts(24,44);
             //Se traen los productos "anormales" aquellos que se llamen igual, pero difieran en descripción
-            specialProductsName = getSpecialProducts(24,29,45,51);
+            specialProductsName = getSpecialProducts(45,51);
             //Se valida que haya datos en la lista
             if (productsName.Count > 0)
             {
@@ -242,7 +242,6 @@ namespace LaLombriz.Formularios
                 {
                     sb.Append("<h4>Precios</h4>");
                     sb.Append("</br>");
-                    //sb.Append("<form id='formSize'>");
                     foreach (KeyValuePair<string, string> prices in product.Value)
                     {
                         sb.Append("<span style='float:left'>");
@@ -252,13 +251,9 @@ namespace LaLombriz.Formularios
                         sb.Append("</label></span>");
                         sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
                         contTamanio++;
-                        //sb.Append("<span style='float:left'>" + prices.Key + "</span><span style='float:right'>" + prices.Value + "</span></br></br>");
                     }
-                    //sb.Append("</form>");
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number' id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
-                    //sb.Append("<asp:LinkButton  runat ='server' ID='"+nameImage+ "' class='btn btn-primary' OnClientClick='getID(this)'>Agregar</asp:LinkButton>");
-                    //sb.Append("<asp:Button runat='server' ID='"+nameImage+"'  Text='Agregar' class='btn btn-primary' OnClientClick='getID(this)' />");
                     sb.Append("<button id='"+nameImage+"' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
                 }
                 else
@@ -270,7 +265,7 @@ namespace LaLombriz.Formularios
                         sb.Append("<p>" + prices.Value + "</p>");
                     }
                     sb.Append("<h4>Cantidad</h4>");
-                    sb.Append("<input type='number' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    sb.Append("<input type='number'  id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getIDPack(this)'>Agregar</button>");
                 }
                 sb.Append("</div>");
@@ -353,11 +348,11 @@ namespace LaLombriz.Formularios
             }
         }
         //Metodo para traer productos y su descripcion de la sección "otros"
-        public Dictionary<int,Dictionary<string,string>> getSpecialProducts(int val1, int val2, int val3, int val4)
+        public Dictionary<int,Dictionary<string,string>> getSpecialProducts(int val1, int val2)
         {
             //Contador para llave de deccionario
             int contProducts = 0;
-            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO BETWEEN "+val1+" AND "+ val2 + ") OR (ID_PRODUCTO BETWEEN "+val3+" AND "+val4+")";
+            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO BETWEEN "+val1+" AND "+ val2 + ")";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;

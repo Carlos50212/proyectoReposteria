@@ -46,6 +46,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=8.0.22.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -115,11 +116,13 @@
     <Content Include="Estilos\InicioStyles.css" />
     <Content Include="Estilos\MasterStyles.css" />
     <Content Include="Estilos\MenuStyles.css" />
+    <Content Include="Estilos\PedidosStyles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formularios\Cotizaciones.aspx" />
     <Content Include="Formularios\Inicio.aspx" />
     <Content Include="Formularios\Menu.aspx" />
+    <Content Include="Formularios\Pedidos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -167,7 +170,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Clases\ArrayList.cs" />
     <Compile Include="Formularios\Cotizaciones.aspx.cs">
       <DependentUpon>Cotizaciones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -175,7 +177,7 @@
     <Compile Include="Formularios\Cotizaciones.aspx.designer.cs">
       <DependentUpon>Cotizaciones.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Clases\Pedidos.cs" />
+    <Compile Include="Clases\PedidosCliente.cs" />
     <Compile Include="Clases\Productos.cs" />
     <Compile Include="Clases\ProductosPedidos.cs" />
     <Compile Include="Clases\Usuario.cs" />
@@ -192,6 +194,13 @@
     </Compile>
     <Compile Include="Formularios\Menu.aspx.designer.cs">
       <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Pedidos.aspx.cs">
+      <DependentUpon>Pedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Pedidos.aspx.designer.cs">
+      <DependentUpon>Pedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
