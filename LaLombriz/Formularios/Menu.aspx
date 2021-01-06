@@ -112,10 +112,10 @@
                 }
             });
 
-
-            document.getElementById('hidden').value = log2;
-            $('#<%=lblNameProduct.ClientID%>').text(log2);
-            $('#selectOptions').modal('show');
+            
+            //document.getElementById('hidden').value = log2;
+            //$('#<%=lblNameProduct.ClientID%>').text(log2);
+            //$('#selectOptions').modal('show');
         }
         function getIDPack(comp) {
             var idBtn = comp.id

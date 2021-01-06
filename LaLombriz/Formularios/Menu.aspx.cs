@@ -40,7 +40,7 @@ namespace LaLombriz.Formularios
         {
             clearCollections();
             showSecondForm();
-            productsName = getProducts(0, 15);
+            productsName = getProducts(1, 15);
             if (productsName.Count > 0)
             {
                 foreach (string product in productsName)
@@ -67,7 +67,7 @@ namespace LaLombriz.Formularios
         {
             clearCollections();
             showSecondForm();
-            productsName = getProducts(16, 23);
+            productsName = getProducts(16, 39);
             if (productsName.Count > 0)
             {
                 foreach (string product in productsName)
@@ -94,8 +94,8 @@ namespace LaLombriz.Formularios
         {
             clearCollections();
             showSecondForm();
-            productsName = getProducts(52, 56);
-            descriptionProduct = getDescriptionProducts(52, 56);
+            productsName = getProducts(82, 86);
+            descriptionProduct = getDescriptionProducts(82, 86);
             if (productsName.Count > 0 && descriptionProduct.Count>0)
             {
                 foreach (string product in productsName)
@@ -123,9 +123,9 @@ namespace LaLombriz.Formularios
             clearCollections();
             showSecondForm();
             //Se traen los productos "normales" aquellos que no tengan descripción.
-            productsName = getProducts(24,44);
+            productsName = getProducts(40,81);
             //Se traen los productos "anormales" aquellos que se llamen igual, pero difieran en descripción
-            specialProductsName = getSpecialProducts(45,51);
+            //specialProductsName = getSpecialProducts(67,76);
             //Se valida que haya datos en la lista
             if (productsName.Count > 0)
             {
@@ -150,6 +150,7 @@ namespace LaLombriz.Formularios
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
             }
+            /*
             //Se valida que haya datos en el diccionario
             if (specialProductsName.Count > 0)
             {
@@ -183,7 +184,7 @@ namespace LaLombriz.Formularios
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
             }
             //Se dibuja la interfaz "especial" para aquellos productos que tengan descripción y nombre
-            drawSpecialInterface();
+            drawSpecialInterface();*/
             //Se dibuja la interfaz para los productos "normales"
             drawInterface(0, descriptionProduct);
         }
@@ -352,7 +353,7 @@ namespace LaLombriz.Formularios
         {
             //Contador para llave de deccionario
             int contProducts = 0;
-            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO BETWEEN "+val1+" AND "+ val2 + ")";
+            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO = "+val1+") OR (ID_PRODUCTO ="+ val2 + ")";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;

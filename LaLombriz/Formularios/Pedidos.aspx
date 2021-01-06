@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div runat="server" id="detailOrder" style="display:none;">
-                <div>
+                <div style="width:100%" >
                     <asp:Literal runat="server" ID="tbOrderDetails"></asp:Literal>
                 </div>
             </div>

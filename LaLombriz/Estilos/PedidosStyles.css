@@ -86,6 +86,51 @@
     height: 25px;
     margin-left: 50px;
 }
+.oneOrderDetail{
+    width:85%;
+}
+.singleProduct {
+    background-color: white;
+    margin-top: 10px;
+}
+.headerSingleProduct {
+    border-bottom: 1px solid #C6C1C2;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    color: #8E8B8B;
+}
+.imageProduct {
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+    width:50%;
+}
+.dataContainer{
+    width:50%;
+}
+.informationProductContainer {
+    margin: 0px 0px 0px 10px;
+    padding: 10px 0px;
+    min-height: 200px;
+}
+.detailContainer {
+    padding: 10px 0px;
+}
+.detailOrderContainer {
+    background-color: #FAF9F9;
+    margin-top: 10px;
+}
+.headerDataProduct {
+    border-bottom: 1px solid;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+}
+.noteContainer {
+    padding: 10px;
+    text-align: justify;
+}
 /*Efectos*/
 .option-selected {
     color: black;
@@ -118,5 +163,12 @@
     }
     .dropdown-item:focus, .dropdown-item:hover {
         cursor: pointer;
+    }
+    .informationProductContainer {
+        min-height: 200px;
+    }
+    .productAllInfoContainer {
+        width: 85%;
+        margin: 0px auto;
     }
 }

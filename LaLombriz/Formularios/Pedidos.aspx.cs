@@ -91,11 +91,11 @@ namespace LaLombriz.Formularios
                 //Se oculta
                 notNewOrders.Style["display"] = "none";
             }
-            //Se valida si el div de pedidos esta oculto
-            if(newOrders.Style["display"] == "none" && listNewOrders.Count > 0)
+            //Se valida si el div de no hay pedidos no está visible y si sigue sin haber pedidos
+            if(notNewOrders.Style["display"]=="none" && listNewOrders.Count==0)
             {
                 //Se muestra
-                newOrders.Style["display"] = "flex";
+                notNewOrders.Style["display"] = "flex";
             }
             //Se valida si el div donde se muestran los pedidos de cada producto está visible
             if (detailOrder.Style["display"] == "flex")
@@ -103,47 +103,137 @@ namespace LaLombriz.Formularios
                 //Se oculta
                 detailOrder.Style["display"] = "none";
             }
-            StringBuilder sb = new StringBuilder();
-            foreach(PedidosCliente pedido in listNewOrders)
+            //Se valida si el div de pedidos esta oculto
+            if (newOrders.Style["display"] == "none" && listNewOrders.Count > 0)
             {
-                sb.Append("<div id='"+pedido.Id_pedido+"Order'  class='oneOrder'>");
-                sb.Append("<div class='containerOptionsNewOrders'>");
-                sb.Append("<div class='title'>");
-                sb.Append("<b>Número de pedido: </b><span style='color:#757575;'>" + pedido.Id_pedido+"</span>");
-                sb.Append("</div>");
-                sb.Append("<div class='dropdown'>");
-                sb.Append("<button class='btnNewOptions' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'><img src='../Recursos/menuOptions.png' alt='options' class='imgDotOptions'/></button>");
-                sb.Append("<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>");
-                sb.Append("<a id='"+pedido.Id_pedido+ "_Detalles' class='dropdown-item' onclick='onClickDetails(this);'>Detalles<img src='../Recursos/seeDetails.png' alt='details'  class='optionsImages'/></a><a id='" + pedido.Id_pedido+ "_Eliminar' class='dropdown-item' onclick='onClickDelete(this)'>Eliminar<img src='../Recursos/delete.png' alt='delete' class='optionsImages'/></a>");
-                sb.Append("</div>");
-                sb.Append("</div>");
-                sb.Append("</div>");
-                sb.Append("<div class='tableInformation'>");
-                sb.Append("<table class='table table-borderless tableNewOrder'>");
-                sb.Append("<thead>");
-                sb.Append("<tr>");
-                sb.Append("<th scope='col'>Fecha de creación</th><th scope='col'>Fecha de entrega</th><th scope='col'>Precio</th>");
-                sb.Append("</tr>");
-                sb.Append("</thead>");
-                sb.Append("<tbody>");
-                sb.Append("<tr>");
-                sb.Append("<td>" + pedido.Fecha_creacion.ToString("dd/MM/yyyy") + "</td><td>" + pedido.Fecha_entrega.ToString("dd/MM/yyyy") + "</td><td>$" + pedido.Precio + "</td>");
-                sb.Append("</tr>");
-                sb.Append("</tbody>");
-                sb.Append("</table>");
-                sb.Append("</div>");
-                sb.Append("</div>");
-                tbNewOrders.Text = sb.ToString();
+                //Se muestra y se dibuja
+                newOrders.Style["display"] = "flex";
+
+                StringBuilder sb = new StringBuilder();
+                foreach (PedidosCliente pedido in listNewOrders)
+                {
+                    sb.Append("<div id='" + pedido.Id_pedido + "Order'  class='oneOrder'>");
+                    sb.Append("<div class='containerOptionsNewOrders'>");
+                    sb.Append("<div class='title'>");
+                    sb.Append("<b>Número de pedido: </b><span style='color:#757575;'>" + pedido.Id_pedido + "</span>");
+                    sb.Append("</div>");
+                    sb.Append("<div class='dropdown'>");
+                    sb.Append("<button class='btnNewOptions' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'><img src='../Recursos/menuOptions.png' alt='options' class='imgDotOptions'/></button>");
+                    sb.Append("<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>");
+                    sb.Append("<a id='" + pedido.Id_pedido + "_Detalles' class='dropdown-item' onclick='onClickDetails(this);'>Detalles<img src='../Recursos/seeDetails.png' alt='details'  class='optionsImages'/></a><a id='" + pedido.Id_pedido + "_Eliminar' class='dropdown-item' onclick='onClickDelete(this)'>Eliminar<img src='../Recursos/delete.png' alt='delete' class='optionsImages'/></a>");
+                    sb.Append("</div>");
+                    sb.Append("</div>");
+                    sb.Append("</div>");
+                    sb.Append("<div class='tableInformation'>");
+                    sb.Append("<table class='table table-borderless tableNewOrder'>");
+                    sb.Append("<thead>");
+                    sb.Append("<tr>");
+                    sb.Append("<th scope='col'>Fecha de creación</th><th scope='col'>Fecha de entrega</th><th scope='col'>Precio</th>");
+                    sb.Append("</tr>");
+                    sb.Append("</thead>");
+                    sb.Append("<tbody>");
+                    sb.Append("<tr>");
+                    sb.Append("<td>" + pedido.Fecha_creacion.ToString("dd/MM/yyyy") + "</td><td>" + pedido.Fecha_entrega.ToString("dd/MM/yyyy") + "</td><td>$" + pedido.Precio + "</td>");
+                    sb.Append("</tr>");
+                    sb.Append("</tbody>");
+                    sb.Append("</table>");
+                    sb.Append("</div>");
+                    sb.Append("</div>");
+                    tbNewOrders.Text = sb.ToString();
+                }
             }
         }
         //Metodo para dibujar la interface con los detalles de la orden
         public void drawInterfaceDetailOrder(string idOrder)
         {
+            int contProduct = 1;
             //Se oculta div que muestra todos los pedidos actuales
             newOrders.Style["display"] = "none";
             //Se muestra div que enseña los productos de ese pedido
             detailOrder.Style["display"] = "flex";
             getAllOrderInfo(idOrder);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class='row productAllInfoContainer'>");
+            sb.Append("<p style='color: #838383;'>Por entregar > Detalles pedido #" + pedidoContenido.Pedido.Id_pedido + "</p>");
+            //Contenedor de productos
+            sb.Append("<div class='col-xs-12 col-md-6 productsContainer'>");
+            //Contenedor de cada producto, traemos cada producto
+            foreach (Productos producto in pedidoContenido.Productos)
+            {
+                string nameImage = producto.Nombre_producto.Replace(" ", "_");
+                sb.Append("<div class='singleProduct'>");
+                sb.Append("<div class='headerSingleProduct'>");
+                sb.Append("<p>Producto " + contProduct + " de " + pedidoContenido.Productos.Count + "</p>");
+                sb.Append("</div>");
+                sb.Append("<div class='informationProductContainer row'>");
+                //Contenedor imagen
+                sb.Append("<div class='imageProduct col-xs-6' style='background-image:url(../Recursos/Menu/" + nameImage + ".jpg);'>");
+                sb.Append("</div>");
+                //Contenedor información de producto
+                sb.Append("<div class='dataContainer col-xs-6'>");
+                sb.Append("<h6>Producto</h6>");
+                sb.Append("<p>" + producto.Nombre_producto + "</p>");
+                sb.Append("<h6>Descripción</h6>");
+                sb.Append("<p>" + producto.Descripcion + "</p>");
+                sb.Append("<h6>Precio unitario</h6>");
+                sb.Append("<p> $" + producto.Precio+"</p>");
+                sb.Append("<h6>Cantidad</h6>");
+                sb.Append("<p>" + producto.Cantidad + "</p>");
+                sb.Append("</div>");
+                sb.Append("</div>");
+                sb.Append("</div>");
+                contProduct++;
+            }
+            sb.Append("</div>");
+            //Contenedor información del pedido
+            sb.Append("<div class='col-xs-12 col-md-6'>");
+            //Contenedor de resumen del pedido
+            sb.Append("<div class='detailOrderContainer'>");
+            sb.Append("<div class='headerDataProduct'>");
+            sb.Append("<h5>Resumen del pedido</h5>");
+            sb.Append("</div>");
+            sb.Append("<div class='detailContainer'>");
+            sb.Append("<table style='width:100%;'>");
+            sb.Append("<tr>");
+            sb.Append("<td style='text-align: right;'>Total:</td><td>&nbsp$" + pedidoContenido.Pedido.Precio+"</td>");
+            sb.Append("</tr>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            //Contenedor de información del cliente
+            sb.Append("<div class='detailOrderContainer'>");
+            sb.Append("<div class='headerDataProduct'>");
+            sb.Append("<h5>Información del cliente</h5>");
+            sb.Append("</div>");
+            sb.Append("<div class='detailContainer'>");
+            sb.Append("<table style='width:100%;'>");
+            sb.Append("<tr>");
+            sb.Append("<td style='text-align: right;'>Nombre del cliente: </td><td>&nbsp" + pedidoContenido.Usuario.Nombre + "</td>");
+            sb.Append("</tr>");
+            sb.Append("<tr>");
+            sb.Append("<td style='text-align: right;'>Correo: </td><td>&nbsp" + pedidoContenido.Usuario.Correo + "</td>");
+            sb.Append("</tr>");
+            sb.Append("<tr>");
+            sb.Append("<td style='text-align: right;'>Teléfono: </td><td>&nbsp" + pedidoContenido.Usuario.Telefono + "</td>");
+            sb.Append("</tr>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            //Contenedor de nota
+            sb.Append("<div class='detailOrderContainer'>");
+            sb.Append("<div class='headerDataProduct'>");
+            sb.Append("<h5>NOTA</h5>");
+            sb.Append("</div>");
+            sb.Append("<div class='noteContainer'>");
+            sb.Append("<p>Cualquier duda o acalración sobre su pedido, favor de ponerse en contacto con nosotros mediante nuestras redes sociales, correo electrónico o teléfono.</p>");
+            sb.Append("<p>Los pedidos pueden ser cancelados o modificados con un máximo de 15 días antes de la fecha de entrega.</p>");
+            sb.Append("<p>Tenga su número de pedido a la mano.</p>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+
+            sb.Append("</div>");
+            tbOrderDetails.Text = sb.ToString();
 
         }
         //Metodo para obtener toda la información del pedido
