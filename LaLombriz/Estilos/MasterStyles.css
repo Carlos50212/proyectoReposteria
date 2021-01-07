@@ -56,12 +56,54 @@
 /*Estilos footer*/
 #footer-container{
     width:100%;
-    height:200px;
-    color:white;
+    min-height:200px;
     background-color:black;
 }
+#cursor-container {
+    height: 50px;
+    padding: 20px 10px 10px 10px;
+}
+#cursor-link {
+    padding: 2px;
+    border: 2px solid #993AF9;
+    border-radius:10px;
+}
+#companyInformation-container {
+    display: flex;
+    padding: 30px 10px 0px 10px;
+}
+#logoFooter{
+    width:70px;
+    height:70px;
+}
+#companylogo-container {
+    width: 50%;
+}
+.containersFooter {
+    width: 100%;
+    text-align: center;
+    padding: 20px 10px 5px 10px;
+    color: #993AF9;
+}
+.singleNetwork {
+    padding: 5px 0px 5px 10px;
+}
+.networksImages {
+    width: 20px;
+    height: 20px;
+    padding-right:5px;
+}
+.linkNetworks {
+    text-decoration: none;
+}
+#networksCompany-container a:hover {
+    color: #993AF9;
+}
+#networksCompany-container a{
+    color: #993AF9;
+}
 /*Responsive desing menu*/
-@media(min-width:992px){
+@media(min-width:992px) {
     .header{
         width:80%;
         margin-left:10%;
@@ -84,6 +126,17 @@
         height: 50px;
         padding-bottom: 10px;
         transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    }
+    #companyInformation-container {
+        display: flex;
+        padding: 30px 50px 10px 50px;
+    }
+    #logoFooter {
+        width: 100px;
+        height: 100px;
+    }
+    #companylogo-container {
+        text-align: center;
     }
 }
 

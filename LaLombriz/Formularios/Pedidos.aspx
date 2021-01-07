@@ -7,6 +7,8 @@
             <asp:Button runat="server" ID="btnDetailsOrder" OnClick="seeDetailsOnClick" style="display:none;"/>
             <input type="hidden" name="hiddenIdDeleteOrder" id="hiddenIdDeleteOrder" value="" />
             <asp:Button runat="server" ID="btnDeleteOrder" OnClick="deleteOrderOnClick" style="display:none;"/>
+            <input type="hidden" name="hiddenIdDetailOldOrder" id="hiddenIdDetailOldOrder" value="" />
+            <asp:Button runat="server" ID="btnDetailOldOrder" OnClick="seeDetailsOldOrderOnClick" style="display:none;"/>
             <div id="title-container">
                 <h1>¡Visualiza tus pedidos!</h1>
             </div>
@@ -28,6 +30,11 @@
             <div runat="server" id="detailOrder" style="display:none;">
                 <div style="width:100%" >
                     <asp:Literal runat="server" ID="tbOrderDetails"></asp:Literal>
+                </div>
+            </div>
+            <div runat="server" id="oldOrders" style="display:none;">
+                <div class='orders-containers'>
+                    <asp:Literal runat="server" ID="tbOldOrders"></asp:Literal>
                 </div>
             </div>
             <div runat="server" id="notNewOrders" class="infoContainer" style="display:none;">
@@ -60,6 +67,13 @@
             var idOrderDelete = idLink.split("_");
             document.getElementById('hiddenIdDeleteOrder').value = idOrderDelete[0];
             document.getElementById('<%=btnDeleteOrder.ClientID %>').click();
+        }
+        /*Metodo para ver que pedido entregado se seleccionó para ver sus detalles*/
+        function onClickOldDetails(comp) {
+            var idLink = comp.id;
+            var idOrderDelete = idLink.split("_");
+            document.getElementById('hiddenIdDetailOldOrder').value = idOrderDelete[0];
+            document.getElementById('<%=btnDetailOldOrder.ClientID %>').click();
         }
     </script>
 </asp:Content>

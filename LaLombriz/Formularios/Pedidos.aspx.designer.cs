@@ -33,6 +33,15 @@ namespace LaLombriz.Formularios
         protected global::System.Web.UI.WebControls.Button btnDeleteOrder;
 
         /// <summary>
+        /// Control btnDetailOldOrder.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDetailOldOrder;
+
+        /// <summary>
         /// Control lkNew.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,24 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal tbOrderDetails;
+
+        /// <summary>
+        /// Control oldOrders.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl oldOrders;
+
+        /// <summary>
+        /// Control tbOldOrders.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal tbOldOrders;
 
         /// <summary>
         /// Control notNewOrders.

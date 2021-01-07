@@ -22,7 +22,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light navbar-estilo">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="Inicio.aspx">
-                            <img src="../Recursos/cupcake.png" alt="" width="50" height="50">
+                            <img src="../Recursos/logoMenu.png" alt="" width="60" height="60">
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false">
                             <span class="navbar-toggler-icon"></span>
@@ -48,7 +48,30 @@
         </div>
         <footer>
             <div id="footer-container">
-                <p>Este es el footer</p>
+                <div id="cursor-container"  class="containersFooter">
+                    <a href="#header" id="cursor-link"><img src="../Recursos/subir.png" alt="logo" width="20" height="20" style="margin-bottom: 6px;"></a>
+                </div>
+                <div id="companyInformation-container" class="containersFooter">
+                    <div id="companylogo-container">
+                        <img src="../Recursos/logoFooter.png" alt="logo" id="logoFooter">
+                    </div>
+                    <div id="networksCompany-container"">
+                        <div style="margin:0 auto;">
+                            <div class="singleNetwork">
+                                <a href="https://www.instagram.com/instalalombriz/" class="linkNetworks"><img src="../Recursos/logoInstagram.png" alt="logo" class='networksImages'">@instalalombriz</a>
+                            </div>
+                            <div class="singleNetwork">
+                                <a href="https://www.facebook.com/LaLombrizBook/" class="linkNetworks"><img src="../Recursos/logoFacebook.png" alt="logo" class='networksImages'">La Lombriz</a>
+                            </div>
+                            <div class="singleNetwork">
+                                <span style="color:#993AF9;" class="linkNetworks"><img src="../Recursos/logoWhatsapp.png" alt="logo" class='networksImages'">5578182219</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="copyright-container" class="containersFooter">
+                    <p>&copy Todos los derechos reservados, La Lombriz S.A de C.V</p>
+                </div>
             </div>
         </footer>
         <!-- Modal/Pop up -->
