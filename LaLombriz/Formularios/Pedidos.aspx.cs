@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Services;
+using iTextSharp.text;
 
 namespace LaLombriz.Formularios
 {
