@@ -91,6 +91,13 @@ namespace LaLombriz.Formularios
             string idOrder = Request.Form["hiddenIdDetailOldOrder"];
             drawInterfaceDetailOrder(idOrder, 1);
         }
+        //Metodo para crear y descargar pdf
+        public void downloadPDFOnClick(object sender, EventArgs args)
+        {
+            Response.Write("PEDIDO SELECCIONADO: " + pedidoContenido.Pedido.Id_pedido);
+            archivoPDF pdfFile = new archivoPDF(pedidoContenido);
+            pdfFile.createPDF();
+        }
         //Metodo para dibujar los pedidos recientes que tiene el usuario
         public void drawInterfaceNewOrder()
         {
@@ -311,6 +318,9 @@ namespace LaLombriz.Formularios
                 sb.Append("<p>Los pedidos pueden ser cancelados o modificados con un máximo de 15 días antes de la fecha de entrega.</p>");
                 sb.Append("<p>Tenga su número de pedido a la mano.</p>");
                 sb.Append("</div>");
+                sb.Append("</div>");
+                sb.Append("<div class='downloadButtonContainer'>");
+                sb.Append("<a id='btnDownload' onclick='downloadOption();' class='btn btn-primary'>Descargar</a>");
                 sb.Append("</div>");
             }
             sb.Append("</div>");

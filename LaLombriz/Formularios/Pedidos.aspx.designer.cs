@@ -42,6 +42,15 @@ namespace LaLombriz.Formularios
         protected global::System.Web.UI.WebControls.Button btnDetailOldOrder;
 
         /// <summary>
+        /// Control btnDownloadPDF.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDownloadPDF;
+
+        /// <summary>
         /// Control lkNew.
         /// </summary>
         /// <remarks>

@@ -53,7 +53,7 @@
                 </div>
                 <div id="companyInformation-container" class="containersFooter">
                     <div id="companylogo-container">
-                        <img src="../Recursos/logoFooter.png" alt="logo" id="logoFooter">
+                        <img src="../Recursos/logoMenu.png" alt="logo" id="logoFooter">
                     </div>
                     <div id="networksCompany-container"">
                         <div style="margin:0 auto;">
@@ -64,7 +64,7 @@
                                 <a href="https://www.facebook.com/LaLombrizBook/" class="linkNetworks"><img src="../Recursos/logoFacebook.png" alt="logo" class='networksImages'">La Lombriz</a>
                             </div>
                             <div class="singleNetwork">
-                                <span style="color:#993AF9;" class="linkNetworks"><img src="../Recursos/logoWhatsapp.png" alt="logo" class='networksImages'">5578182219</span>
+                                <span style="color:#ffff;" class="linkNetworks"><img src="../Recursos/logoWhatsapp.png" alt="logo" class='networksImages'">5578182219</span>
                             </div>
                         </div>
                     </div>

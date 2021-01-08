@@ -9,6 +9,7 @@
             <asp:Button runat="server" ID="btnDeleteOrder" OnClick="deleteOrderOnClick" style="display:none;"/>
             <input type="hidden" name="hiddenIdDetailOldOrder" id="hiddenIdDetailOldOrder" value="" />
             <asp:Button runat="server" ID="btnDetailOldOrder" OnClick="seeDetailsOldOrderOnClick" style="display:none;"/>
+            <asp:Button runat="server" ID="btnDownloadPDF" OnClick="downloadPDFOnClick" style="display:none;"/>
             <div id="title-container">
                 <h1>¡Visualiza tus pedidos!</h1>
             </div>
@@ -74,6 +75,10 @@
             var idOrderDelete = idLink.split("_");
             document.getElementById('hiddenIdDetailOldOrder').value = idOrderDelete[0];
             document.getElementById('<%=btnDetailOldOrder.ClientID %>').click();
+        }
+        //Metodo para descargar pdf
+        function downloadOption() {
+            document.getElementById('<%=btnDownloadPDF.ClientID %>').click();
         }
     </script>
 </asp:Content>

@@ -29,6 +29,10 @@
     height: 40px;
     text-align: center;
 }
+#btnDownload {
+    width: 150px;
+    margin: 0 auto;
+}
 /*Clases*/
 .listOptions {
     display: inline-block;
@@ -130,6 +134,12 @@
 .noteContainer {
     padding: 10px;
     text-align: justify;
+}
+.downloadButtonContainer {
+    height: 150px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
 }
 /*Efectos*/
 .option-selected {

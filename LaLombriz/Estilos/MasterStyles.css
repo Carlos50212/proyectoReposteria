@@ -65,7 +65,7 @@
 }
 #cursor-link {
     padding: 2px;
-    border: 2px solid #993AF9;
+    border: 2px solid #ffff;
     border-radius:10px;
 }
 #companyInformation-container {
@@ -79,11 +79,14 @@
 #companylogo-container {
     width: 50%;
 }
+#networksCompany-container{
+    width:50%;
+}
 .containersFooter {
     width: 100%;
     text-align: center;
     padding: 20px 10px 5px 10px;
-    color: #993AF9;
+    color: #ffff;
 }
 .singleNetwork {
     padding: 5px 0px 5px 10px;
@@ -100,7 +103,7 @@
     color: #993AF9;
 }
 #networksCompany-container a{
-    color: #993AF9;
+    color: white;
 }
 /*Responsive desing menu*/
 @media(min-width:992px) {
@@ -137,6 +140,10 @@
     }
     #companylogo-container {
         text-align: center;
+    }
+    .networksImages {
+        width: 35px;
+        height: 35px;
     }
 }
 
