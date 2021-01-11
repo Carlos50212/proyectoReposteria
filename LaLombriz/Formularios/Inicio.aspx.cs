@@ -31,6 +31,7 @@ namespace LaLombriz.Formularios
         //Boton galeria
         public void btnGaleriaOnClick(object sender, EventArgs e)
         {
+            Response.Redirect("Galeria.aspx");
 
         }
     }

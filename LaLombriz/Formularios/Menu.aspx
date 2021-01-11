@@ -4,7 +4,7 @@
     <link href="../Estilos/MenuStyles.css" rel="stylesheet" />
     <div id="allContainer">
         <div id="second-container">
-            <div runat="server" id="optionsContainer" class="containerOptions row">
+            <div runat="server" id="optionsContainer" class="containerOptionsMenu row">
                 <div id="cakeBefore" class="btnOptions col-xs-12 col-md-6">
                     <asp:LinkButton runat="server" ID="btnCake" Text="Pasteles" OnClick="btnCakeOnClick">
                     </asp:LinkButton>

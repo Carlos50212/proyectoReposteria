@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Formularios/Site.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="LaLombriz.Formularios.Inicio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <link href="../Estilos/InicioStyles.css" rel="stylesheet" />
     <div id="menuContainer" class="containerOptions row">
         <div id="welcomeText" class="col-xs-12 col-md-12">
             <h1>Bienvenido</h1>

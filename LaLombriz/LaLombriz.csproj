@@ -119,6 +119,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Estilos\CotizacionStyles.css" />
+    <Content Include="Estilos\GalleryStyles.css" />
     <Content Include="Estilos\InicioStyles.css" />
     <Content Include="Estilos\MasterStyles.css" />
     <Content Include="Estilos\MenuStyles.css" />
@@ -126,6 +127,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formularios\Cotizaciones.aspx" />
+    <Content Include="Formularios\Galeria.aspx" />
     <Content Include="Formularios\Inicio.aspx" />
     <Content Include="Formularios\Menu.aspx" />
     <Content Include="Formularios\Pedidos.aspx" />
@@ -188,6 +190,13 @@
     <Compile Include="Clases\Productos.cs" />
     <Compile Include="Clases\ProductosPedidos.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="Formularios\Galeria.aspx.cs">
+      <DependentUpon>Galeria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Galeria.aspx.designer.cs">
+      <DependentUpon>Galeria.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

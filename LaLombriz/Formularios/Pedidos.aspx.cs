@@ -315,13 +315,13 @@ namespace LaLombriz.Formularios
                 sb.Append("<h5>NOTA</h5>");
                 sb.Append("</div>");
                 sb.Append("<div class='noteContainer'>");
-                sb.Append("<p>Cualquier duda o acalración sobre su pedido, favor de ponerse en contacto con nosotros mediante nuestras redes sociales, correo electrónico o teléfono.</p>");
+                sb.Append("<p>Cualquier duda o aclaración sobre su pedido, favor de ponerse en contacto con nosotros mediante nuestras redes sociales, correo electrónico o teléfono.</p>");
                 sb.Append("<p>Los pedidos pueden ser cancelados o modificados con un máximo de 15 días antes de la fecha de entrega.</p>");
                 sb.Append("<p>Tenga su número de pedido a la mano.</p>");
                 sb.Append("</div>");
                 sb.Append("</div>");
                 sb.Append("<div class='downloadButtonContainer'>");
-                sb.Append("<a id='btnDownload' onclick='downloadOption();' class='btn btn-primary'>Descargar</a>");
+                sb.Append("<a id='btnDownload' onclick='downloadOption();' class='btn btn-primary'>Descargar PDF<img src='../Recursos/download.png' alt='descargar'  class='optionsDownload'/></a>");
                 sb.Append("</div>");
             }
             sb.Append("</div>");

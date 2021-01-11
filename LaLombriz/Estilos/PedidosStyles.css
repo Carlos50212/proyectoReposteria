@@ -30,7 +30,6 @@
     text-align: center;
 }
 #btnDownload {
-    width: 150px;
     margin: 0 auto;
 }
 /*Clases*/
@@ -89,6 +88,11 @@
     width: 25px;
     height: 25px;
     margin-left: 50px;
+}
+.optionsDownload {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
 }
 .oneOrderDetail{
     width:85%;
