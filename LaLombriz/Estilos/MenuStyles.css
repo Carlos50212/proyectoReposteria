@@ -64,7 +64,6 @@
 /*ESTILOS MENU SELECCIÓN*/
 #selectionContainer {
     text-align:center;
-    margin: 0px 70px;
 }
 #cart-container{
     margin-top:50px;
@@ -77,6 +76,9 @@
 .linkCart {
     color: black;
     text-decoration: none;
+}
+#products {
+    padding-left: 50px;
 }
 .infoProduct {
     margin-top:20px;
@@ -95,6 +97,12 @@
     position: relative;
     background-position: center center;
     min-height:400px;
+}
+.addToCart {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /*Responsive desing opciones*/
 @media(min-width:768px) {
@@ -122,3 +130,11 @@
         background-size: 25% 4px;
     }
 }
+@media(min-width:992px){
+    #selectionContainer {
+        margin: 0px 70px;
+    }
+    #products {
+        padding-left: 0px;
+    }
+} 

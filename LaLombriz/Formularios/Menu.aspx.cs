@@ -124,8 +124,6 @@ namespace LaLombriz.Formularios
             showSecondForm();
             //Se traen los productos "normales" aquellos que no tengan descripción.
             productsName = getProducts(40,81);
-            //Se traen los productos "anormales" aquellos que se llamen igual, pero difieran en descripción
-            //specialProductsName = getSpecialProducts(67,76);
             //Se valida que haya datos en la lista
             if (productsName.Count > 0)
             {
@@ -150,41 +148,6 @@ namespace LaLombriz.Formularios
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
             }
-            /*
-            //Se valida que haya datos en el diccionario
-            if (specialProductsName.Count > 0)
-            {
-                //Se recorre el diccionario
-                foreach(KeyValuePair<int,Dictionary<string,string>> specialProduct in specialProductsName)
-                {
-                    //Se recorre el diccionario que se encuentra en la posicion "value" del diccionario padre
-                    foreach (KeyValuePair<string,string> secondDictionary in specialProduct.Value)
-                    {
-                        //Se buscan los precios del producto
-                        pricesSpecialProduct = getPricesProduct(secondDictionary.Key);
-                        //Se valida que haya datos en la lista
-                        if (pricesSpecialProduct.Count > 0)
-                        {
-                            //Se hace una lista donde se agregar el KeyValuePair a dicha lista "nota: se hace esto por que, secondDictionary el cual es el diccionario que tiene los datos de un producto en específico, es de tipo KeyValuePairs y no hay una conversión directa de KeyValuePairs a Dictionary"
-                            var list = new List<KeyValuePair<string, string>> { secondDictionary };
-                            //Se convierte la lista obtenida a diccionario, aplicando funciones lambda decimos cual es la llave y cual es el valor (primer valor del KeyValuePairs es la llave y el segundo el valor). 
-                            var dictionary = list.ToDictionary(x => x.Key, x => x.Value);
-                            //Se agrega el diccionario obtenido y el diccionario de precios al diccionario de productos en general (ese diccionario se usará para imprimir los datos en la interfaz)
-                            specialProductsInfo.Add(dictionary, pricesSpecialProduct);
-                        }
-                        else
-                        {
-                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
-            }
-            //Se dibuja la interfaz "especial" para aquellos productos que tengan descripción y nombre
-            drawSpecialInterface();*/
             //Se dibuja la interfaz para los productos "normales"
             drawInterface(0, descriptionProduct);
         }
@@ -229,7 +192,9 @@ namespace LaLombriz.Formularios
                 sb.Append("<div id='image-container'class='imageContainer col-xs-12 col-md-6' style='background-image:url(../Recursos/Menu/"+nameImage+".jpg);'>");
                 sb.Append("</div>");
                 sb.Append("<div id='info-container' class='productContainer col-xs-12 col-md-6'>");
+                sb.Append("<div style='min-height:120px;'>");
                 sb.Append("<h2>" + product.Key + "</h2>");
+                sb.Append("</div>");
                 //Se valida si el producto es de la categoría de paquetes
                 if (numProduct==2)
                 {
@@ -255,7 +220,9 @@ namespace LaLombriz.Formularios
                     }
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number' id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    sb.Append("<div class='addToCart'>");
                     sb.Append("<button id='"+nameImage+"' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
+                    sb.Append("</div>");
                 }
                 else
                 {
@@ -267,55 +234,15 @@ namespace LaLombriz.Formularios
                     }
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number'  id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    sb.Append("<div class='addToCart'>");
                     sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getIDPack(this)'>Agregar</button>");
+                    sb.Append("</div>");
                 }
                 sb.Append("</div>");
                 sb.Append("</div>");
                 //Se asigna la interfaz a la literal
                 ltProduct.Text = sb.ToString();
             }   
-        }
-        //Metodo para dibujar interfaz de productos "otros"
-        public void drawSpecialInterface()
-        {
-            StringBuilder sb = new StringBuilder();
-            //Recorre el diccionario que trae dos diccionarios, el primer diccionario trae "nombre producto" y "descripción", el segundo diccionario trae "tamaños(grande, mediano, chico)" y su "precio" respectivo
-            foreach (KeyValuePair<Dictionary<string,string>, Dictionary<string, string>> productInfo in specialProductsInfo)
-            {
-                //Se lee el primer diccionario (nombre producto, descripción)
-                foreach(KeyValuePair<string,string> product in productInfo.Key)
-                {
-                    //Del nombre producto, reemplazamos todos los espacios por un _
-                    string nameImage = product.Key.Replace(" ", "_");
-                    //Se concatena nameImage con un "." y se reemplazan los espacios de la descripción, con un _
-                    string nameProduct = nameImage +"."+product.Value.Replace(" ","_");
-                    //Creamos tarjetas
-                    sb.Append("<div id='" + product.Key + "' class='infoProduct row col-xs-12 col-md-6'>");
-                    sb.Append("<div id='image-container'class='imageContainer col-xs-12 col-md-6' style='background-image:url(../Recursos/Menu/" + nameImage + ".jpg);'>");
-                    sb.Append("</div>");
-                    sb.Append("<div id='info-container' class='productContainer col-xs-12 col-md-6'>");
-                    //Mostramos nombre de producto
-                    sb.Append("<h2>" + product.Key + "</h2>");
-                    sb.Append("<h4>Descripción</h4>");
-                    //Mostramos descripción del producto
-                    sb.Append("<p style='text-align:justify;'>" + product.Value + "</p>");
-                    //Mostramos precios del producto
-                    sb.Append("<h4>Precios</h4>");
-                    sb.Append("</br>");
-                    //Recorremos el segundo diccionario (tamaño,precio)
-                    foreach (KeyValuePair<string, string> prices in productInfo.Value)
-                    {
-                        ddlTamanio.Items.Add(prices.Key);
-                        //Imprimimos tamaño y precio
-                        sb.Append("<span style='float:left'>" + prices.Key + "</span><span style='float:right'>" + prices.Value + "</span></br></br>");
-                    }
-                    sb.Append("<button id='" + nameProduct + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
-                    sb.Append("</div>");
-                    sb.Append("</div>");
-                    //Agregamos la interfaz a la literal
-                    ltProductSpecial.Text = sb.ToString();
-                }
-            }
         }
         //Metodo para traer productos y llenar gridview
         public List<string> getProducts(int min, int max)

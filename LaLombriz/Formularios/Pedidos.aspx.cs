@@ -95,7 +95,6 @@ namespace LaLombriz.Formularios
         //Metodo para crear y descargar pdf
         public void downloadPDFOnClick(object sender, EventArgs args)
         {
-            Response.Write("PEDIDO SELECCIONADO: " + pedidoContenido.Pedido.Id_pedido);
             archivoPDF pdfFile = new archivoPDF(pedidoContenido);
             pdfFile.createPDF();
         }

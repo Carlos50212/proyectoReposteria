@@ -57,13 +57,13 @@
                     <div id="networksCompany-container"">
                         <div style="margin:0 auto;">
                             <div class="singleNetwork">
-                                <a href="https://www.instagram.com/instalalombriz/" class="linkNetworks"><img src="../Recursos/logoInstagram.png" alt="logo" class='networksImages'">@instalalombriz</a>
+                                <a href="https://www.instagram.com/instalalombriz/" class="linkNetworks"><img src="../Recursos/logoInstagram.png" alt="logo" id="instagramLogo" class='networksImages'>@instalalombriz</a>
                             </div>
                             <div class="singleNetwork">
-                                <a href="https://www.facebook.com/LaLombrizBook/" class="linkNetworks"><img src="../Recursos/logoFacebook.png" alt="logo" class='networksImages'">La Lombriz</a>
+                                <a href="https://www.facebook.com/LaLombrizBook/" class="linkNetworks"><img src="../Recursos/logoFacebook.png" alt="logo" id="facebookLogo" class="networksImages" >La Lombriz</a>
                             </div>
                             <div class="singleNetwork">
-                                <span style="color:#ffff;" class="linkNetworks"><img src="../Recursos/logoWhatsapp.png" alt="logo" class='networksImages'">5578182219</span>
+                                <span id="whatsappLogo" style="color:#ffff;" class="linkNetworks"><img src="../Recursos/logoWhatsapp.png" alt="logo" class='networksImages'">5578182219</span>
                             </div>
                         </div>
                     </div>

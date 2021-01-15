@@ -18,12 +18,12 @@
     background-color:black;
 }
 .botones-registros {
-    width: 97%;
+    width: 99%;
     height: 40px;
     background-color: transparent;
     border: none;
     color: white;
-    margin-left: 12px;
+    margin-left: 9px;
     margin-bottom: 5px;
 }
 .botones-registros:hover{
@@ -54,10 +54,10 @@
     padding-bottom: 30px;
 }
 /*Estilos footer*/
-#footer-container{
-    width:100%;
-    min-height:200px;
-    background-color:black;
+#footer-container {
+    width: 100%;
+    min-height: 200px;
+    background-color: black;
 }
 #cursor-container {
     height: 50px;
@@ -105,15 +105,65 @@
 #networksCompany-container a{
     color: white;
 }
+#instagramLogo {
+    margin-left: 7px;
+}
+#facebookLogo {
+    margin-left: -31px;
+}
+#whatsappLogo {
+    margin-left: -19px;
+}
 /*Responsive desing menu*/
-@media(min-width:992px) {
+@media(min-width:992px){
+
+    #content-container{
+        animation:transitionIn 0.75s;
+    }
+
+    @keyframes transitionIn {
+        from{
+            opacity: 0;
+            transform:rotateX(-10deg);
+        }
+        to{
+            opacity:1;
+            transform:rotateX(0);
+        }
+    }
+    #instagramLogo {
+        margin-left: 27px;
+    }
+
+    #facebookLogo {
+        margin-left: -11px;
+    }
+
+    #whatsappLogo {
+        margin-left: 0px;
+    }
+}
+@media(min-width:992px) and (max-width:1029px){
+    .navbar-collapse {
+        width:75%;
+    }
+    .botones-registros {
+        width: 17%;
+        height: 42px;
+        margin-bottom:0px;
+    }
+    .menuClass {
+        width: 105px;
+    }
+}
+@media(min-width:1030px) {
     .header{
         width:80%;
         margin-left:10%;
     }
-    .menuClass{
-        width:100px;
-        height:50px;
+    .menuClass {
+        width: 100px;
+        height: 50px;
     }
     .navbar-collapse {
         width: auto;
@@ -125,7 +175,7 @@
     }
     .botones-registros {
         margin-left: 10px;
-        width: 150px;
+        width: 128px;
         height: 50px;
         padding-bottom: 10px;
         transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
