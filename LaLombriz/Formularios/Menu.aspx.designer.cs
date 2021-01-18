@@ -7,11 +7,31 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace LaLombriz.Formularios {
-    
-    
-    public partial class Menu {
-        
+namespace LaLombriz.Formularios
+{
+
+
+    public partial class Menu
+    {
+
+        /// <summary>
+        /// Control btnAddOrder.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddOrder;
+
+        /// <summary>
+        /// Control btnDeleteProduct.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteProduct;
+
         /// <summary>
         /// Control optionsContainer.
         /// </summary>
@@ -20,7 +40,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl optionsContainer;
-        
+
         /// <summary>
         /// Control btnCake.
         /// </summary>
@@ -29,7 +49,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCake;
-        
+
         /// <summary>
         /// Control btnBurger.
         /// </summary>
@@ -38,7 +58,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnBurger;
-        
+
         /// <summary>
         /// Control btnPack.
         /// </summary>
@@ -47,7 +67,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnPack;
-        
+
         /// <summary>
         /// Control btnOther.
         /// </summary>
@@ -56,7 +76,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnOther;
-        
+
         /// <summary>
         /// Control productsContainer.
         /// </summary>
@@ -65,7 +85,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl productsContainer;
-        
+
         /// <summary>
         /// Control btnSeeCarOption.
         /// </summary>
@@ -74,7 +94,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSeeCarOption;
-        
+
         /// <summary>
         /// Control lblConteoCarro.
         /// </summary>
@@ -83,7 +103,16 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblConteoCarro;
-        
+
+        /// <summary>
+        /// Control products.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl products;
+
         /// <summary>
         /// Control ltProduct.
         /// </summary>
@@ -92,7 +121,7 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltProduct;
-        
+
         /// <summary>
         /// Control ltProductSpecial.
         /// </summary>
@@ -101,68 +130,50 @@ namespace LaLombriz.Formularios {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltProductSpecial;
-        
+
         /// <summary>
-        /// Control lblNameProduct.
+        /// Control detailCart.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNameProduct;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detailCart;
+
         /// <summary>
-        /// Control ddlTamanio.
+        /// Control tbProductsCart.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTamanio;
-        
+        protected global::System.Web.UI.WebControls.Literal tbProductsCart;
+
         /// <summary>
-        /// Control txtCantidad.
+        /// Control btnReturnMenu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
-        
+        protected global::System.Web.UI.WebControls.Button btnReturnMenu;
+
         /// <summary>
-        /// Control btnAddCart.
+        /// Control btnCreateProduct.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddCart;
-        
+        protected global::System.Web.UI.WebControls.Button btnCreateProduct;
+
         /// <summary>
-        /// Control lblPackTitle.
+        /// Control notProductsCart.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPackTitle;
-        
-        /// <summary>
-        /// Control TextBox2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
-        
-        /// <summary>
-        /// Control Button1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl notProductsCart;
     }
 }

@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <div runat="server" id="newOrders" style="display:none;">
-                <div class='orders-containers'>
+                <div class='orders-container'>
                     <asp:Literal runat="server" ID="tbNewOrders"></asp:Literal>
                 </div>
             </div>

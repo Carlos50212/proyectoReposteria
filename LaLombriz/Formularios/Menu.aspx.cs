@@ -10,8 +10,8 @@ namespace LaLombriz.Formularios
     public partial class Menu : System.Web.UI.Page
     {
         private int contadorP = 1;
+        private bool isCartOptionActivated = false;
         private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
-        private static string product, size, quantityProduct;
         private static List<string> productsName = new List<string>();
         private static List<string> descriptionProduct = new List<string>();
         private static Dictionary<string, string> pricestProduct = new Dictionary<string, string>();
@@ -19,29 +19,24 @@ namespace LaLombriz.Formularios
         private static Dictionary<int, Dictionary<string, string>> specialProductsName = new Dictionary<int, Dictionary<string, string>>();
         private static Dictionary<string, Dictionary<string,string>> productsInfo = new Dictionary<string, Dictionary<string, string>>();
         private static Dictionary<Dictionary<string, string>, Dictionary<string, string>> specialProductsInfo = new Dictionary<Dictionary<string, string>, Dictionary<string, string>>();
-        private static Dictionary<int, Dictionary<string, string>> carroProductos = new Dictionary<int, Dictionary<string, string>>();
+        private static Dictionary<int,string[]> carroProductos = new Dictionary<int,string[]>();
     
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
                 productsContainer.Visible = false;
-                lblConteoCarro.Text = "(0)";
+                lblConteoCarro.Text = "0";
                 //tableCake.Visible = false;
             }
             if (Session["NoProductos"] != null)
             {
                 lblConteoCarro.Text = ((int)Session["NoProductos"]).ToString();
             }
-        }
-        //Metodo para traer productos seleccionados desde el lado del cliente
-        [WebMethod]
-        public static string getInformationSelected(string nameProduct,string sizeSelected,string quantity)
-        {
-            product = nameProduct;
-            size = sizeSelected;
-            quantityProduct = quantity;
-            return "Correct";
+            if (isCartOptionActivated)
+            {
+                
+            }
         }
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
@@ -159,26 +154,65 @@ namespace LaLombriz.Formularios
             //Se dibuja la interfaz para los productos "normales"
             drawInterface(0, descriptionProduct);
         }
-        public void btnAddOnClick(object sender, EventArgs e) //Botón añadir de las mesas de dulces
+        //Metodo onclick para agregar los productos al carrito 
+        public void btnAddOnClick(object sender, EventArgs e)
         {
-            //Trae producto que se seleccionó
-            string hiddenValue = Request.Form["hidden"];
-            //Response.Write("Nombre producto: "+product+" Tamaño seleccionado: "+size+" Cantidad: "+quantityProduct);
-            Dictionary<string, string> temporaryDictionary = new Dictionary<string, string>();
-            temporaryDictionary.Add(size, quantityProduct);
+            //Traemos valores del front 
+            string product = Request.Form["hiddenIdProduct"];
+            string size = Request.Form["hiddenSizeProduct"];
+            string quantity = Request.Form["hiddenQuantityProduct"];
+            string[] productInformation = new string[3];
+            productInformation[0] = product;
+            productInformation[1] = size;
+            productInformation[2] = quantity;
             int idProduct = 0;
             idProduct = getIDProduct(product, size);
             //Se agrega el identificador del producto y el diccionario temporal al diccionario principal
-            carroProductos.Add(idProduct, temporaryDictionary);
+            carroProductos.Add(idProduct, productInformation);
             //Código para aumentar el número mostrado al lado del carrito
             if (Session["NoProductos"] != null)
             {
                 contadorP = (int)Session["NoProductos"] + 1;
             }
-            lblConteoCarro.Text = "("+contadorP.ToString()+")";
+            lblConteoCarro.Text = contadorP.ToString();
             Session["NoProductos"] = contadorP;
-            //Modal para corroborar que se metieron los datos de manera correcta
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto "+ idProduct+". Nombre Producto: "+ product +" Tamaño: "+ size +" Cantidad: "+quantityProduct+"',text: 'Bienvenido '})</script>");
+            //Modal para corroborar que se metieron los datos de manera correcta Cambiar el tipo de mensaje y customizarla 
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto "+ idProduct+". Nombre Producto: "+ product +" Tamaño: "+ size +" Cantidad: "+quantity+"',text: 'Bienvenido '})</script>");
+        }
+        //Método para abrir el carrito 
+        public void btnSeeCarOptionOnClick(object sender, EventArgs args)
+        {
+            //Indicamos que la vista del carrito se está visualizando 
+            isCartOptionActivated = true;
+            //Se muestra la vista
+            if (detailCart.Style["display"] == "none")
+            {
+                detailCart.Style["display"] = "flex";
+                products.Style["display"] = "none";
+            }
+            drawInterfaceCart();
+        }
+        //Metodo para eliminar el pedido 
+        public void btnDeleteOnClick(object sender, EventArgs args)
+        {
+            string idProduct = Request.Form["hiddenIdProduct"];
+            //Quitamos producto del diccionario
+            carroProductos.Remove(Convert.ToInt32(idProduct));
+            if (carroProductos.Count > 0)
+            {
+                drawInterfaceCart();
+            }
+            else
+            {
+                detailCart.Style["display"] = "none";
+                notProductsCart.Style["display"] = "flex";
+            }
+        }
+        //Metodo para retornar al menu de productos
+        public void btnReturnMenuOnlick(object sender, EventArgs args)
+        {
+            isCartOptionActivated = false;
+            Response.Redirect("Menu.aspx");
         }
         public int getIDProduct(string nombre, string tamaño) //Recuperamos el ID del producto que se añadió al carro
         {
@@ -209,26 +243,6 @@ namespace LaLombriz.Formularios
                 Console.WriteLine("Error" + e);
                 return 0;
             }
-        }
-        //Boton modal tiendas de dulces
-        public void btnAddPackOnClick(object sender, EventArgs e) //Botón de añadir para productos excepto mesas de dulces
-        {
-            string hiddenValue = Request.Form["hiddenPack"];
-            //Response.Write(hiddenValue);
-            Dictionary<string, string> temporaryDictionay = new Dictionary<string, string>();
-            temporaryDictionay.Add(size, quantityProduct);
-            int idProduct = 0;
-            idProduct = getIDProduct(product, size);
-            //Agregamos el identificador del producto y el diccionario temporal al diccionario principal
-            carroProductos.Add(idProduct, temporaryDictionay);
-            if (Session["NoProductos"] != null)
-            {
-                contadorP = (int)Session["NoProductos"] + 1;
-            }
-            lblConteoCarro.Text = "(" + contadorP.ToString() + ")";
-            Session["NoProductos"] = contadorP;
-            //Modal para corroborar que se metieron los datos de manera correcta
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto " + idProduct + ". Nombre Producto: " + product + " Tamaño: " + size + " Cantidad: " + quantityProduct + "',text: 'Bienvenido '})</script>");
         }
         //Metodo para mostrar formulario de productos seleccionado
         public void showSecondForm()
@@ -302,7 +316,7 @@ namespace LaLombriz.Formularios
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number'  id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<div class='addToCart'>");
-                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getIDPack(this)'>Agregar</button>");
+                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
                     sb.Append("</div>");
                 }
                 sb.Append("</div>");
@@ -311,6 +325,36 @@ namespace LaLombriz.Formularios
                 ltProduct.Text = sb.ToString();
             }   
         }
+        //Metodo para dibujar interfaz del carrito 
+        private void drawInterfaceCart()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<int, string[]> producto in carroProductos)
+            {
+                sb.Append("<div id='" + producto.Key + "Order'  class='oneProduct'>");
+                sb.Append("<div class='containerDeleteOption'>");
+                sb.Append("<div class='dropdown'>");
+                sb.Append("<button class='btnDeleteOption' type='button' id='"+producto.Key+"' onclick='deleteProduct(this)'><img src='../Recursos/delete.png' alt='eliminar' class='imgDotOptions'/></button>");
+                sb.Append("</div>");
+                sb.Append("</div>");
+                sb.Append("<div class='tableInformation'>");
+                sb.Append("<table class='table table-borderless tableNewOrder'>");
+                sb.Append("<thead>");
+                sb.Append("<tr>");
+                sb.Append("<th scope='col' style='width:403px'>Nombre de producto</th><th scope='col' style='width:182px'>Tamaño</th><th scope='col' style='width:195px'>Cantidad</th>");
+                sb.Append("</tr>");
+                sb.Append("</thead>");
+                sb.Append("<tbody>");
+                sb.Append("<tr>");
+                sb.Append("<td>" + producto.Value[0] + "</td><td>" + producto.Value[1] + "</td><td>" + producto.Value[2] + "pz</td>");
+                sb.Append("</tr>");
+                sb.Append("</tbody>");
+                sb.Append("</table>");
+                sb.Append("</div>");
+                sb.Append("</div>");
+                tbProductsCart.Text = sb.ToString();
+            }
+        }   
         //Metodo para traer productos y llenar gridview
         public List<string> getProducts(int min, int max)
         {

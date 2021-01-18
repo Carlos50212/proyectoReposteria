@@ -62,8 +62,11 @@
     font-family: Cambria;
 }
 /*ESTILOS MENU SELECCIÓN*/
+.detailCartStyle {
+    flex-direction: column;
+}
 #selectionContainer {
-    text-align:center;
+    text-align: center;
 }
 #cart-container{
     margin-top:50px;
@@ -104,6 +107,56 @@
     align-items: center;
     justify-content: center;
 }
+/*Carrito*/
+.cartProductsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.containerDeleteOption {
+    display: flex;
+    padding-top: 10px;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+.imgDotOptions {
+    width: 100%;
+    height: 100%;
+}
+.btnDeleteOption {
+    border: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background-color: transparent;
+}
+.oneProduct {
+    width: 85%;
+    margin-top: 20px;
+    background-color: white;
+}
+.tableInformation {
+    width: 80%;
+}
+.btnReturnClass {
+    height: 100px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.infoContainer {
+    text-align: center;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px;
+}
+.imgInfo {
+    width: 100px;
+    height: 100px;
+}
 /*Responsive desing opciones*/
 @media(min-width:768px) {
     #cakeBefore {
@@ -136,5 +189,13 @@
     }
     #products {
         padding-left: 0px;
+    }
+    .infoContainer {
+        padding: 0px 0px;
+    }
+
+    .imgInfo {
+        width: 200px;
+        height: 200px;
     }
 } 

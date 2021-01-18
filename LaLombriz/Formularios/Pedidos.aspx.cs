@@ -29,8 +29,6 @@ namespace LaLombriz.Formularios
                 listNewOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 0);
                 listOldOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 1);
             }
-            //listNewOrders = getOrdersClient(1,0);
-            //listOldOrders = getOrdersClient(1,1);
             if (!IsPostBack)
             {
                 lkNew.CssClass += " option-selected";
