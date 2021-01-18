@@ -25,7 +25,7 @@
                     <div id="cart-container">
                         <asp:LinkButton runat="server" ID="btnSeeCarOption" CssClass="linkCart">
                             <img src="../Recursos/cart.png" alt="" width="45" height="40" class="d-inline-block align-top">
-                            (0)
+                            <asp:Label runat="server" ID="lblConteoCarro" Text=""></asp:Label>
                         </asp:LinkButton>
                     </div>
                     <div id="products" class="row">
@@ -112,10 +112,10 @@
                 }
             });
 
-            
-            //document.getElementById('hidden').value = log2;
-            //$('#<%=lblNameProduct.ClientID%>').text(log2);
-            //$('#selectOptions').modal('show');
+            //Traer los datos de pasteles, macarons y otros
+            document.getElementById('hidden').value = log2;
+            $('#<%=lblNameProduct.ClientID%>').text(log2);
+            $('#selectOptions').modal('show');
         }
         function getIDPack(comp) {
             var idBtn = comp.id
@@ -141,6 +141,7 @@
                 }
             });
 
+            //Trae los datos de las mesas de dulces
             document.getElementById('hiddenPack').value = idBtnT;
             $('#<%=lblPackTitle.ClientID%>').text(idBtnT);
             $('#selectOptionsPack').modal('show');

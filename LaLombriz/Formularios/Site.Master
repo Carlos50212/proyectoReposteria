@@ -16,6 +16,46 @@
     <!--SweetAlert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript"> 
+        function FiltroNumeros(e) { //función para solo permitir números en los txtBox
+            var keynum = window.event ? window.event.keyCode : e.which;
+            if ((keynum == 8 || keynum == 48))
+                return true;
+            if (keynum <= 47 || keynum >= 58) return false;
+            return /\d/.test(String.fromCharCode(keynum));
+        }
+
+        function FiltroLetras(evt) { //función para solo permitir letras en los txtBox
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode == 164 || charCode == 165 || charCode == 32 || (charCode >= 65 && charCode <= 90 ) || (charCode>=97 && charCode <=122) )
+                return true;
+            return false;
+        }
+        function Correo(evt) {
+            campo = evt.target;
+            valido = document.getElementById('validador');
+
+            emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            if (emailRegex.test(campo.value)) {
+                validador.innerText = "";
+            } else {
+                validador.innerText = "Formato de correo incorrecto";
+            }
+        }
+        function CorreoDos(evt) {
+            campo = evt.target;
+            valido = document.getElementById('validador2');
+
+            emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            if (emailRegex.test(campo.value)) {
+                validador2.innerText = "";
+            } else {
+                validador2.innerText = "Formato de correo incorrecto";
+            }
+        }
+    </script>
 </head>
 <body>
     <form runat="server">
@@ -37,7 +77,7 @@
                                 <a class="nav-link active menuClass" href="Cotizaciones.aspx">Cotizaciones</a>
                                 <a class="nav-link active menuClass" href="Galeria.aspx">Galería</a>
                                 <button type="button" class="botones-registros" data-bs-toggle="modal" data-bs-target="#singIn">
-                                    <asp:label runat="server" Text="Iniciar sesión" ID="lblOptions"></asp:label>
+                                    <asp:label runat="server" Text="" ID="lblOptions"></asp:label>
                                 </button>
                             </div>
                         </div>
@@ -86,11 +126,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtCorreoI" class="form-control" placeholder="name@example.com" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtCorreoI" onkeypress="return CorreoDos(event);" class="form-control" placeholder="name@example.com" ></asp:TextBox>
                             <label for="txtCorreoI">Correo electrónico</label>
+                            <span id="validador2"></span>
                         </div>
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtContraseniaI" class="form-control" placeholder="contraseña" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtContraseniaI" TextMode="Password" class="form-control" placeholder="contraseña" ></asp:TextBox>
                             <label for="txtContraseniaI">Contraseña</label>
                         </div>
                         <p><label>¿No tiene una cuenta?</label> <button type="button" style="border:none; color:#0d6efd;background-color:transparent;"data-bs-toggle="modal" data-bs-target="#signUp" data-bs-dismiss="modal">Crear una</button></p>
@@ -111,19 +152,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtNombreUser" class="form-control" placeholder="Nombre de usuario" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtNombreUser" onkeypress="return FiltroLetras(event);" class="form-control" placeholder="Nombre de usuario" ></asp:TextBox>
                             <label for="txtNombreUser">Nombre de usuario</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtCorreroRegistro" class="form-control" placeholder="name@example.com" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtCorreroRegistro" onkeypress="return Correo(event);" class="form-control" placeholder="name@example.com" ></asp:TextBox>
                             <label for="txtCorreoRegistro">Correo electrónico</label>
+                            <span id="validador"></span>
                         </div>
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtNoTel" class="form-control" placeholder="Número telefónico" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtNoTel" onkeypress="return FiltroNumeros(event);" class="form-control" placeholder="Número telefónico" ></asp:TextBox>
                             <label for="txtNoTel">Número telefónico</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtPasswordRegistro" class="form-control" placeholder="Contraseña" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtPasswordRegistro" TextMode="Password" class="form-control" placeholder="Contraseña" ></asp:TextBox>
                             <label for="txtPasswordRegistro">Contraseña</label>
                         </div>
                     </div>
