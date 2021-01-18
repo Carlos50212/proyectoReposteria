@@ -24,8 +24,13 @@ namespace LaLombriz.Formularios
         public static bool isNewOrderSelected = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            listNewOrders = getOrdersClient(1,0);
-            listOldOrders = getOrdersClient(1,1);
+            if(Session["CORREO_USUARIO"] != null)
+            {
+                listNewOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 0);
+                listOldOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 1);
+            }
+            //listNewOrders = getOrdersClient(1,0);
+            //listOldOrders = getOrdersClient(1,1);
             if (!IsPostBack)
             {
                 lkNew.CssClass += " option-selected";
@@ -37,6 +42,36 @@ namespace LaLombriz.Formularios
                 {
                     notNewOrders.Style["display"] = "flex";
                 }
+            }
+        }
+        public int getIDUser(string correo)
+        {
+            int id=0;
+            string query = "SELECT ID_USUARIO FROM usuarios where CORREO='" + correo +"'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        id = Convert.ToInt32(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return 0;
             }
         }
         public void lkOldOrdersOnClick(object sender, EventArgs args)
@@ -315,7 +350,7 @@ namespace LaLombriz.Formularios
                 sb.Append("</div>");
                 sb.Append("<div class='noteContainer'>");
                 sb.Append("<p>Cualquier duda o aclaración sobre su pedido, favor de ponerse en contacto con nosotros mediante nuestras redes sociales, correo electrónico o teléfono.</p>");
-                sb.Append("<p>Los pedidos pueden ser cancelados o modificados con un máximo de 15 días antes de la fecha de entrega.</p>");
+                sb.Append("<p>Los pedidos pueden ser cancelados o modificados con un máximo de 10 días antes de la fecha de entrega.</p>");
                 sb.Append("<p>Tenga su número de pedido a la mano.</p>");
                 sb.Append("</div>");
                 sb.Append("</div>");

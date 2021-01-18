@@ -15,6 +15,15 @@ namespace LaLombriz.Clases
         private string telefono;
 
         public Usuario() { }  //constructor vacio
+        public Usuario(string correo, string pass) //constructor para inicio sesión
+        {
+            this.correo = correo;
+            this.pass = pass;
+        }
+        public Usuario(string correo) //constructor para validación
+        {
+            this.correo = correo;
+        }
         public Usuario (string nombre, string correo,string pass, string telefono)  //constructor sobrecargado
         {
             
@@ -54,7 +63,79 @@ namespace LaLombriz.Clases
                 return false;
             }
         }
-
+        public bool IniciarSesion(string mail, string contra, string strConnection)
+        {
+            //Sentencia
+            string query = "SELECT NOMBRE_USUARIO, CORREO, TELEFONO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos a los atributos de la clase 
+                    {
+                        nombre = reader.GetString(0);
+                        correo = reader.GetString(1);
+                        telefono = reader.GetString(2);
+                    }
+                    dbConnection.Close();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return false;
+            }
+        }
+        public bool CorreoDoble(string strConnection)
+        {
+            string correocomparar = "";
+            //Sentencia
+            string query = "SELECT CORREO FROM usuarios  WHERE correo='" + this.correo + "'";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos a los atributos de la clase 
+                    {
+                        correocomparar = reader.GetString(0);
+                    }
+                }
+                dbConnection.Close();
+                if (correocomparar == correo)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return false;
+            }
+        }
 
     }
 }

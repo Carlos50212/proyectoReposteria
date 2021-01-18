@@ -9,6 +9,7 @@ namespace LaLombriz.Formularios
 {
     public partial class Menu : System.Web.UI.Page
     {
+        private int contadorP = 1;
         private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
         private static string product, size, quantityProduct;
         private static List<string> productsName = new List<string>();
@@ -18,12 +19,19 @@ namespace LaLombriz.Formularios
         private static Dictionary<int, Dictionary<string, string>> specialProductsName = new Dictionary<int, Dictionary<string, string>>();
         private static Dictionary<string, Dictionary<string,string>> productsInfo = new Dictionary<string, Dictionary<string, string>>();
         private static Dictionary<Dictionary<string, string>, Dictionary<string, string>> specialProductsInfo = new Dictionary<Dictionary<string, string>, Dictionary<string, string>>();
+        private static Dictionary<int, Dictionary<string, string>> carroProductos = new Dictionary<int, Dictionary<string, string>>();
+    
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
                 productsContainer.Visible = false;
+                lblConteoCarro.Text = "(0)";
                 //tableCake.Visible = false;
+            }
+            if (Session["NoProductos"] != null)
+            {
+                lblConteoCarro.Text = ((int)Session["NoProductos"]).ToString();
             }
         }
         //Metodo para traer productos seleccionados desde el lado del cliente
@@ -151,17 +159,76 @@ namespace LaLombriz.Formularios
             //Se dibuja la interfaz para los productos "normales"
             drawInterface(0, descriptionProduct);
         }
-        public void btnAddOnClick(object sender, EventArgs e)
+        public void btnAddOnClick(object sender, EventArgs e) //Botón añadir de las mesas de dulces
         {
             //Trae producto que se seleccionó
             string hiddenValue = Request.Form["hidden"];
-            Response.Write("Nombre producto: "+product+" Tamaño seleccionado: "+size+" Cantidad: "+quantityProduct);
+            //Response.Write("Nombre producto: "+product+" Tamaño seleccionado: "+size+" Cantidad: "+quantityProduct);
+            Dictionary<string, string> temporaryDictionary = new Dictionary<string, string>();
+            temporaryDictionary.Add(size, quantityProduct);
+            int idProduct = 0;
+            idProduct = getIDProduct(product, size);
+            //Se agrega el identificador del producto y el diccionario temporal al diccionario principal
+            carroProductos.Add(idProduct, temporaryDictionary);
+            //Código para aumentar el número mostrado al lado del carrito
+            if (Session["NoProductos"] != null)
+            {
+                contadorP = (int)Session["NoProductos"] + 1;
+            }
+            lblConteoCarro.Text = "("+contadorP.ToString()+")";
+            Session["NoProductos"] = contadorP;
+            //Modal para corroborar que se metieron los datos de manera correcta
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto "+ idProduct+". Nombre Producto: "+ product +" Tamaño: "+ size +" Cantidad: "+quantityProduct+"',text: 'Bienvenido '})</script>");
+        }
+        public int getIDProduct(string nombre, string tamaño) //Recuperamos el ID del producto que se añadió al carro
+        {
+            int id = 0;
+            string query = "SELECT ID_PRODUCTO FROM productos where NOMBRE_PRODUCTO='" + nombre+ "' AND TAMANIO='" + tamaño+"'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        id = Convert.ToInt32(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return 0;
+            }
         }
         //Boton modal tiendas de dulces
-        public void btnAddPackOnClick(object sender, EventArgs e)
+        public void btnAddPackOnClick(object sender, EventArgs e) //Botón de añadir para productos excepto mesas de dulces
         {
             string hiddenValue = Request.Form["hiddenPack"];
-            Response.Write(hiddenValue);
+            //Response.Write(hiddenValue);
+            Dictionary<string, string> temporaryDictionay = new Dictionary<string, string>();
+            temporaryDictionay.Add(size, quantityProduct);
+            int idProduct = 0;
+            idProduct = getIDProduct(product, size);
+            //Agregamos el identificador del producto y el diccionario temporal al diccionario principal
+            carroProductos.Add(idProduct, temporaryDictionay);
+            if (Session["NoProductos"] != null)
+            {
+                contadorP = (int)Session["NoProductos"] + 1;
+            }
+            lblConteoCarro.Text = "(" + contadorP.ToString() + ")";
+            Session["NoProductos"] = contadorP;
+            //Modal para corroborar que se metieron los datos de manera correcta
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto " + idProduct + ". Nombre Producto: " + product + " Tamaño: " + size + " Cantidad: " + quantityProduct + "',text: 'Bienvenido '})</script>");
         }
         //Metodo para mostrar formulario de productos seleccionado
         public void showSecondForm()
@@ -315,6 +382,7 @@ namespace LaLombriz.Formularios
                 return listSpecialProduct;
             }
         }
+        
         //Metodo para traer precios de los productos
         public Dictionary<string,string> getPricesProduct(string nameProduct)
         {

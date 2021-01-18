@@ -7,13 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace LaLombriz.Formularios
-{
-
-
-    public partial class Menu
-    {
-
+namespace LaLombriz.Formularios {
+    
+    
+    public partial class Menu {
+        
         /// <summary>
         /// Control optionsContainer.
         /// </summary>
@@ -22,7 +20,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl optionsContainer;
-
+        
         /// <summary>
         /// Control btnCake.
         /// </summary>
@@ -31,7 +29,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCake;
-
+        
         /// <summary>
         /// Control btnBurger.
         /// </summary>
@@ -40,7 +38,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnBurger;
-
+        
         /// <summary>
         /// Control btnPack.
         /// </summary>
@@ -49,7 +47,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnPack;
-
+        
         /// <summary>
         /// Control btnOther.
         /// </summary>
@@ -58,7 +56,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnOther;
-
+        
         /// <summary>
         /// Control productsContainer.
         /// </summary>
@@ -67,7 +65,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl productsContainer;
-
+        
         /// <summary>
         /// Control btnSeeCarOption.
         /// </summary>
@@ -76,7 +74,16 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSeeCarOption;
-
+        
+        /// <summary>
+        /// Control lblConteoCarro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblConteoCarro;
+        
         /// <summary>
         /// Control ltProduct.
         /// </summary>
@@ -85,7 +92,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltProduct;
-
+        
         /// <summary>
         /// Control ltProductSpecial.
         /// </summary>
@@ -94,7 +101,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltProductSpecial;
-
+        
         /// <summary>
         /// Control lblNameProduct.
         /// </summary>
@@ -103,7 +110,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNameProduct;
-
+        
         /// <summary>
         /// Control ddlTamanio.
         /// </summary>
@@ -112,7 +119,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTamanio;
-
+        
         /// <summary>
         /// Control txtCantidad.
         /// </summary>
@@ -121,7 +128,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
-
+        
         /// <summary>
         /// Control btnAddCart.
         /// </summary>
@@ -130,7 +137,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddCart;
-
+        
         /// <summary>
         /// Control lblPackTitle.
         /// </summary>
@@ -139,7 +146,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPackTitle;
-
+        
         /// <summary>
         /// Control TextBox2.
         /// </summary>
@@ -148,7 +155,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBox2;
-
+        
         /// <summary>
         /// Control Button1.
         /// </summary>
