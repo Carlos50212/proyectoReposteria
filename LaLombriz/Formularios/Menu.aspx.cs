@@ -161,6 +161,27 @@ namespace LaLombriz.Formularios
             string product = Request.Form["hiddenIdProduct"];
             string size = Request.Form["hiddenSizeProduct"];
             string quantity = Request.Form["hiddenQuantityProduct"];
+            if (size == "undefined") //El usuario pudo no haber escogido un tamaño o estamos frente a un paquete
+            {
+                int discriminador = 0;
+                discriminador = getIDProduct(product, "Grande");
+                if (discriminador != 0) // El producto si tiene un tamaño que el usuario puede escoger
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Por favor, selecciona el tamaño del producto.'})</script>");
+                }
+                else if (discriminador == 0) // El producto es un paquete
+                {
+                    Agregar(product, size, quantity);
+                }
+            }
+            else
+            {
+                Agregar(product, size, quantity);
+            }
+            
+        }
+        public void Agregar (string product, string size, string quantity) //Función para guardar el producto en el diccionario
+        {
             string[] productInformation = new string[3];
             productInformation[0] = product;
             productInformation[1] = size;
@@ -176,21 +197,27 @@ namespace LaLombriz.Formularios
             }
             lblConteoCarro.Text = contadorP.ToString();
             Session["NoProductos"] = contadorP;
-            //Modal para corroborar que se metieron los datos de manera correcta Cambiar el tipo de mensaje y customizarla 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ID_Producto "+ idProduct+". Nombre Producto: "+ product +" Tamaño: "+ size +" Cantidad: "+quantity+"',text: 'Bienvenido '})</script>");
         }
         //Método para abrir el carrito 
         public void btnSeeCarOptionOnClick(object sender, EventArgs args)
         {
-            //Indicamos que la vista del carrito se está visualizando 
-            isCartOptionActivated = true;
-            //Se muestra la vista
-            if (detailCart.Style["display"] == "none")
+            if (Session["NoProductos"] == null)
             {
-                detailCart.Style["display"] = "flex";
-                products.Style["display"] = "none";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'No hay productos en tu carrito de compras.'})</script>");
             }
-            drawInterfaceCart();
+            else
+            {
+                //Indicamos que la vista del carrito se está visualizando 
+                isCartOptionActivated = true;
+                //Se muestra la vista
+                if (detailCart.Style["display"] == "none")
+                {
+                    detailCart.Style["display"] = "flex";
+                    products.Style["display"] = "none";
+                }
+                drawInterfaceCart();
+            }
+            
         }
         //Metodo para eliminar el pedido 
         public void btnDeleteOnClick(object sender, EventArgs args)
@@ -198,12 +225,21 @@ namespace LaLombriz.Formularios
             string idProduct = Request.Form["hiddenIdProduct"];
             //Quitamos producto del diccionario
             carroProductos.Remove(Convert.ToInt32(idProduct));
+            int aux = 0;
+            aux = (int)Session["NoProductos"]-1; //Descontamos una unidad al contador de productos 
+            if (aux == 0) //Eliminamos todos los pedidos
+                Session["NoProductos"] = null;
+            else //Aún queda al menos un producto
+                Session["NoProductos"] = aux;
+            
             if (carroProductos.Count > 0)
             {
+                lblConteoCarro.Text = aux.ToString();
                 drawInterfaceCart();
             }
             else
             {
+                lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
                 detailCart.Style["display"] = "none";
                 notProductsCart.Style["display"] = "flex";
             }
