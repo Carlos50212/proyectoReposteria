@@ -47,6 +47,12 @@
 #menu-container {
     margin: 0px 10px;
 }
+.showButtom{
+    display:block;
+}
+.hideButton{
+    display:none;
+}
 /*Estilos place holder*/
 #content-container {
     min-height: 703px;

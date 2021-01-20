@@ -56,6 +56,16 @@
                 validador2.innerText = "Formato de correo incorrecto";
             }
         }
+        function getStatus() {
+            var text = document.getElementById('lblOptions').innerHTML;
+            console.log(text);
+            if (text == "Iniciar Sesión") {
+                $("#singIn").modal("show");
+            } else {
+                text.innerText = "Iniciar Sesión";
+                document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Iniciar Sesión";
+            }
+        }
         /*function Verificar() { Verificar inicio de sesión
             texto = document.getElementById('lblOptions').innerHTML;
             if (texto == "Iniciar Sesión") {
@@ -86,7 +96,7 @@
                                 <a class="nav-link active menuClass" href="Pedidos.aspx">Pedidos</a>
                                 <a class="nav-link active menuClass" href="Cotizaciones.aspx">Cotizaciones</a>
                                 <a class="nav-link active menuClass" href="Galeria.aspx">Galería</a>
-                                <button type="button" class="botones-registros" data-bs-toggle="modal" data-bs-target="#singIn"> 
+                                <button type="button" class="botones-registros" onclick="getStatus();"> 
                                     <asp:label runat="server" Text="" ID="lblOptions"></asp:label>
                                 </button>
                             </div>

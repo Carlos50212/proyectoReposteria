@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <div runat="server" id="newOrders" style="display:none;">
-                <div class='orders-container'>
+                <div class='newAllOrders'>
                     <asp:Literal runat="server" ID="tbNewOrders"></asp:Literal>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div runat="server" id="oldOrders" style="display:none;">
-                <div class='orders-containers'>
+                <div class='orders-containersOld'>
                     <asp:Literal runat="server" ID="tbOldOrders"></asp:Literal>
                 </div>
             </div>
