@@ -29,38 +29,38 @@ namespace LaLombriz
         }
         public void btnIngresarOnClick(object sender, EventArgs e)
         {
-            if (CamposVaciosInicio())
-            {
-                //colocar alerta o modal de campos vacíos 
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Favor de llenar todos los campos'})</script>"); 
-            }
-            else
-            {
-                if (ExpCorreo(txtCorreoI.Text))
+                if (CamposVaciosInicio())
                 {
-                    Security encripta = new Security();
-                    string pass = "";
-                    pass = encripta.encriptar(txtContraseniaI.Text); //Encriptamos la contraseña ingresada para la BD 
-                    if (us1.IniciarSesion(txtCorreoI.Text, pass, strConnection))
-                    {
-                        //Datos asignados a la clase en base al inicio de sesión
-                        txtCorreoI.Text = "";
-                        txtContraseniaI.Text = "";
-                        Session["CORREO_USUARIO"] = us1.Correo;
-                        lblOptions.Text = "Cerrar Sesión";
-                    }
-                    else
-                    {
-                        //mostramos alerta o modal de datos incorrectos o usuario no registrado
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Usuario o contraseña incorrectos'})</script>");
-                    }
+                    //colocar alerta o modal de campos vacíos 
+                    //Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Favor de llenar todos los campos'})</script>"); 
                 }
                 else
                 {
-                    //colocar alerta o modal de formato de correo incorrecto
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
+                    if (ExpCorreo(txtCorreoI.Text))
+                    {
+                        Security encripta = new Security();
+                        string pass = "";
+                        pass = encripta.encriptar(txtContraseniaI.Text); //Encriptamos la contraseña ingresada para la BD 
+                        if (us1.IniciarSesion(txtCorreoI.Text, pass, strConnection))
+                        {
+                            //Datos asignados a la clase en base al inicio de sesión
+                            txtCorreoI.Text = "";
+                            txtContraseniaI.Text = "";
+                            Session["CORREO_USUARIO"] = us1.Correo;
+                            lblOptions.Text = "Cerrar Sesión";
+                        }
+                        else
+                        {
+                            //mostramos alerta o modal de datos incorrectos o usuario no registrado
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Usuario o contraseña incorrectos'})</script>");
+                        }
+                    }
+                    else
+                    {
+                        //colocar alerta o modal de formato de correo incorrecto
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
+                    }
                 }
-            }
         }
         public void btnRegistrarOnClick(object sender, EventArgs e)
         {
