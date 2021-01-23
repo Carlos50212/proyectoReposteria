@@ -37,6 +37,7 @@ namespace LaLombriz.Formularios
             {
                 
             }
+            
         }
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
@@ -171,23 +172,32 @@ namespace LaLombriz.Formularios
                 }
                 else if (discriminador == 0) // El producto es un paquete
                 {
-                    Agregar(product, size, quantity);
+                    //La variable del nombre guardada en product
+                    size = "-";
+                    Agregar(product, size, quantity,1);
                 }
             }
             else
             {
-                Agregar(product, size, quantity);
+                Agregar(product, size, quantity,0);
             }
             
         }
-        public void Agregar (string product, string size, string quantity) //Función para guardar el producto en el diccionario
+        public void Agregar (string product, string size, string quantity, int caso) //Función para guardar el producto en el diccionario
         {
             string[] productInformation = new string[3];
             productInformation[0] = product;
             productInformation[1] = size;
             productInformation[2] = quantity;
             int idProduct = 0;
-            idProduct = getIDProduct(product, size);
+            if (caso == 0)
+            {
+                idProduct = getIDProduct(product, size);
+            }
+            else
+            {
+                idProduct = getIDProductPaquete(product);
+            }
             //Se agrega el identificador del producto y el diccionario temporal al diccionario principal
             carroProductos.Add(idProduct, productInformation);
             //Código para aumentar el número mostrado al lado del carrito
@@ -197,6 +207,36 @@ namespace LaLombriz.Formularios
             }
             lblConteoCarro.Text = contadorP.ToString();
             Session["NoProductos"] = contadorP;
+        }
+        public int getIDProductPaquete(string product) //Función para recuperar el id del paquete
+        {
+            int id = 0;
+            string query = "SELECT ID_PRODUCTO FROM productos where NOMBRE_PRODUCTO='" + product + "'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        id = Convert.ToInt32(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return 0;
+            }
         }
         //Método para abrir el carrito 
         public void btnSeeCarOptionOnClick(object sender, EventArgs args)
@@ -361,6 +401,206 @@ namespace LaLombriz.Formularios
                 ltProduct.Text = sb.ToString();
             }   
         }
+        //Botón para comprar 
+        public void btnComprar(object sender, EventArgs args)
+        {
+            if (Session["CORREO_USUARIO"] == null)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Solo un paso más!',text: 'Debes iniciar sesión para poder confirmar la compra'})</script>");
+            }
+            else
+            {
+                //Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({title: 'Are you sure?',text: 'Acción irreversible',icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, delete it!'}).then((result) => {if (result.isConfirmed){Swal.fire('Deleted!','Your file has been deleted.','success');}}) </script>");
+                    int identificador = 0, lastid = 0, iduser = 0, cantidad = 0, i = 0;
+                    float total = 0, precio = 0;
+                    string fecha_entrega = "", fecha_creacion = "";
+                    lastid = RecuperarIDPedido() + 1; //Recuperamos ultímo id de pedido registrado
+                    iduser = getIDUser(Session["CORREO_USUARIO"].ToString()); //Recuperamos el id del usuario
+                    foreach (KeyValuePair<int, string[]> producto in carroProductos) //Calculamos el total a pagar 
+                    {
+                        identificador = producto.Key;
+                        cantidad = Convert.ToInt32(producto.Value[2]);
+                        precio = getPrecio(identificador);
+                        total = total + (precio * cantidad);
+                        //i++;
+                    }
+                    i = (int)Session["NoProductos"];
+                    fecha_creacion = DateTime.Today.ToString(); //Recuperamos fecha actual del sistema
+                    string[] datos_fecha = fecha_creacion.Split('/', ' '); //Fragmentamos la fecha
+                    fecha_creacion = datos_fecha[2] + "-" + datos_fecha[1] + "-" + datos_fecha[0]; //Nuevo formato de fecha
+                    fecha_entrega = calendario.Value; //Recuperamos la fecha introducida por el cliente
+                    string[] fragmentador = fecha_entrega.Split('/', ' '); //Fragmentamos la fecha
+                    fecha_entrega = fragmentador[2] + "-" + fragmentador[0] + "-" + fragmentador[1]; //Nuevo formato de fecha
+
+                    if (GuardarPedido(lastid, iduser, fecha_entrega, fecha_creacion, total, 0) == true) //Creamos el pedido
+                    {
+                        int quantity = 0, a = 0;
+                        int[] identificadores = new int[i];
+                        foreach (KeyValuePair<int, string[]> producto in carroProductos)
+                        {
+                            identificador = producto.Key;
+                            quantity = Convert.ToInt32(producto.Value[2]);
+                            GuardarProductoPedido(lastid, identificador, quantity); //Guardamos cada producto relacionado al pedido
+                            identificadores[a] = identificador; //Guardamos cada id de productos dentro del carro para eliminarlos
+                            a++;
+                        }
+                        for (int j = 0; j < a; j++)
+                        {
+                            carroProductos.Remove(identificadores[j]);
+                            int aux = 0;
+                            aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
+                            if (aux == 0) //Eliminamos todos los productos
+                                Session["NoProductos"] = null;
+                            else //Aún queda al menos un producto
+                                Session["NoProductos"] = aux;
+                        }
+                        lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
+                        detailCart.Style["display"] = "none";
+                        notProductsCart.Style["display"] = "flex";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Algo salió mal al procesar tu pedido, lo sentimos.'})</script>");
+                    }
+            }
+        }
+        public bool GuardarPedido(int id_pedido, int id_usuario, string fe, string fc, float precio, int estatus)
+        {
+            string query = "INSERT INTO pedidos (`id_pedido`,`id_usuario`, `fecha_entrega`, `fecha_creacion`, `precio`, `estatus`) VALUES ('"+id_pedido+"','" + id_usuario + "','" + fe + "', '" + fc + "', '" + precio + "', '" + estatus + "')";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+
+            try
+            {
+                //Abrir base de datos
+                dbConnection.Open();
+                //Insertamos
+                MySqlDataReader myReader = cmdDB.ExecuteReader();
+                //Cerramos base de datos 
+                dbConnection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error " + e);
+                return false; 
+            }
+        }
+        public void GuardarProductoPedido(int pedido, int producto, int cantidad)
+        {
+            string query = "INSERT INTO productos_pedido(`id_pedido`,`id_producto`, `cantidad`) VALUES ('"+pedido+"','" + producto + "', '" + cantidad + "')";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+
+            try
+            {
+                //Abrir base de datos
+                dbConnection.Open();
+                //Insertamos
+                MySqlDataReader myReader = cmdDB.ExecuteReader();
+                //Cerramos base de datos 
+                dbConnection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error " + e);
+            }
+        }
+        public int RecuperarIDPedido()
+        {
+            int contador = 0;
+            string query = "SELECT DISTINCT ID_PEDIDO FROM `pedidos`";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        contador= Convert.ToInt32(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return contador;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return -1;
+            }
+        }
+        public int getIDUser(string correo)
+        {
+            int id = 0;
+            string query = "SELECT ID_USUARIO FROM usuarios where CORREO='" + correo + "'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        id = Convert.ToInt32(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return 0;
+            }
+        }
+        public float getPrecio(int id)
+        {
+            float precio = 0;
+            string query = "SELECT PRECIO FROM productos where ID_PRODUCTO='" + id + "'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        precio = Convert.ToSingle(reader.GetString(0));
+                    }
+                }
+                dbConnection.Close();
+                return precio;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return 0;
+            }
+        }
         //Metodo para dibujar interfaz del carrito 
         private void drawInterfaceCart()
         {
@@ -462,7 +702,6 @@ namespace LaLombriz.Formularios
                 return listSpecialProduct;
             }
         }
-        
         //Metodo para traer precios de los productos
         public Dictionary<string,string> getPricesProduct(string nameProduct)
         {

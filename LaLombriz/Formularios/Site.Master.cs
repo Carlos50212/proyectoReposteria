@@ -18,9 +18,12 @@ namespace LaLombriz
         {
             if (!IsPostBack)
             {
-
                 lblOptions.Text = "Iniciar Sesión";
                 //tableCake.Visible = false;
+            }
+            if(lblOptions.Text=="Iniciar Sesión")
+            {
+                Session["CORREO_USUARIO"] = null;
             }
             if (Session["CORREO_USUARIO"] != null)
             {

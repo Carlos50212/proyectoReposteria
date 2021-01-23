@@ -170,7 +170,10 @@ namespace LaLombriz.Formularios
                     sb.Append("<button class='btnNewOptions' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'><img src='../Recursos/menuOptions.png' alt='options' class='imgDotOptions'/></button>");
                     sb.Append("<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>");
                     sb.Append("<a id='" + pedido.Id_pedido + "_Detalles' class='dropdown-item' onclick='onClickDetails(this);'>Detalles<img src='../Recursos/seeDetails.png' alt='details'  class='optionsImages'/>");
-                    sb.Append("<a id='" + pedido.Id_pedido + "_Eliminar' class='dropdown-item' onclick='onClickDelete(this)'>Eliminar<img src='../Recursos/delete.png' alt='delete' class='optionsImages'/></a>");
+                    //if (ComprobarFecha(pedido.Fecha_entrega.ToString("dd/MM/yyyy")))
+                    //{
+                        sb.Append("<a id='" + pedido.Id_pedido + "_Eliminar' class='dropdown-item' onclick='onClickDelete(this)'>Eliminar<img src='../Recursos/delete.png' alt='delete' class='optionsImages'/></a>");
+                    //}
                     sb.Append("</div>");
                     sb.Append("</div>");
                     sb.Append("</div>");
@@ -191,6 +194,41 @@ namespace LaLombriz.Formularios
                     sb.Append("</div>");
                     tbNewOrders.Text = sb.ToString();
                 }
+            }
+        }
+        //Validadmos los días para la cancelación del pedido
+        public bool ComprobarFecha(string fecha_entrega)
+        {
+            DateTime fecha_actual;
+            fecha_actual = DateTime.Today;
+            string[] datos_creacion = fecha_actual.ToString().Split('/', ' ');
+            string[] datos_entrega = fecha_entrega.Split('/');
+            int dias_creacion = 0, dias_entrega=0, condicion =0;
+            dias_creacion = dias_acum(Convert.ToInt32(datos_creacion[0]), Convert.ToInt32(datos_creacion[1])); //días acumulados hasta la fecha actual
+            dias_entrega = dias_acum(Convert.ToInt32(datos_entrega[0]), Convert.ToInt32(datos_entrega[1])); //días acumulados hasta la fecha de entrega
+            condicion = dias_entrega - dias_creacion;
+            if (condicion >= 10) //Dentro de los limites para cancelar el pedido
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Obtenemos la suma de días acumulados
+        public int dias_acum(int dia, int mes)
+        {
+            int[] dias_acum = { 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
+            int resultado = 0;
+            if (mes == 1)
+            {
+                return dia;
+            }
+            else
+            {
+                resultado = dias_acum[mes - 2] + dia;
+                return resultado;
             }
         }
         //Metodo para dibujar la interfaz de los pedidos ya entregados 
@@ -408,32 +446,41 @@ namespace LaLombriz.Formularios
         //Metodo para traer detalles generales del pedido seleccionado
         public PedidosCliente getDetailsOrder(string idOrder)
         {
-            string query = "SELECT ID_USUARIO,FECHA_ENTREGA,FECHA_CREACION,PRECIO FROM `pedidos` WHERE ID_PEDIDO="+Convert.ToInt32(idOrder)+"";
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            PedidosCliente pedido = new PedidosCliente();
             try
             {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
+                string query = "SELECT ID_USUARIO,FECHA_ENTREGA,FECHA_CREACION,PRECIO FROM `pedidos` WHERE ID_PEDIDO=" + Convert.ToInt32(idOrder) + "";
+                MySqlConnection dbConnection = new MySqlConnection(strConnection);
+                MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+                cmdDB.CommandTimeout = 60;
+                MySqlDataReader reader;
+                PedidosCliente pedido = new PedidosCliente();
+                try
                 {
-                    while (reader.Read())
+                    dbConnection.Open();
+                    //Leemos los datos 
+                    reader = cmdDB.ExecuteReader();
+                    if (reader.HasRows)
                     {
-                        pedido=new PedidosCliente(Convert.ToInt32(idOrder),Convert.ToInt32(reader.GetString(0)), DateTime.Parse(reader.GetString(1)), DateTime.Parse(reader.GetString(2)), Convert.ToDouble(reader.GetString(3)));
+                        while (reader.Read())
+                        {
+                            pedido = new PedidosCliente(Convert.ToInt32(idOrder), Convert.ToInt32(reader.GetString(0)), DateTime.Parse(reader.GetString(1)), DateTime.Parse(reader.GetString(2)), Convert.ToDouble(reader.GetString(3)));
+                        }
                     }
+                    dbConnection.Close();
+                    return pedido;
                 }
-                dbConnection.Close();
-                return pedido;
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error: " + e);
+                    return pedido;
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e);
-                return pedido;
+                return null;
             }
+            
         }
         //Metodo para traer toda la información respecto al usuario
         public Usuario getUserInformation(int idUser)
