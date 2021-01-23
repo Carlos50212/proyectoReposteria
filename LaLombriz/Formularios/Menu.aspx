@@ -34,14 +34,21 @@
                     <div runat="server" id="products" class="row">
                         <asp:Literal ID="ltProduct" runat="server"></asp:Literal>
                         <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>
+                        
                     </div>
                     <div runat="server" id="detailCart" class="detailCartStyle" style="display: none;">
+                       <div class="input-group date" data-provide="datepicker" style="width:23%; padding-left:60px;">
+                            <input id="calendario" type="text" class="form-control" runat="server">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
                         <div class='cartProductsContainer'>
                             <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
                         </div>
                         <div class="btnReturnClass">
                             <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick"/>
-                            <asp:Button runat="server" ID="btnCreateProduct" CssClass="btn btn-primary" Text="Comprar"/>
+                            <asp:Button runat="server" ID="btnCreateProduct" CssClass="btn btn-primary" Text="Comprar" OnClick="btnComprar"/>
                         </div>
                     </div>
                     <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
@@ -80,5 +87,6 @@
             document.getElementById('hiddenIdProduct').value = idProduct;
             document.getElementById('<%=btnDeleteProduct.ClientID %>').click();
         }
+
     </script>
 </asp:Content>
