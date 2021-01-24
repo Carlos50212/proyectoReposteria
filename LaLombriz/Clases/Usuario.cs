@@ -42,8 +42,8 @@ namespace LaLombriz.Clases
         public bool createUser(string strConnection)
         {
             //Sentencia
-            //string query = "INSERT INTO usuarios(`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('"+this.nombre+"', '"+this.correo+"', '"+this.pass+"', '"+this.telefono+"')";
-            string query = "INSERT INTO usuarios(`id_usuario`,`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('','" + this.nombre + "', '" + this.correo + "', '" + this.pass + "', '" + this.telefono + "')";
+            string query = "INSERT INTO usuarios(`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('"+this.nombre+"', '"+this.correo+"', '"+this.pass+"', '"+this.telefono+"')";
+            //string query = "INSERT INTO usuarios(`id_usuario`,`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('','" + this.nombre + "', '" + this.correo + "', '" + this.pass + "', '" + this.telefono + "')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);

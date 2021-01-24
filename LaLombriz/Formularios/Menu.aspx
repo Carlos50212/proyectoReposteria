@@ -33,17 +33,19 @@
                     </div>
                     <div runat="server" id="products" class="row">
                         <asp:Literal ID="ltProduct" runat="server"></asp:Literal>
-                        <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>
-                        
+                        <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>         
                     </div>
                     <div runat="server" id="detailCart" class="detailCartStyle" style="display: none;">
-                       <div class="input-group date" data-provide="datepicker" style="width:23%; padding-left:60px;">
-                            <input id="calendario" type="text" class="form-control" runat="server">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
                         <div class='cartProductsContainer'>
+                            <div class="inputDate" style="font-size: 24px;">
+                                <p>Seleccione la fecha de entrega</p>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' id="calendario" class="form-control" runat="server" />
+                                    <span class="input-group-addon" style="padding-left: 5px;">
+                                        <span class="fas fa-calendar-times"></span>
+                                    </span>
+                                </div>
+                            </div>
                             <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
                         </div>
                         <div class="btnReturnClass">
@@ -64,6 +66,9 @@
     </div>
     <!--Funcion para mostrar modal y obtener producto que se seleccionó-->
     <script>
+        $(document).ready(function () {
+            $('#datetimepicker1').datepicker();
+        });
         function getID(comp) {
             /*Traemos los valores de los componentes*/
             var log = comp.id

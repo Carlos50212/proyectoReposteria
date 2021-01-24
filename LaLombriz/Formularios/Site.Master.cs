@@ -7,6 +7,8 @@ using System.Net;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Text;
+using System.Net.Mail;
 
 namespace LaLombriz
 {
@@ -114,6 +116,68 @@ namespace LaLombriz
                     //Mostramos mensaje de error de formato en el correo
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
                 }
+            }
+        }
+        //Método on click para recuperar contraseña
+        public void btnRecoverOnClick(object sender, EventArgs args)
+        {
+            string token = generateToken();
+            Response.Write(token);
+            if (sendEmail(token,txtRecoverPass.Text))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true,)</script>");
+            }
+
+        }
+        private string generateToken()
+        {
+            string caracteres = "abcdefghijqlmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder sb = new StringBuilder();
+            Random rnd = new Random();
+            for(int cont = 0; cont <10 ; cont++)
+            {
+                sb.Append(caracteres[rnd.Next(caracteres.Length)]);
+            }
+            return sb.ToString(); 
+        }
+        //Método para enviar token mediante correo
+        public bool sendEmail(string token, string correo)
+        {
+            try
+            {
+                //Instanciamos de la clase mailmessage, el objeto servirá para agregar las partes de nuestro correo
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = true;
+                //Indicamos el servidor de correo y puerto con el que trabaja gmail
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    //Vuelve a nulo el valor de credenciales, esto permitirá usar nuestras propias credenciales
+                    UseDefaultCredentials = false,
+                    //Se indican las credenciales de la cuenta gmail que ocuparemos para enviar el correo
+                    Credentials = new System.Net.NetworkCredential("noreplylalombriz@gmail.com", "lalombrizAP"),
+                    //Método de entrega
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    //Habilitar seguridad en smtp
+                    EnableSsl = true,
+                };
+                //Creamos el correo
+                //Indicamos de donde viene el correo
+                mail.From = new MailAddress("noreplylalombriz@gmail.com");
+                //Indicamos dirección destino
+                mail.To.Add(correo);
+                //Asunto
+                mail.Subject = "Recuperación de contraseña";
+                //Cuerpo
+                string texto = String.Format("<a href='{0}'>{0}</a>", "https://localhost:44393/Formularios/Inicio.aspx?token="+token);
+                mail.Body = "Para recuperar tu contraseña, da click en el siguiente enlace: "+texto;
+                //Enviamos el email 
+                smtpServer.Send(mail);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR " + e);
+                return false;
             }
         }
         public bool ExpCorreo(string a) //Verificamos la validez del campo correo electronico

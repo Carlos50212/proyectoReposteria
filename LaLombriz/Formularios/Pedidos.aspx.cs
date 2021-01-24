@@ -169,11 +169,11 @@ namespace LaLombriz.Formularios
                     sb.Append("<div class='dropdown'>");
                     sb.Append("<button class='btnNewOptions' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'><img src='../Recursos/menuOptions.png' alt='options' class='imgDotOptions'/></button>");
                     sb.Append("<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>");
-                    sb.Append("<a id='" + pedido.Id_pedido + "_Detalles' class='dropdown-item' onclick='onClickDetails(this);'>Detalles<img src='../Recursos/seeDetails.png' alt='details'  class='optionsImages'/>");
-                    //if (ComprobarFecha(pedido.Fecha_entrega.ToString("dd/MM/yyyy")))
-                    //{
+                    sb.Append("<a id='" + pedido.Id_pedido + "_Detalles' class='dropdown-item' onclick='onClickDetails(this);'>Detalles<img src='../Recursos/seeDetails.png' alt='details'  class='optionsImages'/></a>");
+                    if (ComprobarFecha(pedido.Fecha_entrega.ToString("dd/MM/yyyy")))
+                    {
                         sb.Append("<a id='" + pedido.Id_pedido + "_Eliminar' class='dropdown-item' onclick='onClickDelete(this)'>Eliminar<img src='../Recursos/delete.png' alt='delete' class='optionsImages'/></a>");
-                    //}
+                    }
                     sb.Append("</div>");
                     sb.Append("</div>");
                     sb.Append("</div>");

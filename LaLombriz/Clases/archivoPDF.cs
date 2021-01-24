@@ -24,7 +24,7 @@ namespace LaLombriz.Clases
             try
             {
                 //Indicamos donde se guardará el pdf y con que nombre, FileMode.Create = Crea archivo, si existe, sobreescribe
-                //PdfWriter pdf = PdfWriter.GetInstance(document, new FileStream("C:\\Users\\Gio\\Documents\\pdfPruebas\\Detalles pedido " + pedido.Pedido.Id_pedido + ".pdf",FileMode.Create));
+                //PdfWriter pdf = PdfWriter.GetInstSGance(document, new FileStream("C:\\Users\\Gio\\Documents\\pdfPruebas\\Detalles pedido " + pedido.Pedido.Id_pedido + ".pdf",FileMode.Create));
                 //Para este caso, indicamos que la dirección destino será el propio navegador (System.Web.HttpContext.Current.Response.OutputStream)
                 PdfWriter pdf = PdfWriter.GetInstance(document, System.Web.HttpContext.Current.Response.OutputStream);
                 //Estilos de letra 
