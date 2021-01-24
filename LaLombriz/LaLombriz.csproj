@@ -1772,6 +1772,7 @@
     <Content Include="Estilos\MasterStyles.css" />
     <Content Include="Estilos\MenuStyles.css" />
     <Content Include="Estilos\PedidosStyles.css" />
+    <Content Include="Estilos\RecoverStyles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formularios\Cotizaciones.aspx" />
@@ -1779,6 +1780,7 @@
     <Content Include="Formularios\Inicio.aspx" />
     <Content Include="Formularios\Menu.aspx" />
     <Content Include="Formularios\Pedidos.aspx" />
+    <Content Include="Formularios\Recuperacion.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1920,6 +1922,13 @@
     </Compile>
     <Compile Include="Formularios\Pedidos.aspx.designer.cs">
       <DependentUpon>Pedidos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Recuperacion.aspx.cs">
+      <DependentUpon>Recuperacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Recuperacion.aspx.designer.cs">
+      <DependentUpon>Recuperacion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formularios\Stringbuilder.cs" />
     <Compile Include="Global.asax.cs">
