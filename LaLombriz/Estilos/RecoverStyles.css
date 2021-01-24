@@ -1,0 +1,23 @@
+﻿body {
+    background-image: linear-gradient(180deg, #ffbaff 0, #f7acff 25%, #d59df2 50%, #b58eda 75%, #997fc4 100%);
+    overflow-y: hidden;
+}
+.mainContainer {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.boxContainer {
+    background-color: white;
+    height: 445px;
+    width: 500px;
+    border-radius: 15px;
+    padding: 20px;
+}
+#recoverContainer {
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

@@ -724,8 +724,6 @@ namespace LaLombriz.Formularios
         //Metodo para traer detalles generales del pedido seleccionado
         public PedidosCliente getDetailsOrder(string idOrder)
         {
-            try
-            {
                 string query = "SELECT ID_USUARIO,FECHA_ENTREGA,FECHA_CREACION,PRECIO FROM `pedidos` WHERE ID_PEDIDO=" + Convert.ToInt32(idOrder) + "";
                 MySqlConnection dbConnection = new MySqlConnection(strConnection);
                 MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -752,13 +750,6 @@ namespace LaLombriz.Formularios
                     Console.WriteLine("Error: " + e);
                     return pedido;
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error: " + e);
-                return null;
-            }
-            
         }
         //Metodo para traer toda la información respecto al usuario
         public Usuario getUserInformation(int idUser)

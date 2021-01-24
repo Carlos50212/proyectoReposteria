@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Net.Mail;
+using MySql.Data.MySqlClient;
 
 namespace LaLombriz
 {
@@ -121,21 +122,33 @@ namespace LaLombriz
         //Método on click para recuperar contraseña
         public void btnRecoverOnClick(object sender, EventArgs args)
         {
-            if (ExpCorreo(txtRecoverPass.Text))
+            string token = generateToken();
+            int idUser = getIdUser(txtRecoverPass.Text);
+            if (idUser > 0)
             {
-                string token = generateToken();
-                Response.Write(token);
                 if (sendEmail(token, txtRecoverPass.Text))
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true})</script>");
+                    if(saveRecoverData(idUser, token))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true})</script>");
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
+                    }
+
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
                 }
             }
             else
             {
-                //Mostramos mensaje de error de formato en el correo
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
             }
         }
+        //Metodo para generar token
         private string generateToken()
         {
             string caracteres = "abcdefghijqlmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -146,6 +159,62 @@ namespace LaLombriz
                 sb.Append(caracteres[rnd.Next(caracteres.Length)]);
             }
             return sb.ToString(); 
+        }
+        //Metodo que regresa el id del usuario
+        private int getIdUser(string correo)
+        {
+                string query = "SELECT ID_USUARIO FROM `usuarios` WHERE CORREO='" + correo + "'";
+                MySqlConnection dbConnection = new MySqlConnection(strConnection);
+                MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+                cmdDB.CommandTimeout = 60;
+                MySqlDataReader reader;
+                int idUser = 0;
+                try
+                {
+                    dbConnection.Open();
+                    //Leemos los datos 
+                    reader = cmdDB.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            idUser = Convert.ToInt32(reader.GetString(0));
+                           
+                        }
+                    }
+                    dbConnection.Close();
+                    return idUser;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error: " + e);
+                    return idUser;
+                }
+        }
+        //Metodo para almacenar token
+        private bool saveRecoverData(int idUser,string token)
+        {
+            string query = "INSERT INTO recuperacion (`id_usuario`,`token`) VALUES ('" + idUser + "','" + token+ "')";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+
+            try
+            {
+                //Abrir base de datos
+                dbConnection.Open();
+                //Insertamos
+                MySqlDataReader myReader = cmdDB.ExecuteReader();
+                //Cerramos base de datos 
+                dbConnection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error " + e);
+                return false;
+            }
         }
         //Método para enviar token mediante correo
         public bool sendEmail(string token, string correo)
@@ -175,7 +244,7 @@ namespace LaLombriz
                 //Asunto
                 mail.Subject = "Recuperación de contraseña";
                 //Cuerpo
-                string texto = String.Format("<a href='{0}'>{0}</a>", "https://localhost:44393/Formularios/Inicio.aspx?token="+token);
+                string texto = String.Format("<a href='{0}'>{0}</a>", "https://localhost:44393/Formularios/Recuperacion.aspx?tk=" + token);
                 mail.Body = "Para recuperar tu contraseña, da click en el siguiente enlace: "+texto;
                 //Enviamos el email 
                 smtpServer.Send(mail);
