@@ -24,7 +24,7 @@ namespace LaLombriz
                 lblOptions.Text = "Iniciar Sesión";
                 //tableCake.Visible = false;
             }
-            if(lblOptions.Text=="Iniciar Sesión")
+            if (lblOptions.Text=="Iniciar Sesión")
             {
                 Session["CORREO_USUARIO"] = null;
             }
