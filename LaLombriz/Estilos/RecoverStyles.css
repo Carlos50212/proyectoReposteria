@@ -21,3 +21,10 @@
     justify-content: flex-end;
     align-items: center;
 }
+#wrongUrl {
+    flex-direction: column;
+    align-items: center;
+}
+#imgWrongUrl{
+    width:350px;
+}

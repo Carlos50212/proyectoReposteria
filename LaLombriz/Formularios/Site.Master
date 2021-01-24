@@ -81,8 +81,8 @@
             if (text == "Iniciar Sesión") {
                 $("#singIn").modal("show");
             } else {
-                text.innerText = "Iniciar Sesión";
-                document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Iniciar Sesión";
+                text.innerText = "Cerrar Sesión";
+                document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Cerrar Sesión";
             }
         }
         /*function Verificar() { Verificar inicio de sesión

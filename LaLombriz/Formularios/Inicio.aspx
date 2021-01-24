@@ -3,7 +3,7 @@
     <div id="menuContainer" class="containerOptions row">
         <div id="welcomeText" class="col-xs-12 col-md-12">
             <h1>Bienvenido</h1>
-            <p>Empresa 100% mexicana, dedicada a la elaboración y venta de</p>
+            <p>Empresa 100% mexicana, dedicada a la elaboración y venta de postres.</p>
         </div>
         <div id="btnMenu" class="col-xs-12 col-md-6 btnOptions">
             <asp:LinkButton runat="server" ID="btnMenuOption" Text="Menú" OnClick="btnMenuOnClick"></asp:LinkButton>

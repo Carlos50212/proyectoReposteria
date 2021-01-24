@@ -66,8 +66,27 @@
         function onClickDelete(comp) {
             var idLink = comp.id;
             var idOrderDelete = idLink.split("_");
-            document.getElementById('hiddenIdDeleteOrder').value = idOrderDelete[0];
-            document.getElementById('<%=btnDeleteOrder.ClientID %>').click();
+            Swal.fire({
+                title: 'Cancelar pedido',
+                text: "¿Estás seguro de cancelar tu pedido?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Eliminar pedido'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('hiddenIdDeleteOrder').value = idOrderDelete[0];
+                    document.getElementById('<%=btnDeleteOrder.ClientID %>').click();
+                    /*NOTA: TE RECOMIENDO PONER ESTA ALERTA DE CONFIRMACIÓN DESDE EL BACK, UNA VEZ SE HAYA ELIMINADO DE LA BD*/
+                    Swal.fire(
+                        'Cancelado',
+                        'Tú pedido ha sido cancelado',
+                        'success'
+                    )
+                }
+            })
         }
         /*Metodo para ver que pedido entregado se seleccionó para ver sus detalles*/
         function onClickOldDetails(comp) {

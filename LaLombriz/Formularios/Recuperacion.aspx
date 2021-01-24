@@ -18,7 +18,7 @@
 <body>
     <form id="recoverForm" runat="server">
         <div class="mainContainer">
-            <div class="boxContainer">
+            <div class="boxContainer" id="recoverPass" runat="server">
                 <h2>Recupera tu contraseña</h2>
                 <div class="form-floating mb-3" style="margin-top: 50px;">
                     <asp:TextBox runat="server" ID="txtCorreo" class="form-control" placeholder="name@example.com" ReadOnly="true"></asp:TextBox>
@@ -35,6 +35,11 @@
                 <div id="recoverContainer">
                     <asp:Button runat="server" ID="btnChangePass" Text="Confirmar" class="btn btn-primary"/>
                 </div>
+            </div>
+            <div id="wrongUrl" runat="server" style="display:none;">
+                <h1>Ops...</h1>
+                <img id="imgWrongUrl" src="../Recursos/stop.png" alt="wrong url"/>
+                <h2>Url incorrecta</h2>
             </div>
         </div>
     </form>

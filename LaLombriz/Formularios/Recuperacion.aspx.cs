@@ -31,7 +31,8 @@ namespace LaLombriz.Formularios
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
+                    recoverPass.Style["display"] = "none";
+                    wrongUrl.Style["display"] = "flex";
                 }
 
             }
