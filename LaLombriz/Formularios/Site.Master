@@ -63,6 +63,18 @@
                 validador2.innerText = "Formato de correo incorrecto";
             }
         }
+        function CorreoTres(evt) {
+            campo = evt.target;
+            valido = document.getElementById('validador3');
+
+            emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            if (emailRegex.test(campo.value)) {
+                validador3.innerText = "";
+            } else {
+                validador3.innerText = "Formato de correo incorrecto";
+            }
+        }
         function getStatus() {
             var text = document.getElementById('lblOptions').innerHTML;
             console.log(text);
@@ -214,8 +226,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <asp:TextBox runat="server" ID="txtRecoverPass" onkeypress="return Correo(event);" class="form-control" placeholder="name@example.com" ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtRecoverPass" onkeypress="return CorreoTres(event);" class="form-control" placeholder="name@example.com" ></asp:TextBox>
                             <label for="txtRecoverPass">Correo electrónico</label>
+                            <span id="validador3"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
