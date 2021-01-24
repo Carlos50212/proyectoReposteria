@@ -121,13 +121,20 @@ namespace LaLombriz
         //Método on click para recuperar contraseña
         public void btnRecoverOnClick(object sender, EventArgs args)
         {
-            string token = generateToken();
-            Response.Write(token);
-            if (sendEmail(token,txtRecoverPass.Text))
+            if (ExpCorreo(txtRecoverPass.Text))
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true,)</script>");
+                string token = generateToken();
+                Response.Write(token);
+                if (sendEmail(token, txtRecoverPass.Text))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true})</script>");
+                }
             }
-
+            else
+            {
+                //Mostramos mensaje de error de formato en el correo
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
+            }
         }
         private string generateToken()
         {
