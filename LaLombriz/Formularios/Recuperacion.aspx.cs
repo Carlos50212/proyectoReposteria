@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using LaLombriz.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,131 @@ namespace LaLombriz.Formularios
             else
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
+            }
+        }
+        //Botón para actualizar contraseña
+        public void btnChangePassOnClick(object sender, EventArgs args)
+        {
+            if (CamposVacios()) //Campos vacíos
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Favor de llenar todos los campos '})</script>");
+            }
+            else
+            {
+                if(Coincidencias(txtNewContrasenia.Text, txtConfirmPass.Text))
+                {
+                    string pass = "";
+                    Security encriptador = new Security();
+                    pass = encriptador.encriptar(txtConfirmPass.Text);
+                    int id = 0;
+                    id = getId(txtCorreo.Text);
+                    if (ActualizarPass(id, pass))
+                    {
+                        if (BorrarToken(id))
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Hecho!',text: 'La contraseña ha sido reestablecida.'})</script>");
+                        }
+                        else
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Lo sentimos, algo salió mal.'})</script>");
+                        }
+                        
+                    }
+                    else
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Lo sentimos, algo salió mal.'})</script>");
+                    }
+                }
+                else
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Las contraseñas no coinciden'})</script>");
+                }
+            }
+        }
+        //Validar campos vacíos
+        public bool CamposVacios()
+        {
+            if (txtNewContrasenia.Text == " " || txtConfirmPass.Text == " ")
+                return true;
+            else
+                return false;
+        }
+        //Coincidencias entre ambas contraseñas
+        public bool Coincidencias(string a, string b)
+        {
+            if (a == b)
+                return true;
+            else
+                return false;
+        }
+        private int getId(string correo)
+        {
+            string query = "SELECT ID_USUARIO FROM `usuarios` WHERE CORREO='" + correo + "'";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            int idUser = 0;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        idUser = Convert.ToInt32(reader.GetString(0));
+
+                    }
+                }
+                dbConnection.Close();
+                return idUser;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e);
+                return idUser;
+            }
+        }
+        //Método para actualizar la contraseña
+        private bool ActualizarPass(int id, string pass)
+        {
+            string query = "UPDATE `usuarios` SET `PASSWORD` = '"+pass+"' WHERE `ID_USUARIO` ="+id+"";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            try
+            {
+                dbConnection.Open();
+                cmdDB.ExecuteNonQuery();
+                dbConnection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e);
+                return false;
+            }
+        }
+        //Borramos el token generado para el usuario
+        private bool BorrarToken(int id)
+        {
+            string query = "DELETE FROM recuperacion WHERE `ID_USUARIO` = " + id + "";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            try
+            {
+                dbConnection.Open();
+                cmdDB.ExecuteNonQuery();
+                dbConnection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e);
+                return false;
             }
         }
         //Metodo que recupera el token

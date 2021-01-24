@@ -44,7 +44,7 @@
             valido = document.getElementById('validador');
 
             emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            //Filtramos el correo con el formato
             if (emailRegex.test(campo.value)) {
                 validador.innerText = "";
             } else {
@@ -56,7 +56,7 @@
             valido = document.getElementById('validador2');
 
             emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            //Filtramos el correo con el formato
             if (emailRegex.test(campo.value)) {
                 validador2.innerText = "";
             } else {
@@ -68,7 +68,7 @@
             valido = document.getElementById('validador3');
 
             emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-            //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+            //Filtramos el correo con el formato
             if (emailRegex.test(campo.value)) {
                 validador3.innerText = "";
             } else {
