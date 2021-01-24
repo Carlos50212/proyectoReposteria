@@ -7,13 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace LaLombriz.Formularios
-{
-
-
-    public partial class Recuperacion
-    {
-
+namespace LaLombriz.Formularios {
+    
+    
+    public partial class Recuperacion {
+        
         /// <summary>
         /// Control recoverForm.
         /// </summary>
@@ -22,7 +20,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm recoverForm;
-
+        
         /// <summary>
         /// Control txtCorreo.
         /// </summary>
@@ -31,7 +29,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCorreo;
-
+        
         /// <summary>
         /// Control txtNewContrasenia.
         /// </summary>
@@ -40,7 +38,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNewContrasenia;
-
+        
         /// <summary>
         /// Control txtConfirmPass.
         /// </summary>
@@ -49,7 +47,7 @@ namespace LaLombriz.Formularios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtConfirmPass;
-
+        
         /// <summary>
         /// Control btnChangePass.
         /// </summary>
