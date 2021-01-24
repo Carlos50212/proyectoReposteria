@@ -59,7 +59,8 @@ namespace LaLombriz.Clases
 
                 //Header
                 //Insertamos logo
-                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
+                //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
+                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
                 logo.BorderWidth = 0;
                 //Tamaño 
                 logo.ScaleToFit(80f, 80f);
@@ -193,7 +194,7 @@ namespace LaLombriz.Clases
                 cellTitle.BorderWidthLeft = 1f;
                 cellTitle.BorderWidthRight = 1f;
                 tableNote.AddCell(cellTitle);
-                PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados o modificados con un máximo de 15 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.",content));
+                PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados o modificados con un máximo de 10 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.",content));
                 cellContent.Border = Rectangle.NO_BORDER;
                 cellContent.BorderWidthLeft = 1f;
                 cellContent.BorderWidthRight = 1f;
@@ -220,5 +221,6 @@ namespace LaLombriz.Clases
                 Console.WriteLine("ERROR: " + ex);
             }
         }
+        
     }
 }
