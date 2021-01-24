@@ -25,15 +25,16 @@
                     <label for="txtCorreoI">Correo electrónico</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <asp:TextBox runat="server" ID="txtNewContrasenia" TextMode="Password" class="form-control" placeholder="contraseña"></asp:TextBox>
+                    <asp:TextBox runat="server"  ID="txtNewContrasenia" TextMode="Password" class="form-control" placeholder="contraseña"></asp:TextBox>
                     <label for="txtNewContrasenia">Nueva contraseña</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <asp:TextBox runat="server" ID="txtConfirmPass" TextMode="Password" class="form-control" placeholder="contraseña"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtConfirmPass" TextMode="Password"  class="form-control" placeholder="contraseña"></asp:TextBox>
                     <label for="txtConfirmPass">Repite tu contraseña</label>
+                    
                 </div>
                 <div id="recoverContainer">
-                    <asp:Button runat="server" ID="btnChangePass" Text="Confirmar" class="btn btn-primary"/>
+                    <asp:Button runat="server" ID="btnChangePass" Text="Confirmar"  OnClick="btnChangePassOnClick" class="btn btn-primary"/>
                 </div>
             </div>
             <div id="wrongUrl" runat="server" style="display:none;">
