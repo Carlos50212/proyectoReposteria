@@ -444,10 +444,8 @@ namespace LaLombriz.Formularios
                     {
                         //Verificamos que el cliente haya dado clic en el botón de Aceptar
                         string confirmacion = Request.Form["hiddenIdAddOrder"];
-                        if (confirmacion == "1")
+                        if (confirmacion == "1") //El usuario confirma el pedido
                         {
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
-                            //El usuario acepto 
                             int identificador = 0, lastid = 0, iduser = 0, cantidad = 0, i = 0;
                             float total = 0, precio = 0;
                             string fecha_entrega = "", fecha_creacion = "";
@@ -468,241 +466,242 @@ namespace LaLombriz.Formularios
                             fecha_entrega = calendario.Value; //Recuperamos la fecha introducida por el cliente
                             string[] fragmentador = fecha_entrega.Split('/', ' '); //Fragmentamos la fecha
                             fecha_entrega = fragmentador[2] + "-" + fragmentador[0] + "-" + fragmentador[1]; //Nuevo formato de fecha
-                            int quantity = 0, a = 0;
-                            int[] identificadores = new int[i];
-                            foreach (KeyValuePair<int, string[]> producto in carroProductos)
+
+                            if (GuardarPedido(lastid, iduser, fecha_entrega, fecha_creacion, total, 0) == true) //Creamos el pedido
                             {
-                                identificador = producto.Key;
-                                quantity = Convert.ToInt32(producto.Value[2]);
-                                GuardarProductoPedido(lastid, identificador, quantity); //Guardamos cada producto relacionado al pedido
-                                identificadores[a] = identificador; //Guardamos cada id de productos dentro del carro para eliminarlos
-                                a++;
+                                int quantity = 0, a = 0;
+                                int[] identificadores = new int[i];
+                                foreach (KeyValuePair<int, string[]> producto in carroProductos)
+                                {
+                                    identificador = producto.Key;
+                                    quantity = Convert.ToInt32(producto.Value[2]);
+                                    GuardarProductoPedido(lastid, identificador, quantity); //Guardamos cada producto relacionado al pedido
+                                    identificadores[a] = identificador; //Guardamos cada id de productos dentro del carro para eliminarlos
+                                    a++;
+                                }
+                                for (int j = 0; j < a; j++)
+                                {
+                                    carroProductos.Remove(identificadores[j]);
+                                    int aux = 0;
+                                    aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
+                                    if (aux == 0) //Eliminamos todos los productos
+                                        Session["NoProductos"] = null;
+                                    else //Aún queda al menos un producto
+                                        Session["NoProductos"] = aux;
+                                }
+                                lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
+                                detailCart.Style["display"] = "none";
+                                notProductsCart.Style["display"] = "flex";
+                                //Creación de PDF y envío por correo
+                                getAllOrderInfo(lastid.ToString());
+                                //Creamos docuemento 
+                                Document document = new Document();
+                                //Establecemos margenes 
+                                document.SetMargins(60, 60, 40, 40);//Left,Right,Top,Bottom
+                                MemoryStream memoryStream = new MemoryStream();
+                                //Para este caso, indicamos que la dirección destino será el propio navegador (System.Web.HttpContext.Current.Response.OutputStream)
+                                PdfWriter pdf = PdfWriter.GetInstance(document, memoryStream);
+                                //Estilos de letra 
+                                //Título
+                                Font title = FontFactory.GetFont("Arial", 16, Font.BOLD);
+                                Font subTitle = FontFactory.GetFont("Arial", 14);
+                                Font content = FontFactory.GetFont("Arial", 12);
+                                Font tableColumns = FontFactory.GetFont("Arial", 12, Font.BOLD);
+                                //Ancho de columnas de tabla información del pedido 
+                                float[] cellDataOrder = new float[2];
+                                cellDataOrder[0] = 100;
+                                cellDataOrder[1] = 22;
+                                //Ancho de columas, tabla información del producto
+                                float[] cellDataProduct = new float[6];
+                                cellDataProduct[0] = 120;
+                                cellDataProduct[1] = 120;
+                                cellDataProduct[2] = 60;
+                                cellDataProduct[3] = 60;
+                                cellDataProduct[4] = 60;
+                                cellDataProduct[5] = 50;
+                                //Ancho de columnas, tabla total
+                                float[] cellTotalOrder = new float[2];
+                                cellTotalOrder[0] = 10;
+                                cellTotalOrder[1] = 8;
+                                //Colocamos título y nombre autor
+                                document.AddTitle("Detalles de pedido");
+                                document.AddCreator("La Lombriz S.A de C.V");
+                                //Abrimos el documento 
+                                document.Open();
+                                //Header
+                                //Insertamos logo
+                                //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
+                                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
+                                logo.BorderWidth = 0;
+                                //Tamaño 
+                                logo.ScaleToFit(80f, 80f);
+                                //Posición del logo
+                                logo.SetAbsolutePosition(60, 720); //X,Y
+                                document.Add(logo);
+                                //Header 
+                                var titleParagraph = new Paragraph("La Lombriz S.A de C.V", title);
+                                titleParagraph.Alignment = 1; //0=Izquierda 1=Centro 2=Derecha
+                                document.Add(titleParagraph);
+                                var subTitleParagraph = new Paragraph("Una empresa 100% mexicana", subTitle);
+                                subTitleParagraph.Alignment = 1;
+                                document.Add(subTitleParagraph);
+                                var numReport = new Paragraph("Detalles del pedido", content);
+                                numReport.Alignment = 1;
+                                document.Add(numReport);
+                                document.Add(Chunk.NEWLINE);
+                                //Tabla datos de pedido
+                                PdfPTable tableDataOrder = new PdfPTable(2);
+                                //Agregamos celdas 
+                                PdfPCell cellIdOrder = new PdfPCell(new Paragraph("No. Pedido:", tableColumns));
+                                cellIdOrder.Border = Rectangle.NO_BORDER;
+                                cellIdOrder.HorizontalAlignment = 2;
+                                tableDataOrder.AddCell(cellIdOrder);
+                                PdfPCell cellIdOrderValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Id_pedido), content));
+                                cellIdOrderValue.Border = Rectangle.NO_BORDER;
+                                cellIdOrderValue.HorizontalAlignment = 0;
+                                tableDataOrder.AddCell(cellIdOrderValue);
+                                PdfPCell cellDataCreate = new PdfPCell(new Paragraph("Fecha creación:", tableColumns));
+                                cellDataCreate.Border = Rectangle.NO_BORDER;
+                                cellDataCreate.HorizontalAlignment = 2;
+                                tableDataOrder.AddCell(cellDataCreate);
+                                PdfPCell cellDataCreateValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Fecha_creacion.ToString("dd/MM/yyyy")), content));
+                                cellDataCreateValue.Border = Rectangle.NO_BORDER;
+                                cellDataCreateValue.HorizontalAlignment = 0;
+                                tableDataOrder.AddCell(cellDataCreateValue);
+                                PdfPCell cellDataDelivery = new PdfPCell(new Paragraph("Fecha entrega:", tableColumns));
+                                cellDataDelivery.Border = Rectangle.NO_BORDER;
+                                cellDataDelivery.HorizontalAlignment = 2;
+                                tableDataOrder.AddCell(cellDataDelivery);
+                                PdfPCell cellDataDeliveryValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Fecha_entrega.ToString("dd/MM/yyyy")), content));
+                                cellDataDeliveryValue.Border = Rectangle.NO_BORDER;
+                                cellDataDeliveryValue.HorizontalAlignment = 0;
+                                tableDataOrder.AddCell(cellDataDeliveryValue);
+                                tableDataOrder.SetWidths(cellDataOrder);
+                                tableDataOrder.HorizontalAlignment = 2;
+                                document.Add(tableDataOrder);
+                                var orderOwner = new Paragraph("Pedido de: " + pedidoContenido.Usuario.Nombre);
+                                orderOwner.Alignment = 0;
+                                document.Add(orderOwner);
+                                document.Add(Chunk.NEWLINE);
+                                //Tabla productos del pedido
+                                PdfPTable tableProducts = new PdfPTable(6);
+                                PdfPCell headerNameProduct = new PdfPCell(new Paragraph("Nombre producto", tableColumns));
+                                headerNameProduct.HorizontalAlignment = 1;
+                                headerNameProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerNameProduct);
+                                PdfPCell headerDescriptionProduct = new PdfPCell(new Paragraph("Descripción", tableColumns));
+                                headerDescriptionProduct.HorizontalAlignment = 1;
+                                headerDescriptionProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerDescriptionProduct);
+                                PdfPCell headerSizeProduct = new PdfPCell(new Paragraph("Tamaño", tableColumns));
+                                headerSizeProduct.HorizontalAlignment = 1;
+                                headerSizeProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerSizeProduct);
+                                PdfPCell headerQuantityProduct = new PdfPCell(new Paragraph("Cantidad", tableColumns));
+                                headerQuantityProduct.HorizontalAlignment = 1;
+                                headerQuantityProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerQuantityProduct);
+                                PdfPCell headerCostProduct = new PdfPCell(new Paragraph("Precio unitario", tableColumns));
+                                headerCostProduct.HorizontalAlignment = 1;
+                                headerCostProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerCostProduct);
+                                PdfPCell headerTotalProduct = new PdfPCell(new Paragraph("Total", tableColumns));
+                                headerTotalProduct.HorizontalAlignment = 1;
+                                headerTotalProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
+                                tableProducts.AddCell(headerTotalProduct);
+                                foreach (Productos producto in pedidoContenido.Productos)
+                                {
+                                    PdfPCell cellNameProdcut = new PdfPCell(new Paragraph(producto.Nombre_producto, content));
+                                    cellNameProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellNameProdcut);
+                                    PdfPCell cellDescriptionProdcut = new PdfPCell(new Paragraph(producto.Descripcion, content));
+                                    cellDescriptionProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellDescriptionProdcut);
+                                    PdfPCell cellSizeProdcut = new PdfPCell(new Paragraph(producto.Tamanio, content));
+                                    cellSizeProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellSizeProdcut);
+                                    PdfPCell cellQuantityProdcut = new PdfPCell(new Paragraph(Convert.ToString(producto.Cantidad), content));
+                                    cellQuantityProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellQuantityProdcut);
+                                    PdfPCell cellCostProdcut = new PdfPCell(new Paragraph("$" + producto.Precio, content));
+                                    cellCostProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellCostProdcut);
+                                    PdfPCell cellTotalProdcut = new PdfPCell(new Paragraph("$" + (producto.Cantidad * producto.Precio), content));
+                                    cellTotalProdcut.HorizontalAlignment = 1;
+                                    tableProducts.AddCell(cellTotalProdcut);
+                                }
+                                tableProducts.WidthPercentage = 100f;
+                                tableProducts.HorizontalAlignment = 0;
+                                tableProducts.SetWidths(cellDataProduct);
+                                document.Add(tableProducts);
+                                //Tabla total 
+                                PdfPTable tableTotal = new PdfPTable(2);
+                                PdfPCell cellTotalCostProdcut = new PdfPCell(new Paragraph("Total:", tableColumns));
+                                cellTotalCostProdcut.HorizontalAlignment = 2;
+                                cellTotalCostProdcut.Border = Rectangle.NO_BORDER;
+                                tableTotal.AddCell(cellTotalCostProdcut);
+                                PdfPCell cellTotal = new PdfPCell(new Paragraph("$" + pedidoContenido.Pedido.Precio, tableColumns));
+                                cellTotal.HorizontalAlignment = 1;
+                                tableTotal.AddCell(cellTotal);
+                                tableTotal.SetWidths(cellTotalOrder);
+                                tableTotal.HorizontalAlignment = 2;
+                                tableTotal.WidthPercentage = 24f;
+                                document.Add(tableTotal);
+                                //Tabla nota 
+                                PdfPTable tableNote = new PdfPTable(1);
+                                //Espacio entre nota y la tabla
+                                tableNote.SpacingBefore = 200;
+                                PdfPCell cellTitle = new PdfPCell(new Paragraph("Nota", tableColumns));
+                                cellTitle.Border = Rectangle.NO_BORDER;
+                                cellTitle.BorderWidthTop = 1f;
+                                cellTitle.BorderWidthLeft = 1f;
+                                cellTitle.BorderWidthRight = 1f;
+                                tableNote.AddCell(cellTitle);
+                                PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados o modificados con un máximo de 10 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.", content));
+                                cellContent.Border = Rectangle.NO_BORDER;
+                                cellContent.BorderWidthLeft = 1f;
+                                cellContent.BorderWidthRight = 1f;
+                                cellContent.BorderWidthBottom = 1f;
+                                tableNote.WidthPercentage = 100f;
+                                tableNote.AddCell(cellContent);
+                                document.Add(tableNote);
+                                pdf.CloseStream = false;
+                                //Cerramos el archivo
+                                document.Close();
+                                memoryStream.Position = 0;
+                                //Instanciamos de la clase mailmessage, el objeto servirá para agregar las partes de nuestro correo
+                                MailMessage mail = new MailMessage();
+                                //Indicamos el servidor de correo y puerto con el que trabaja gmail
+                                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587)
+                                {
+                                    //Vuelve a nulo el valor de credenciales, esto permitirá usar nuestras propias credenciales
+                                    UseDefaultCredentials = false,
+                                    //Se indican las credenciales de la cuenta gmail que ocuparemos para enviar el correo
+                                    Credentials = new System.Net.NetworkCredential("noreplylalombriz@gmail.com", "lalombrizAP"),
+                                    //Método de entrega
+                                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                                    //Habilitar seguridad en smtp
+                                    EnableSsl = true,
+                                };
+                                //Creamos el correo
+                                //Indicamos de donde viene el correo
+                                mail.From = new MailAddress("noreplylalombriz@gmail.com");
+                                //Indicamos dirección destino
+                                mail.To.Add(Session["CORREO_USUARIO"].ToString());
+                                //Asunto
+                                mail.Subject = "Confirmación de pedido #" + lastid;
+                                //Cuerpo
+                                mail.Attachments.Add(new Attachment(memoryStream, "Pedido" + lastid + ".pdf"));
+                                mail.Body = "Hola  " + pedidoContenido.Usuario.Nombre + " muchas gracias por tu compra. A continuación se adjunta un archivo en formato pdf que contiene la información relacionada al pedido que has realizado hace unos momentos, nos comunicaremos contigo a la brevedad. Este correo se genera de manera automática, favor de no responder.";
+                                //Enviamos el email 
+                                smtpServer.Send(mail);
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias por tu compra!',text: 'Tu pedido ha sido registrado, te haremos llegar un correo electrónico con la información del pedido.'})</script>");
                             }
-                            for (int j = 0; j < a; j++)
+                            else
                             {
-                                carroProductos.Remove(identificadores[j]);
-                                int aux = 0;
-                                aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
-                                if (aux == 0) //Eliminamos todos los productos
-                                    Session["NoProductos"] = null;
-                                else //Aún queda al menos un producto
-                                    Session["NoProductos"] = aux;
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Algo salió mal al registrar tu pedido, lo sentimos.'})</script>");
                             }
-                            lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
-                            detailCart.Style["display"] = "none";
-                            notProductsCart.Style["display"] = "flex";
-                            //Creación de PDF y envío por correo
-                            getAllOrderInfo(lastid.ToString());
-                            //Creamos docuemento 
-                            Document document = new Document();
-                            //Establecemos margenes 
-                            document.SetMargins(60, 60, 40, 40);//Left,Right,Top,Bottom
-                            MemoryStream memoryStream = new MemoryStream();
-                            //Para este caso, indicamos que la dirección destino será el propio navegador (System.Web.HttpContext.Current.Response.OutputStream)
-                            PdfWriter pdf = PdfWriter.GetInstance(document, memoryStream);
-                            //Estilos de letra 
-                            //Título
-                            Font title = FontFactory.GetFont("Arial", 16, Font.BOLD);
-                            Font subTitle = FontFactory.GetFont("Arial", 14);
-                            Font content = FontFactory.GetFont("Arial", 12);
-                            Font tableColumns = FontFactory.GetFont("Arial", 12, Font.BOLD);
-                            //Ancho de columnas de tabla información del pedido 
-                            float[] cellDataOrder = new float[2];
-                            cellDataOrder[0] = 100;
-                            cellDataOrder[1] = 22;
-                            //Ancho de columas, tabla información del producto
-                            float[] cellDataProduct = new float[6];
-                            cellDataProduct[0] = 120;
-                            cellDataProduct[1] = 120;
-                            cellDataProduct[2] = 60;
-                            cellDataProduct[3] = 60;
-                            cellDataProduct[4] = 60;
-                            cellDataProduct[5] = 50;
-                            //Ancho de columnas, tabla total
-                            float[] cellTotalOrder = new float[2];
-                            cellTotalOrder[0] = 10;
-                            cellTotalOrder[1] = 8;
-                            //Colocamos título y nombre autor
-                            document.AddTitle("Detalles de pedido");
-                            document.AddCreator("La Lombriz S.A de C.V");
-                            //Abrimos el documento 
-                            document.Open();
-                            //Header
-                            //Insertamos logo
-                            //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
-                            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
-                            logo.BorderWidth = 0;
-                            //Tamaño 
-                            logo.ScaleToFit(80f, 80f);
-                            //Posición del logo
-                            logo.SetAbsolutePosition(60, 720); //X,Y
-                            document.Add(logo);
-                            //Header 
-                            var titleParagraph = new Paragraph("La Lombriz S.A de C.V", title);
-                            titleParagraph.Alignment = 1; //0=Izquierda 1=Centro 2=Derecha
-                            document.Add(titleParagraph);
-                            var subTitleParagraph = new Paragraph("Una empresa 100% mexicana", subTitle);
-                            subTitleParagraph.Alignment = 1;
-                            document.Add(subTitleParagraph);
-                            var numReport = new Paragraph("Detalles del pedido", content);
-                            numReport.Alignment = 1;
-                            document.Add(numReport);
-                            document.Add(Chunk.NEWLINE);
-                            //Tabla datos de pedido
-                            PdfPTable tableDataOrder = new PdfPTable(2);
-                            //Agregamos celdas 
-                            PdfPCell cellIdOrder = new PdfPCell(new Paragraph("No. Pedido:", tableColumns));
-                            cellIdOrder.Border = Rectangle.NO_BORDER;
-                            cellIdOrder.HorizontalAlignment = 2;
-                            tableDataOrder.AddCell(cellIdOrder);
-                            PdfPCell cellIdOrderValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Id_pedido), content));
-                            cellIdOrderValue.Border = Rectangle.NO_BORDER;
-                            cellIdOrderValue.HorizontalAlignment = 0;
-                            tableDataOrder.AddCell(cellIdOrderValue);
 
-                            PdfPCell cellDataCreate = new PdfPCell(new Paragraph("Fecha creación:", tableColumns));
-                            cellDataCreate.Border = Rectangle.NO_BORDER;
-                            cellDataCreate.HorizontalAlignment = 2;
-                            tableDataOrder.AddCell(cellDataCreate);
-                            PdfPCell cellDataCreateValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Fecha_creacion.ToString("dd/MM/yyyy")), content));
-                            cellDataCreateValue.Border = Rectangle.NO_BORDER;
-                            cellDataCreateValue.HorizontalAlignment = 0;
-                            tableDataOrder.AddCell(cellDataCreateValue);
-
-                            PdfPCell cellDataDelivery = new PdfPCell(new Paragraph("Fecha entrega:", tableColumns));
-                            cellDataDelivery.Border = Rectangle.NO_BORDER;
-                            cellDataDelivery.HorizontalAlignment = 2;
-                            tableDataOrder.AddCell(cellDataDelivery);
-                            PdfPCell cellDataDeliveryValue = new PdfPCell(new Paragraph(Convert.ToString(pedidoContenido.Pedido.Fecha_entrega.ToString("dd/MM/yyyy")), content));
-                            cellDataDeliveryValue.Border = Rectangle.NO_BORDER;
-                            cellDataDeliveryValue.HorizontalAlignment = 0;
-                            tableDataOrder.AddCell(cellDataDeliveryValue);
-
-                            tableDataOrder.SetWidths(cellDataOrder);
-                            tableDataOrder.HorizontalAlignment = 2;
-                            document.Add(tableDataOrder);
-
-                            var orderOwner = new Paragraph("Pedido de: " + pedidoContenido.Usuario.Nombre);
-                            orderOwner.Alignment = 0;
-                            document.Add(orderOwner);
-                            document.Add(Chunk.NEWLINE);
-
-                            //Tabla productos del pedido
-                            PdfPTable tableProducts = new PdfPTable(6);
-                            PdfPCell headerNameProduct = new PdfPCell(new Paragraph("Nombre producto", tableColumns));
-                            headerNameProduct.HorizontalAlignment = 1;
-                            headerNameProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerNameProduct);
-                            PdfPCell headerDescriptionProduct = new PdfPCell(new Paragraph("Descripción", tableColumns));
-                            headerDescriptionProduct.HorizontalAlignment = 1;
-                            headerDescriptionProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerDescriptionProduct);
-                            PdfPCell headerSizeProduct = new PdfPCell(new Paragraph("Tamaño", tableColumns));
-                            headerSizeProduct.HorizontalAlignment = 1;
-                            headerSizeProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerSizeProduct);
-                            PdfPCell headerQuantityProduct = new PdfPCell(new Paragraph("Cantidad", tableColumns));
-                            headerQuantityProduct.HorizontalAlignment = 1;
-                            headerQuantityProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerQuantityProduct);
-                            PdfPCell headerCostProduct = new PdfPCell(new Paragraph("Precio unitario", tableColumns));
-                            headerCostProduct.HorizontalAlignment = 1;
-                            headerCostProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerCostProduct);
-                            PdfPCell headerTotalProduct = new PdfPCell(new Paragraph("Total", tableColumns));
-                            headerTotalProduct.HorizontalAlignment = 1;
-                            headerTotalProduct.BackgroundColor = new iTextSharp.text.BaseColor(250, 113, 232);
-                            tableProducts.AddCell(headerTotalProduct);
-
-                            foreach (Productos producto in pedidoContenido.Productos)
-                            {
-                                PdfPCell cellNameProdcut = new PdfPCell(new Paragraph(producto.Nombre_producto, content));
-                                cellNameProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellNameProdcut);
-                                PdfPCell cellDescriptionProdcut = new PdfPCell(new Paragraph(producto.Descripcion, content));
-                                cellDescriptionProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellDescriptionProdcut);
-                                PdfPCell cellSizeProdcut = new PdfPCell(new Paragraph(producto.Tamanio, content));
-                                cellSizeProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellSizeProdcut);
-                                PdfPCell cellQuantityProdcut = new PdfPCell(new Paragraph(Convert.ToString(producto.Cantidad), content));
-                                cellQuantityProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellQuantityProdcut);
-                                PdfPCell cellCostProdcut = new PdfPCell(new Paragraph("$" + producto.Precio, content));
-                                cellCostProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellCostProdcut);
-                                PdfPCell cellTotalProdcut = new PdfPCell(new Paragraph("$" + (producto.Cantidad * producto.Precio), content));
-                                cellTotalProdcut.HorizontalAlignment = 1;
-                                tableProducts.AddCell(cellTotalProdcut);
-                            }
-                            tableProducts.WidthPercentage = 100f;
-                            tableProducts.HorizontalAlignment = 0;
-                            tableProducts.SetWidths(cellDataProduct);
-                            document.Add(tableProducts);
-
-                            //Tabla total 
-                            PdfPTable tableTotal = new PdfPTable(2);
-                            PdfPCell cellTotalCostProdcut = new PdfPCell(new Paragraph("Total:", tableColumns));
-                            cellTotalCostProdcut.HorizontalAlignment = 2;
-                            cellTotalCostProdcut.Border = Rectangle.NO_BORDER;
-                            tableTotal.AddCell(cellTotalCostProdcut);
-                            PdfPCell cellTotal = new PdfPCell(new Paragraph("$" + pedidoContenido.Pedido.Precio, tableColumns));
-                            cellTotal.HorizontalAlignment = 1;
-                            tableTotal.AddCell(cellTotal);
-                            tableTotal.SetWidths(cellTotalOrder);
-                            tableTotal.HorizontalAlignment = 2;
-                            tableTotal.WidthPercentage = 24f;
-                            document.Add(tableTotal);
-
-                            //Tabla nota 
-                            PdfPTable tableNote = new PdfPTable(1);
-                            //Espacio entre nota y la tabla
-                            tableNote.SpacingBefore = 200;
-                            PdfPCell cellTitle = new PdfPCell(new Paragraph("Nota", tableColumns));
-                            cellTitle.Border = Rectangle.NO_BORDER;
-                            cellTitle.BorderWidthTop = 1f;
-                            cellTitle.BorderWidthLeft = 1f;
-                            cellTitle.BorderWidthRight = 1f;
-                            tableNote.AddCell(cellTitle);
-                            PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados o modificados con un máximo de 10 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.", content));
-                            cellContent.Border = Rectangle.NO_BORDER;
-                            cellContent.BorderWidthLeft = 1f;
-                            cellContent.BorderWidthRight = 1f;
-                            cellContent.BorderWidthBottom = 1f;
-                            tableNote.WidthPercentage = 100f;
-                            tableNote.AddCell(cellContent);
-                            document.Add(tableNote);
-                            pdf.CloseStream = false;
-                            //Cerramos el archivo
-                            document.Close();
-                            memoryStream.Position = 0;
-                            //Instanciamos de la clase mailmessage, el objeto servirá para agregar las partes de nuestro correo
-                            MailMessage mail = new MailMessage();
-                            //Indicamos el servidor de correo y puerto con el que trabaja gmail
-                            SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587)
-                            {
-                                //Vuelve a nulo el valor de credenciales, esto permitirá usar nuestras propias credenciales
-                                UseDefaultCredentials = false,
-                                //Se indican las credenciales de la cuenta gmail que ocuparemos para enviar el correo
-                                Credentials = new System.Net.NetworkCredential("noreplylalombriz@gmail.com", "lalombrizAP"),
-                                //Método de entrega
-                                DeliveryMethod = SmtpDeliveryMethod.Network,
-                                //Habilitar seguridad en smtp
-                                EnableSsl = true,
-                            };
-                            //Creamos el correo
-                            //Indicamos de donde viene el correo
-                            mail.From = new MailAddress("noreplylalombriz@gmail.com");
-                            //Indicamos dirección destino
-                            mail.To.Add(Session["CORREO_USUARIO"].ToString());
-                            //Asunto
-                            mail.Subject = "Confirmación de pedido #" + lastid;
-                            //Cuerpo
-                            mail.Attachments.Add(new Attachment(memoryStream, "Pedido" + lastid + ".pdf"));
-                            mail.Body = "Hola  " + pedidoContenido.Usuario.Nombre + " muchas gracias por tu compra. A continuación se adjunta un archivo en formato pdf que contiene la información relacionada al pedido que has realizado hace unos momentos, nos comunicaremos contigo a la brevedad. Este correo se genera de manera automática, favor de no responder.";
-                            //Enviamos el email 
-                            smtpServer.Send(mail);
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
                         }
                         else
                         {

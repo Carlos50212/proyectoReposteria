@@ -21,17 +21,24 @@ namespace LaLombriz
         {
             if (!IsPostBack)
             {
-                lblOptions.Text = "Iniciar Sesión";
+                //lblOptions.Text = "Iniciar Sesión";
                 //tableCake.Visible = false;
             }
-            if (lblOptions.Text=="Iniciar Sesión")
-            {
-                Session["CORREO_USUARIO"] = null;
-            }
+          
             if (Session["CORREO_USUARIO"] != null)
             {
                 lblOptions.Text = "Cerrar Sesión";
             }
+            else
+            {
+                lblOptions.Text = "Iniciar Sesión";
+            }
+        }
+        public void btnCerrar(object sender, EventArgs e)
+        {
+            Session["CORREO_USUARIO"] = null;
+            lblOptions.Text = "Iniciar Sesión";
+            Response.Redirect("Inicio.aspx");
         }
         public void btnIngresarOnClick(object sender, EventArgs e)
         {

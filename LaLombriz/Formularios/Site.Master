@@ -81,25 +81,22 @@
             if (text == "Iniciar Sesión") {
                 $("#singIn").modal("show");
             } else {
-                text.innerText = "Cerrar Sesión";
-                document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Cerrar Sesión";
+                if (text == "Cerrar Sesión") {
+                    //document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Iniciar Sesión";
+                    document.getElementById('<%=btnCerrarSesion.ClientID %>').click();
+                } else {
+                    text.innerText = "Cerrar Sesión";
+                    document.getElementById('<%=lblOptions.ClientID %>').innerHTML = "Cerrar Sesión";
+                }
             }
         }
-        /*function Verificar() { Verificar inicio de sesión
-            texto = document.getElementById('lblOptions').innerHTML;
-            if (texto == "Iniciar Sesión") {
-                $("#singIn").modal("show");
-                lblOptions.innerText = "2"
-            } else {
-                
-            }
-        }*/
     </script>
 </head>
 <body>
     <form runat="server">
         <header class="header" id="header">
             <div id="menu-container">
+                <asp:Button runat="server" ID="btnCerrarSesion" OnClick="btnCerrar" style="display:none;"/>
                 <nav class="navbar navbar-expand-lg navbar-light navbar-estilo">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="Inicio.aspx">
@@ -116,7 +113,7 @@
                                 <a class="nav-link active menuClass" href="Cotizaciones.aspx">Cotizaciones</a>
                                 <a class="nav-link active menuClass" href="Galeria.aspx">Galería</a>
                                 <button type="button" class="botones-registros" onclick="getStatus();"> 
-                                    <asp:label runat="server" Text="" ID="lblOptions"></asp:label>
+                                    <asp:label runat="server" Text="Iniciar Sesión" ID="lblOptions"></asp:label>
                                 </button>
                             </div>
                         </div>
