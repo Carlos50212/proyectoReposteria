@@ -5,6 +5,7 @@
             <input type="hidden" name="hiddenIdProduct" id="hiddenIdProduct" value="" />
             <input type="hidden" name="hiddenSizeProduct" id="hiddenSizeProduct" value="" />
             <input type="hidden" name="hiddenQuantityProduct" id="hiddenQuantityProduct" value="1" />
+            <input type="hidden" name="hiddenIdAddOrder" id="hiddenIdAddOrder" value="" />
             <asp:Button runat="server" ID="btnAddOrder" OnClick="btnAddOnClick" style="display:none;"/>
             <asp:Button runat="server" ID="btnDeleteProduct" OnClick="btnDeleteOnClick" style="display:none;"/>
             <div runat="server" id="optionsContainer" class="containerOptionsMenu row">
@@ -50,7 +51,8 @@
                         </div>
                         <div class="btnReturnClass">
                             <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick"/>
-                            <asp:Button runat="server" ID="btnCreateProduct" CssClass="btn btn-primary" Text="Comprar" OnClick="btnComprar"/>
+                            <button type="button" class="btn btn-primary" onclick="Comprar();"> Comprar </button>
+                            <asp:Button runat="server" ID="btnCreateProduct"    OnClick="btnComprar" style="display:none;"/>
                         </div>
                     </div>
                     <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
@@ -92,6 +94,24 @@
             document.getElementById('hiddenIdProduct').value = idProduct;
             document.getElementById('<%=btnDeleteProduct.ClientID %>').click();
         }
-
+         /*Metodo para guardar variable de agregar pedido*/
+        function Comprar() {
+           
+            Swal.fire({
+                title: 'Confirmar Compra',
+                text: "¿Estás seguro de realizar el pedido?, recuerda que en pedidos cuya fecha de entrega es menor a 10 días no existe posibilidad de cancelar el pedido.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar Pedido'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('hiddenIdAddOrder').value = "1";
+                    document.getElementById('<%=btnCreateProduct.ClientID %>').click();
+                }
+            })
+        }
     </script>
 </asp:Content>

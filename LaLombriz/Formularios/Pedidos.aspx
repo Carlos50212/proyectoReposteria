@@ -80,11 +80,11 @@
                     document.getElementById('hiddenIdDeleteOrder').value = idOrderDelete[0];
                     document.getElementById('<%=btnDeleteOrder.ClientID %>').click();
                     /*NOTA: TE RECOMIENDO PONER ESTA ALERTA DE CONFIRMACIÓN DESDE EL BACK, UNA VEZ SE HAYA ELIMINADO DE LA BD*/
-                    Swal.fire(
+                    /*Swal.fire(
                         'Cancelado',
                         'Tú pedido ha sido cancelado',
                         'success'
-                    )
+                    )*/
                 }
             })
         }
