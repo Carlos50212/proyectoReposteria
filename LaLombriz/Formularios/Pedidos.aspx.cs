@@ -32,6 +32,12 @@ namespace LaLombriz.Formularios
                 listNewOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 0);
                 listOldOrders = getOrdersClient(getIDUser(Session["CORREO_USUARIO"].ToString()), 1);
             }
+            else
+            {
+                listNewOrders.Clear();
+                listOldOrders.Clear();
+            }
+           
             if (!IsPostBack)
             {
                 lkNew.CssClass += " option-selected";
@@ -296,7 +302,7 @@ namespace LaLombriz.Formularios
                     cellTitle.BorderWidthLeft = 1f;
                     cellTitle.BorderWidthRight = 1f;
                     tableNote.AddCell(cellTitle);
-                    PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados o modificados con un máximo de 10 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.", content));
+                    PdfPCell cellContent = new PdfPCell(new Paragraph("Los pedidos pueden ser cancelados con un máximo de 10 días antes de la fecha de entrega, favor de tener su número de pedido en mano. Para cualquier duda o aclaración de favor de ponerse en contacto mediante nuestras redes sociales o correo.", content));
                     cellContent.Border = Rectangle.NO_BORDER;
                     cellContent.BorderWidthLeft = 1f;
                     cellContent.BorderWidthRight = 1f;

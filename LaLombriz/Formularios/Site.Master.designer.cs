@@ -7,13 +7,20 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace LaLombriz
-{
-
-
-    public partial class SiteMaster
-    {
-
+namespace LaLombriz {
+    
+    
+    public partial class SiteMaster {
+        
+        /// <summary>
+        /// Control btnCerrarSesion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
+        
         /// <summary>
         /// Control lblOptions.
         /// </summary>
@@ -22,7 +29,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOptions;
-
+        
         /// <summary>
         /// Control MainContent.
         /// </summary>
@@ -31,7 +38,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
-
+        
         /// <summary>
         /// Control txtCorreoI.
         /// </summary>
@@ -40,7 +47,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCorreoI;
-
+        
         /// <summary>
         /// Control txtContraseniaI.
         /// </summary>
@@ -49,7 +56,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtContraseniaI;
-
+        
         /// <summary>
         /// Control btnIngresar.
         /// </summary>
@@ -58,7 +65,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnIngresar;
-
+        
         /// <summary>
         /// Control txtNombreUser.
         /// </summary>
@@ -67,7 +74,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombreUser;
-
+        
         /// <summary>
         /// Control txtCorreroRegistro.
         /// </summary>
@@ -76,7 +83,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCorreroRegistro;
-
+        
         /// <summary>
         /// Control txtNoTel.
         /// </summary>
@@ -85,7 +92,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNoTel;
-
+        
         /// <summary>
         /// Control txtPasswordRegistro.
         /// </summary>
@@ -94,7 +101,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPasswordRegistro;
-
+        
         /// <summary>
         /// Control btnRegistrar.
         /// </summary>
@@ -103,7 +110,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegistrar;
-
+        
         /// <summary>
         /// Control txtRecoverPass.
         /// </summary>
@@ -112,7 +119,7 @@ namespace LaLombriz
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRecoverPass;
-
+        
         /// <summary>
         /// Control btnRecover.
         /// </summary>
