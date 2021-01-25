@@ -206,15 +206,30 @@ namespace LaLombriz.Formularios
             {
                 idProduct = getIDProductPaquete(product);
             }
-            //Se agrega el identificador del producto y el diccionario temporal al diccionario principal
-            carroProductos.Add(idProduct, productInformation);
-            //Código para aumentar el número mostrado al lado del carrito
-            if (Session["NoProductos"] != null)
+            int identificador = 0, cantidad = 0, duplicado = 0;
+            foreach (KeyValuePair<int, string[]> producto in carroProductos) //Calculamos el total a pagar 
             {
-                contadorP = (int)Session["NoProductos"] + 1;
+                identificador = producto.Key;
+                cantidad = Convert.ToInt32(producto.Value[2]);
+                if (idProduct == identificador) //Vemos si el producto ya se encuentra en el carro
+                {
+                    cantidad = cantidad + Convert.ToInt32(quantity); //Obtenemos la nueva cantidad de productos 
+                    producto.Value[2] = cantidad.ToString(); //Guardamos la cantidad dentro del producto correspondiente
+                    duplicado = 1; //Asignamos el valor de uno indicando que el producto ya existia en el carro 
+                }
             }
-            lblConteoCarro.Text = contadorP.ToString();
-            Session["NoProductos"] = contadorP;
+            if (duplicado == 0) //El producto agregado no existia en el carro y se guarda
+            {
+                //Se agrega el identificador del producto y el diccionario temporal al diccionario principal
+                carroProductos.Add(idProduct, productInformation);
+                //Código para aumentar el número mostrado al lado del carrito
+                if (Session["NoProductos"] != null)
+                {
+                    contadorP = (int)Session["NoProductos"] + 1;
+                }
+                lblConteoCarro.Text = contadorP.ToString();
+                Session["NoProductos"] = contadorP;
+            }
         }
         public int getIDProductPaquete(string product) //Función para recuperar el id del paquete
         {
@@ -418,42 +433,41 @@ namespace LaLombriz.Formularios
             }
             else
             {
-                //Validamos que la fecha elegida sea mayor a la fecha actual
-                string fecha_validar = "";
-                fecha_validar = calendario.Value; //Recuperamos la fecha introducida por el cliente
-                string[] dato_aux = fecha_validar.Split('/', ' '); //Fragmentamos la fecha
-                fecha_validar = dato_aux[2] + "/" + dato_aux[0] + "/" + dato_aux[1]; //Nuevo formato de fecha
-                if (FechaValida(fecha_validar))
+                if (calendario.Value != "") //Fecha vacía?
                 {
-                    //Verificamos que el cliente haya dado clic en el botón de Aceptar
-                    string confirmacion = Request.Form["hiddenIdAddOrder"];
-                    if (confirmacion == "1")
+                    //Validamos que la fecha elegida sea mayor a la fecha actual
+                    string fecha_validar = "";
+                    fecha_validar = calendario.Value; //Recuperamos la fecha introducida por el cliente
+                    string[] dato_aux = fecha_validar.Split('/', ' '); //Fragmentamos la fecha
+                    fecha_validar = dato_aux[2] + "/" + dato_aux[0] + "/" + dato_aux[1]; //Nuevo formato de fecha
+                    if (FechaValida(fecha_validar))
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
-                        //El usuario acepto 
-                        int identificador = 0, lastid = 0, iduser = 0, cantidad = 0, i = 0;
-                        float total = 0, precio = 0;
-                        string fecha_entrega = "", fecha_creacion = "";
-                        lastid = RecuperarIDPedido() + 1; //Recuperamos ultímo id de pedido registrado
-                        iduser = getIDUser(Session["CORREO_USUARIO"].ToString()); //Recuperamos el id del usuario
-                        foreach (KeyValuePair<int, string[]> producto in carroProductos) //Calculamos el total a pagar 
+                        //Verificamos que el cliente haya dado clic en el botón de Aceptar
+                        string confirmacion = Request.Form["hiddenIdAddOrder"];
+                        if (confirmacion == "1")
                         {
-                            identificador = producto.Key;
-                            cantidad = Convert.ToInt32(producto.Value[2]);
-                            precio = getPrecio(identificador);
-                            total = total + (precio * cantidad);
-                            //i++;
-                        }
-                        i = (int)Session["NoProductos"];
-                        fecha_creacion = DateTime.Today.ToString(); //Recuperamos fecha actual del sistema
-                        string[] datos_fecha = fecha_creacion.Split('/', ' '); //Fragmentamos la fecha
-                        fecha_creacion = datos_fecha[2] + "-" + datos_fecha[1] + "-" + datos_fecha[0]; //Nuevo formato de fecha
-                        fecha_entrega = calendario.Value; //Recuperamos la fecha introducida por el cliente
-                        string[] fragmentador = fecha_entrega.Split('/', ' '); //Fragmentamos la fecha
-                        fecha_entrega = fragmentador[2] + "-" + fragmentador[0] + "-" + fragmentador[1]; //Nuevo formato de fecha
-
-                        if (GuardarPedido(lastid, iduser, fecha_entrega, fecha_creacion, total, 0) == true) //Creamos el pedido
-                        {
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
+                            //El usuario acepto 
+                            int identificador = 0, lastid = 0, iduser = 0, cantidad = 0, i = 0;
+                            float total = 0, precio = 0;
+                            string fecha_entrega = "", fecha_creacion = "";
+                            lastid = RecuperarIDPedido() + 1; //Recuperamos ultímo id de pedido registrado
+                            iduser = getIDUser(Session["CORREO_USUARIO"].ToString()); //Recuperamos el id del usuario
+                            foreach (KeyValuePair<int, string[]> producto in carroProductos) //Calculamos el total a pagar 
+                            {
+                                identificador = producto.Key;
+                                cantidad = Convert.ToInt32(producto.Value[2]);
+                                precio = getPrecio(identificador);
+                                total = total + (precio * cantidad);
+                                //i++;
+                            }
+                            i = (int)Session["NoProductos"];
+                            fecha_creacion = DateTime.Today.ToString(); //Recuperamos fecha actual del sistema
+                            string[] datos_fecha = fecha_creacion.Split('/', ' '); //Fragmentamos la fecha
+                            fecha_creacion = datos_fecha[2] + "-" + datos_fecha[1] + "-" + datos_fecha[0]; //Nuevo formato de fecha
+                            fecha_entrega = calendario.Value; //Recuperamos la fecha introducida por el cliente
+                            string[] fragmentador = fecha_entrega.Split('/', ' '); //Fragmentamos la fecha
+                            fecha_entrega = fragmentador[2] + "-" + fragmentador[0] + "-" + fragmentador[1]; //Nuevo formato de fecha
                             int quantity = 0, a = 0;
                             int[] identificadores = new int[i];
                             foreach (KeyValuePair<int, string[]> producto in carroProductos)
@@ -515,8 +529,8 @@ namespace LaLombriz.Formularios
                             document.Open();
                             //Header
                             //Insertamos logo
-                            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
-                            //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
+                            //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
+                            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
                             logo.BorderWidth = 0;
                             //Tamaño 
                             logo.ScaleToFit(80f, 80f);
@@ -684,12 +698,10 @@ namespace LaLombriz.Formularios
                             //Asunto
                             mail.Subject = "Confirmación de pedido #" + lastid;
                             //Cuerpo
-                            mail.Attachments.Add(new Attachment(memoryStream, "Pedido"+lastid+".pdf"));
+                            mail.Attachments.Add(new Attachment(memoryStream, "Pedido" + lastid + ".pdf"));
                             mail.Body = "Hola  " + pedidoContenido.Usuario.Nombre + " muchas gracias por tu compra. A continuación se adjunta un archivo en formato pdf que contiene la información relacionada al pedido que has realizado hace unos momentos, nos comunicaremos contigo a la brevedad. Este correo se genera de manera automática, favor de no responder.";
                             //Enviamos el email 
                             smtpServer.Send(mail);
-
-
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Gracias!',text: 'Tu pedido ha sido registrado, nos comunicaremos contigo a la brevedad.'})</script>");
                         }
                         else
@@ -699,7 +711,7 @@ namespace LaLombriz.Formularios
                     }
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Ocurrió un error, lo sentimos.'})</script>");
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Por favor ingresa una fecha valida.'})</script>");
                     }
                 }
                 else
