@@ -62,7 +62,7 @@ namespace LaLombriz.Formularios
                     {
                         if (BorrarToken(id))
                         {
-                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Hecho!',text: 'La contraseña ha sido reestablecida.'})</script>");
+                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Hecho!',text: 'La contraseña ha sido reestablecida.',showConfirmButton:true}).then(function(){window.location.href='Inicio.aspx';})</script>");                        
                         }
                         else
                         {
