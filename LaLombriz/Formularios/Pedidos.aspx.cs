@@ -345,17 +345,16 @@ namespace LaLombriz.Formularios
                     {
                         if (BorrarPedido(idOrder)) //Borrado del pedido
                         {
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Todo listo!',text: 'El pedido ha sido cancelado.'})</script>");
-                            Response.Redirect("Pedidos.aspx");
+                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'success',title: '¡Todo listo!',text: 'El pedido ha sido cancelado.',showConfirmButton:true}).then(function(){window.location.href='Pedidos.aspx';})</script>");
                         }
                         else
                         {
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Algo salió mal'})</script>");
+                            ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Algo salió mal'})</script>");
                         }
                     }
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Algo salió mal'})</script>");
+                        ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Oops!',text: 'Algo salió mal'})</script>");
                     }
                 }
                 catch (Exception e)
@@ -547,7 +546,7 @@ namespace LaLombriz.Formularios
                 detailOrder.Style["display"] = "none";
             }
             //Se valida si el div de pedidos esta oculto
-            if (oldOrders.Style["display"] == "none" && listNewOrders.Count > 0)
+            if (oldOrders.Style["display"] == "none" && listOldOrders.Count > 0)
             {
                 //Se muestra y se dibuja
                 oldOrders.Style["display"] = "flex";
