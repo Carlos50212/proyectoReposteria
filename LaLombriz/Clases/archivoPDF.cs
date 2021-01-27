@@ -59,8 +59,8 @@ namespace LaLombriz.Clases
 
                 //Header
                 //Insertamos logo
-                //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
-                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
+                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
+                //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
                 logo.BorderWidth = 0;
                 //Tamaño 
                 logo.ScaleToFit(80f, 80f);

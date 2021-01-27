@@ -18,28 +18,34 @@ namespace LaLombriz.Formularios
         }
         public void btnEnviarCorreoOnClick(object sender, EventArgs e)
         {
-            //Verificamos si el textArea esta vacío o no
-            if (txtDescription.Text != "")
+            if(Session["CORREO_USUARIO"] != null)
             {
-                //Metodo para enviar correo   
-                if (sendEmail(txtDescription.Text))
+                //Verificamos si el textArea esta vacío o no
+                if (txtDescription.Text != "")
                 {
-                    //Mostramos mensaje de error
-                    ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Cotización enviada, en breve nos comunicaremos contigo',showConfirmButton: false,timer: 2500})</script>");
-                    txtDescription.Text = "";
+                    //Metodo para enviar correo   
+                    if (sendEmail(txtDescription.Text))
+                    {
+                        //Mostramos mensaje de error
+                        ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Cotización enviada, en breve nos comunicaremos contigo',showConfirmButton: false,timer: 2500})</script>");
+                        txtDescription.Text = "";
+                    }
+                    else
+                    {
+                        //Mostramos mensaje de error
+                        ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                    }
                 }
                 else
                 {
                     //Mostramos mensaje de error
-                    ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                    ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Favor de llenar todos los campos'})</script>");
                 }
             }
             else
             {
-                //Mostramos mensaje de error
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Favor de llenar todos los campos'})</script>");
+                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Debes iniciar sesión antes'})</script>");
             }
-           
         }
         //Metodo para enviar correo
         public bool sendEmail(string textDescription)
