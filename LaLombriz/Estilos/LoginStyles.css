@@ -1,0 +1,56 @@
+﻿body {
+    margin: 0;
+    height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+#login {
+    height: 100vh;
+}
+video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -100;
+    background-size: cover;
+}
+#login-shadow {
+    display: flex;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    align-items: center;
+    justify-content: end;
+}
+#login-container {
+    background-color: white;
+    height: 400px;
+    width: 440px;
+    color: black;
+    border-radius: 20px;
+}
+#content-login {
+    padding: 25px;
+}
+#header-login {
+    text-align: center;
+    padding-top: 20px;
+}
+#footer-login {
+    text-align: center;
+    padding-top: 20px;
+}
+/*RESPONSIVE DESIGN*/
+@media (min-width:992px) {
+    #login-shadow {
+        padding-left: 180px;
+    }
+}
