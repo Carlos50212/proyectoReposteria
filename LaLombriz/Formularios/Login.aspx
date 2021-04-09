@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div id="footer-login">
-                    <asp:Button runat="server" ID="btnIngresar" Text="Ingresar" class="btn btn-primary"/>
+                    <asp:Button runat="server" id="btnIngresar" Text="Ingresar" onClick="btnIngresarOnClick" class="btn btn-primary"/>
                 </div>
             </div>
         </div>

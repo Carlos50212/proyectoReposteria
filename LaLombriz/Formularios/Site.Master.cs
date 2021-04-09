@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Net.Mail;
+//using MySqlConnector;
 using MySql.Data.MySqlClient;
 
 namespace LaLombriz

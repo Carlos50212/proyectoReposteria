@@ -51,7 +51,7 @@
                 </div>
                 <div id="footer-create">
                     <asp:Button runat="server" ID="btnBack" Text="Regresar" class="btn btn-secondary" OnClick="btnBackOnClick"/>
-                    <asp:Button runat="server" ID="btnCreate" Text="Crear" class="btn btn-primary" />
+                    <asp:Button runat="server" ID="btnCreate" Text="Crear" class="btn btn-primary" OnClick="btnCrearOnClick"/>
                 </div>
             </div>
         </div>
