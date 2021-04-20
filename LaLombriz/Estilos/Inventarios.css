@@ -1,0 +1,15 @@
+﻿#inventarios-content {
+    padding: 56px 6px;
+}
+#data-container{
+    display: flex;
+    flex-direction: column;
+}
+.inputsData {
+    width: 100%;
+}
+@media(min-width:992px){
+    #inventarios-content {
+        padding: 56px 118px;
+    }
+}

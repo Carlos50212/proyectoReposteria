@@ -1,0 +1,24 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Formularios/Administrador/Administrador.Master" AutoEventWireup="true" CodeBehind="PedidosMaster.master.cs" Inherits="LaLombriz.Formularios.Administrador.PedidosMaster" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainAdminContent" runat="server">
+
+    <link href="../../Estilos/PedidosAdmin.css" rel="stylesheet" />
+
+    <div id="options-main-container">
+        <div id="optionsOrders-container">
+            <ul id="allOptionsList">
+                <li id="firstOption" class="listOptions">
+                    <a id="lkNew" class="lkStyles" href="NewOrders.aspx">Por entregar</a>
+                </li>
+                <li id="secondOption" class="listOptions">
+                    <a id="lkOld" class="lkStyles" href="OldOrders.aspx">Entregados</a>
+                </li>
+                <li id="lastOption" class="listOptions">
+                    <a id="lkCancel" class="lkStyles" href="CancelOrders.aspx">Cancelados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="pedidosMaster-container">
+        <asp:ContentPlaceHolder ID="PedidosOptions" runat="server" />
+    </div>
+</asp:Content>

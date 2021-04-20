@@ -1,0 +1,30 @@
+﻿.modal-dialog {
+    min-height: 550px;
+}
+
+.modal-content {
+    height: 100%;
+}
+.inputsData{
+    width:100%;
+}
+.tMessages {
+    padding: 5px 10px;
+    width: 300px;
+}
+#admin-container,#user-container{
+    display:flex;
+    flex-direction: column
+}
+#content-admin, #content-user {
+    display: flex;
+    flex-direction: column;
+}
+#messages-container{
+    display: flex;
+}
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 600px;
+    }
+}
