@@ -1,0 +1,77 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Administrador.master.cs" Inherits="LaLombriz.Formularios.Administrador.Administrador" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title><%: Page.Title %> - LaLombriz</title>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+     <!--FontAwesome-->
+    <link href="../Estilos/fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet" />
+
+    <!--Kendo UI-->
+    <link href="https://kendo.cdn.telerik.com/2021.1.119/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="https://kendo.cdn.telerik.com/2021.1.119/styles/kendo.default.min.css" rel="stylesheet" />
+
+    <link href="../../Estilos/MasterAdminStyles.css" rel="stylesheet" />
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header class="header" id="header">
+            <div id="menu-container">
+                <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid options-container">
+                <a class="navbar-brand" href="Pedidos.aspx">
+                    <img src="../../Recursos/logoMenu.png" alt="" width="60" height="60">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span id="menu" class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li id="admin-link-orders" class="nav-item  options">
+                            <a id="admin-orders" class="nav-link navOptions" aria-current="page" href="NewOrders.aspx">Pedidos</a>
+                        </li>
+                        <li id="admin-link-sells" class="nav-item options">
+                            <a id="admin-ventas" class="nav-link navOptions" href="VentasDia.aspx">Ventas</a>
+                        </li>
+                        <li id="admin-link-cotizaciones" class="nav-item options">
+                            <a id="admin-cotizacion" class="nav-link navOptions" href="Pendientes.aspx">Cotizaciones</a>
+                        </li>
+                        <li  id="admin-link-inventarios" class="nav-item options">
+                            <a id="admin-inventarios" class="nav-link navOptions" href="Inventarios.aspx">Inventarios</a>
+                        </li>
+                        <li class="options"> 
+                            <asp:Button runat="server" ID="btnLogOut" Text="Cerrar Sesión" CssClass="btn btn-primary logOut" OnClick="btnLogOutOnClick"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+            </div>
+        </header>
+        <div id="main-container">
+            <asp:ContentPlaceHolder ID="MainAdminContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" ></script>
+
+    <!--SweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!--Kendo UI-->
+    <script src="https://kendo.cdn.telerik.com/2021.1.119/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.119/js/messages/kendo.messages.es-MX.min.js"></script>
+
+</body>
+</html>

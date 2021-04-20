@@ -1,0 +1,21 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Formularios/Administrador/Administrador.Master" AutoEventWireup="true" CodeBehind="CotizacionesAdmin.master.cs" Inherits="LaLombriz.Formularios.Administrador.CotizacionesAdmin" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainAdminContent" runat="server">
+
+    <link href="../../Estilos/CotizacionesAdmin.css" rel="stylesheet" />
+
+    <div id="options-main-container">
+        <div id="optionsCotizaciones-container">
+            <ul class="allCotizacionList">
+                <li id="firstOption" class="listOptions">
+                    <a id="lkPendientes" class="lkStyles" href="Pendientes.aspx">Pendientes</a>
+                </li>
+                <li id="secondOption" class="listOptions">
+                    <a id="lkContestadas" class="lkStyles" href="Contestadas.aspx">Contestadas</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="cotizacionesMaster-container">
+        <asp:ContentPlaceHolder ID="CotizacionesOptions" runat="server" />
+    </div>
+</asp:Content>

@@ -37,13 +37,22 @@ namespace LaLombriz.Formularios
                     Usuario us1 = new Usuario();
                     Security encripta = new Security();
                     string pass = "";
-                    pass = encripta.encriptar(txtContraseniaI.Text); //Encriptamos la contraseña ingresada para la BD 
-                    if (us1.IniciarSesion(txtCorreoI.Text, pass, strConnection))
+                    pass = encripta.encriptar(txtPasswdLogin.Text); //Encriptamos la contraseña ingresada para la BD 
+                    if (us1.IniciarSesion(txtCorreoLogin.Text, pass, strConnection))
                     {
                         //Datos asignados a la clase en base al inicio de sesión
-                        txtCorreoLogin.Text == ""
-                        txtPasswdLogin.Text == ""
+                        txtCorreoLogin.Text = "";
+                        txtPasswdLogin.Text = "";
                         Session["CORREO_USUARIO"] = us1.Correo;
+                        Session["ID_USUARIO"] = us1.IdUsuario;
+                        if(us1.getTypeUser(strConnection,us1.IdUsuario) == 1)
+                        {
+                            Response.Redirect("Administrador/NewOrders.aspx");
+                        }
+                        else
+                        {
+                            Response.Redirect("Inicio.aspx");
+                        }
                     }
                     else
                     {

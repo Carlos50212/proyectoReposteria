@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Formularios/Administrador/Administrador.Master" AutoEventWireup="true" CodeBehind="VentasMaster.master.cs" Inherits="LaLombriz.Formularios.Administrador.VentasMaster" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainAdminContent" runat="server">
+
+    <link href="../../Estilos/VentasAdmin.css" rel="stylesheet" />
+
+    <div id="options-main-container">
+        <div id="optionsSells-container">
+            <ul id="allSellsList">
+                <li id="firstOption" class="listOptions">
+                    <a id="lkDay" class="lkStyles" href="VentasDia.aspx">Diarias</a>
+                </li>
+                <li id="secondOption" class="listOptions">
+                    <a id="lkMonth" class="lkStyles" href="VentasMes.aspx">Mensuales</a>
+                </li>
+                <li id="lastOption" class="listOptions">
+                    <a id="lkMost" class="lkStyles" href="MasVendidos.aspx">Mas vendidos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="ventasMaster-container">
+        <asp:ContentPlaceHolder ID="PedidosOptions" runat="server" />
+    </div>
+
+
+
+</asp:Content>

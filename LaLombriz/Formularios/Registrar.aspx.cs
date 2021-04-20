@@ -91,7 +91,7 @@ namespace LaLombriz.Formularios
         //Validar campos vacíos
         public bool CamposVacios()
         {
-            if(txtUserName.Text=="" || txtUserEmail.Text =="" || txtUserPhone.Text == "" || txtUserPasswd.Text =="" || txtConfirmPasswd.Text = "")
+            if(txtUserName.Text == " " || txtUserEmail.Text =="" || txtUserPhone.Text == "" || txtUserPasswd.Text =="" || txtConfirmPasswd.Text == "")
             {
                 return true;
             }

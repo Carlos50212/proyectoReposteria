@@ -1,0 +1,64 @@
+﻿.lkStyles {
+    text-decoration: none;
+    font-size: 18px;
+}
+#allOptionsList {
+    width: 100%;
+}
+.listOptions {
+    display: inline-block;
+}
+#firstOption, #secondOption, #lastOption {
+    width: 115px;
+    height: 40px;
+    text-align: center;
+}
+#optionsOrders-container {
+    width: 100%;
+    padding: 25px 0px 0px 10px;
+}
+#optionsOrders-container a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+#optionsOrders-container a:hover {
+    color: black;
+}
+
+#options-main-container {
+    margin: 0px 10px;
+    padding-top: 53px;
+}
+
+#pedidosMaster-container {
+    margin: 0px 30px;
+}
+
+.selectedLinkOrders {
+    border-bottom: 1px solid;
+}
+.selectedOptionOrders{
+    color:black;
+}
+
+/*RESPONSIVE DESIGN*/
+@media(min-width:450px){
+    #allOptionsList {
+        border-bottom: 1px solid #C6C1C2;
+    }
+}
+@media(min-width:992px) {
+    #optionsOrders-container {
+        width: 100%;
+        padding: 25px 0px 0px 20px;
+    }
+
+    #firstOption, #secondOption, #lastOption {
+        width: 150px;
+    }
+
+    #options-main-container {
+        margin: 0px 30px;
+    }
+}

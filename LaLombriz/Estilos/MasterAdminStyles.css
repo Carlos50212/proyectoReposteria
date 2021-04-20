@@ -1,0 +1,57 @@
+﻿.header {
+    background-color: black;
+    width: 100%;
+    position: relative;
+}
+#menu {
+    background-image: url(../Recursos/menu.png);
+}
+.options:hover {
+    background: rebeccapurple;
+}
+.navOptions {
+    color: white;
+}
+.navOptions:hover {
+    color: white;
+}
+.logOut:hover{
+    background-color:rebeccapurple;
+}
+.options{
+    text-align:center;
+}
+.logOut {
+    background-color: transparent;
+    border-color: transparent;
+}
+#main-container {
+    min-height: 893px;
+    background-color: #E9E6E6;
+    padding-bottom: 30px;
+}
+.selected{
+    background-color:rebeccapurple;
+}
+
+/*RESPONSIVE DESIGN*/
+@media (min-width: 992px) {
+    .options {
+        margin: 0px 10px;
+        padding: 0px 5px;
+    }
+    .navbar-expand-lg .navbar-collapse {
+        justify-content: flex-end;
+        padding-right: 30px;
+    }
+}
+@media (min-width: 1030px){
+    .header {
+        width: 80%;
+        margin-left: 10%;
+    }
+    #main-container{
+        width: 80%;
+        margin: 0px auto;
+    }
+}
