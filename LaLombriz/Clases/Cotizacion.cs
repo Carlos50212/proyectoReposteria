@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LaLombriz.Modelos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,13 @@ namespace LaLombriz.Clases
         private DateTime fechaRespuesta;
         private string mensaje;
         private string respuesta;
+        private CotizacionBD cotizacionBD;
 
         public Cotizacion() { }
+        public Cotizacion(CotizacionBD cotizacionBD)
+        {
+            this.cotizacionBD = cotizacionBD;
+        }
         public Cotizacion(int idCotizacion,int idCliente,string idAdministrador,int estatus,DateTime fechaContacto,DateTime fechaRespuesta,string mensaje,string respuesta)
         {
             this.idCotizacion = idCotizacion;
@@ -39,90 +45,21 @@ namespace LaLombriz.Clases
         public DateTime FechaRespuesta { set { fechaRespuesta = value; } get { return fechaRespuesta; } }
         public string Mensaje { set { mensaje = value; } get { return mensaje; } }
         public string Respuesta { set { respuesta = value; } get { return respuesta; } }
-        public List<Cotizacion> getCotizaciones(string strConnection, int estatus)
+        public virtual List<Cotizacion> getCotizaciones(string strConnection, int estatus)
         {
             List<Cotizacion> cotizacion = new List<Cotizacion>();
-            string query = "SELECT * FROM `cotizaciones` WHERE ESTATUS = " + estatus + "";
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos 
-                    {
-                        cotizacion.Add(new Cotizacion(Convert.ToInt32(reader.GetString(0)), Convert.ToInt32(reader.GetString(1)), reader.GetString(2), Convert.ToInt32(reader.GetString(3)), Convert.ToDateTime(reader.GetString(4)), Convert.ToDateTime(reader.GetString(5)), reader.GetString(6), reader.GetString(7)));
-                    }
-                }
-                dbConnection.Close();
-                return cotizacion;
-            }
-            catch (Exception e)
-            {
-                //Mensaje de error
-                Console.WriteLine("Error" + e);
-                return cotizacion;
-            }
+            cotizacion = this.cotizacionBD.getCotizacionesModel(strConnection,estatus);
+            return cotizacion;
         }
-        public Cotizacion getCotizacion(string strConnection, int idCotizacion)
-        {
-            Cotizacion cotizacion =new Cotizacion();
-            string query = "SELECT * FROM `cotizaciones` WHERE ID_COTIZACION = " + idCotizacion + "";
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos 
-                    {
-                        cotizacion = new Cotizacion(Convert.ToInt32(reader.GetString(0)), Convert.ToInt32(reader.GetString(1)), reader.GetString(2), Convert.ToInt32(reader.GetString(3)), Convert.ToDateTime(reader.GetString(4)), Convert.ToDateTime(reader.GetString(5)), reader.GetString(6), reader.GetString(7));
-                    }
-                }
-                dbConnection.Close();
-                return cotizacion;
-            }
-            catch (Exception e)
-            {
-                //Mensaje de error
-                Console.WriteLine("Error" + e);
-                return cotizacion;
-            }
-        }
-        public bool sendAnswer(string strConnection,int idCotizacion,string respuesta, int idUser, string fecha)
-        {
-            //Sentencia
-            string query = "UPDATE `cotizaciones` SET `ID_ADMINISTRADOR`="+idUser+" ,`ESTATUS`=1,`FECHA_RESPUESTA`='"+fecha+"',`MSJ_ADMINISTRADOR`='"+respuesta+"' WHERE ID_COTIZACION ="+idCotizacion+"";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
 
-            try
-            {
-                //Abrir base de datos
-                dbConnection.Open();
-                //Insertamos
-                MySqlDataReader myReader = cmdDB.ExecuteReader();
-                //Cerramos base de datos 
-                dbConnection.Close();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error " + e);
-                return false;
-            }
+        public virtual Cotizacion getCotizacion(string strConnection, int idCotizacion)
+        {
+            Cotizacion cotizacion = this.cotizacionBD.getCotizacionModel(strConnection, idCotizacion);
+            return cotizacion;
+        }
+        public virtual bool sendAnswer(string strConnection,int idCotizacion,string respuesta, int idUser, string fecha)
+        {
+            return this.cotizacionBD.sendAnswerModel(strConnection, idCotizacion, respuesta, idUser, fecha);
         }
         public bool sendEmail(string to,string respuesta,string mensaje)
         {

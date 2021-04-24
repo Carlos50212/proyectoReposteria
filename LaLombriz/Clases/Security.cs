@@ -9,7 +9,7 @@ namespace LaLombriz.Clases
 {
     public class Security
     {
-        static readonly string password = "H63XQnCxRZ5p"; //Static key, any change on it will affect the DB
+        //static readonly string password = "H63XQnCxRZ5p"; //Static key, any change on it will affect the DB
         public Security() { }
         public string encriptar(string str)
         {
