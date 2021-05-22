@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace LaLombriz.Formularios.Administrador
             //int sizeDay = 3;
             //int sizeMonth = 3;
             DateTime fecha = DateTime.Now;
-            Ventas ventas = new Ventas();
+            Ventas ventas = new Ventas(new VentasBD());
             Ventas ventaTmp = new Ventas();
-            Productos productos = new Productos();
+            Productos productos = new Productos(new ProductosModel());
             string date = DateTime.Now.ToString("yyyy-MM-dd");
 
             List<Ventas> ventasMonth = ventas.getAllSellsMonth(strConnection, date);

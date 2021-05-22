@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LaLombriz.Modelos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,24 @@ namespace LaLombriz.Clases
         private string pass;
         private string telefono;
 
+        private UsuariosBD userBD;
+
         public Usuario() { }  //constructor vacio
+        public Usuario(string nombre, string correo, string pass, string telefono, int idUsuario)  //constructor sobrecargado
+        {
+            this.nombre = nombre;
+            this.correo = correo;
+            this.telefono = telefono;
+            this.idUsuario = idUsuario;
+        }
+        public Usuario(UsuariosBD userBD)
+        {
+            this.userBD = userBD;
+        }
+        public Usuario(UsuariosBD userBD, string nombre, string correo, string pass, string telefono)
+        {
+            this.userBD = userBD;
+        }
         public Usuario(string correo, string pass) //constructor para inicio sesión
         {
             this.correo = correo;
@@ -40,168 +58,28 @@ namespace LaLombriz.Clases
         public string Pass { set { pass = value; } get { return pass; } }
         public string Telefono { set { telefono = value; } get { return telefono; } }
         //Metodos 
-        public bool createUser(string strConnection)
+        public virtual bool createUser(string strConnection)
         {
-            //Sentencia
-            string query = "INSERT INTO usuarios(`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('"+this.nombre+"', '"+this.correo+"', '"+this.pass+"', '"+this.telefono+"')";
-            //string query = "INSERT INTO usuarios(`id_usuario`,`nombre_usuario`, `correo`, `password`, `telefono`) VALUES ('','" + this.nombre + "', '" + this.correo + "', '" + this.pass + "', '" + this.telefono + "')";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
+            return this.userBD.createUserModel(strConnection,this.Nombre,this.Correo,this.Pass,this.Telefono);
+        }
+        public virtual  Usuario IniciarSesion(string mail, string contra, string strConnection)
+        {
+            return this.userBD.IniciarSesionModel(mail, contra, strConnection);
+        }
+        public virtual bool CorreoDoble(string strConnection)
+        {
+            return this.userBD.CorreoDobleModel(strConnection,this.correo);
+        }
+        public virtual Usuario getUser(int idUsuario,string strConnection)
+        {
+            Usuario user = this.userBD.getUserModel(idUsuario, strConnection);
+            return user;
+        }
+        public virtual int getTypeUser(string strConnection, int idUsuario)
+        {
+            int typeUser = this.userBD.getTypeUserModel(strConnection, idUsuario);
 
-            try
-            {
-                //Abrir base de datos
-                dbConnection.Open();
-                //Insertamos
-                MySqlDataReader myReader = cmdDB.ExecuteReader();
-                //Cerramos base de datos 
-                dbConnection.Close();
-                return true;
-            }catch(Exception e)
-            {
-                Console.WriteLine("Error " + e);
-                return false;
-            }
-        }
-        public bool IniciarSesion(string mail, string contra, string strConnection)
-        {
-            //Sentencia
-            string query = "SELECT NOMBRE_USUARIO, CORREO, TELEFONO,ID_USUARIO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos a los atributos de la clase 
-                    {
-                        nombre = reader.GetString(0);
-                        correo = reader.GetString(1);
-                        telefono = reader.GetString(2);
-                        idUsuario = Convert.ToInt32(reader.GetString(3));
-                    }
-                    dbConnection.Close();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-                
-            }
-            catch (Exception e)
-            {
-                //Mensjae de error
-                Console.WriteLine("Error" + e);
-                return false;
-            }
-        }
-        public bool CorreoDoble(string strConnection)
-        {
-            string correocomparar = "";
-            //Sentencia
-            string query = "SELECT CORREO FROM usuarios  WHERE correo='" + this.correo + "'";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos a los atributos de la clase 
-                    {
-                        correocomparar = reader.GetString(0);
-                    }
-                }
-                dbConnection.Close();
-                if (correocomparar == correo)
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception e)
-            {
-                //Mensjae de error
-                Console.WriteLine("Error" + e);
-                return false;
-            }
-        }
-        public Usuario getUser(int idUsuario,string strConnection)
-        {
-            Usuario user = new Usuario();
-            //Sentencia
-            string query = "SELECT * FROM usuarios  WHERE ID_USUARIO=" + idUsuario + "";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos a los atributos de la clase 
-                    {
-                        user = new Usuario(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
-                    }
-                }
-                dbConnection.Close();
-                return user; 
-            }
-            catch (Exception e)
-            {
-                //Mensjae de error
-                Console.WriteLine("Error" + e);
-                return user;
-            }
-        }
-        public int getTypeUser(string strConnection, int idUsuario)
-        {
-            int typeUser = 0;
-            //Sentencia
-            string query = "SELECT `TIPO_USUARIO` FROM `rol` WHERE ID_USUARIO =" + idUsuario + "";
-            //Conexiones 
-            MySqlConnection dbConnection = new MySqlConnection(strConnection);
-            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
-            cmdDB.CommandTimeout = 60;
-            MySqlDataReader reader;
-            try
-            {
-                dbConnection.Open();
-                //Leemos los datos 
-                reader = cmdDB.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read()) //asignamos datos a los atributos de la clase 
-                    {
-                        typeUser = Convert.ToInt32(reader.GetString(0));
-                    }
-                }
-                dbConnection.Close();
-                return typeUser;
-            }
-            catch (Exception e)
-            {
-                //Mensjae de error
-                Console.WriteLine("Error" + e);
-                return typeUser;
-            }
+            return typeUser;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getAllCancelOrders()
         {
-            PedidosCliente pedido = new PedidosCliente();
+            PedidosCliente pedido = new PedidosCliente(new PedidosClienteBD());
             List<PedidosCliente> pedidos = pedido.getOrders(strConnection,2);
 
             List<string> pedidosFinal = new List<string>();

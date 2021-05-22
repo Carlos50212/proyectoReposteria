@@ -1,0 +1,9 @@
+﻿body{
+    background-color:red;
+}
+.sandbox-badge {
+    display: none;
+}
+.layout__col-sidebar{
+    display:none;
+}

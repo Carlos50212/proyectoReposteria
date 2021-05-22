@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getAllSellsMonth()
         {
-            Ventas ventas = new Ventas();
-            Productos productos = new Productos();
+            Ventas ventas = new Ventas(new VentasBD());
+            Productos productos = new Productos(new ProductosModel());
             string date = DateTime.Now.ToString("yyyy-MM-dd");
 
             List<Ventas> ventasMonth = ventas.getAllSellsMonth(strConnection,date);

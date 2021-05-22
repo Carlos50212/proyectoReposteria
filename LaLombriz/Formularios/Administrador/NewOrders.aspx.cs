@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getAllNewOrders()
         {
-            PedidosCliente pedido = new PedidosCliente();
+            PedidosCliente pedido = new PedidosCliente(new PedidosClienteBD());
             List<PedidosCliente> pedidos = pedido.getOrders(strConnection,0);
 
             List<string> pedidosFinal = new List<string>();
@@ -67,7 +68,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = false)]
         public static bool deliverOrder(int idPedido)
         {
-            PedidosCliente pedidoCliente = new PedidosCliente();
+            PedidosCliente pedidoCliente = new PedidosCliente(new PedidosClienteBD());
 
             bool isDelivered = pedidoCliente.deliverOrder(strConnection, idPedido);
 
@@ -78,7 +79,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = false)]
         public static bool cancelOrder(int idPedido)
         {
-            PedidosCliente pedidoCliente = new PedidosCliente();
+            PedidosCliente pedidoCliente = new PedidosCliente(new PedidosClienteBD());
 
             bool isCancelled = pedidoCliente.cancelOrder(strConnection, idPedido);
 

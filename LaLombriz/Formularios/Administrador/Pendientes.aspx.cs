@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,8 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getCotizacionesPendientes()
         {
-            Cotizacion cotizacion = new Cotizacion();
-            Usuario user = new Usuario();
+            Cotizacion cotizacion = new Cotizacion(new CotizacionBD());
+            Usuario user = new Usuario(new UsuariosBD());
             List<Cotizacion> cotizaciones = cotizacion.getCotizaciones(strConnection,0);
 
             List<string> cotizacionFinal = new List<string>();
