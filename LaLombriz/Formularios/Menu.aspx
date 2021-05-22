@@ -38,21 +38,18 @@
                     </div>
                     <div runat="server" id="detailCart" class="detailCartStyle" style="display: none;">
                         <div class='cartProductsContainer'>
-                            <div class="inputDate" style="font-size: 24px;">
+                            <div class="inputDate">
                                 <p>Seleccione la fecha de entrega</p>
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' id="calendario" class="form-control" runat="server" />
-                                    <span class="input-group-addon" style="padding-left: 5px;">
-                                        <span class="fas fa-calendar-times"></span>
-                                    </span>
+                                    <input id="calendario" />
                                 </div>
                             </div>
                             <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
                         </div>
                         <div class="btnReturnClass">
                             <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick"/>
-                            <button type="button" class="btn btn-primary" onclick="Comprar();"> Comprar </button>
-                            <asp:Button runat="server" ID="btnCreateProduct"    OnClick="btnComprar" style="display:none;"/>
+                            <asp:Button runat="server" ID="btnCreateProduct"  style="display:none;"/>
+                            <button type="button" class="btn btn-primary" onclick="Comprar();"> Siguiente </button>
                         </div>
                     </div>
                     <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
@@ -66,10 +63,13 @@
             </div>
         </div>
     </div>
-    <!--Funcion para mostrar modal y obtener producto que se seleccionó-->
+
     <script>
         $(document).ready(function () {
-            $('#datetimepicker1').datepicker();
+            console.log("ENTRO");
+            $("#calendario").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
         });
         function getID(comp) {
             /*Traemos los valores de los componentes*/
@@ -77,8 +77,8 @@
             var log2 = log.split('_').join(' ');
             /*RadioButton seleccionado */
             var sizeSelect = $('input:radio[name=' + log + ']:checked').val();
-            var quantity = $('#'+log +'Quantity').val();
-            console.log("Producto seleccionado: "+log2);
+            var quantity = $('#' + log + 'Quantity').val();
+            console.log("Producto seleccionado: " + log2);
             console.log("Tamaño seleccionado: " + sizeSelect);
             console.log("Cantidad solicitada: " + quantity);
 
@@ -94,9 +94,9 @@
             document.getElementById('hiddenIdProduct').value = idProduct;
             document.getElementById('<%=btnDeleteProduct.ClientID %>').click();
         }
-         /*Metodo para guardar variable de agregar pedido*/
+        /*Metodo para guardar variable de agregar pedido*/
         function Comprar() {
-           
+
             Swal.fire({
                 title: 'Confirmar Compra',
                 text: "¿Estás seguro de realizar el pedido?, recuerda que en pedidos cuya fecha de entrega es menor a 10 días no existe posibilidad de cancelar el pedido.",
@@ -108,10 +108,45 @@
                 confirmButtonText: 'Confirmar Pedido'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('hiddenIdAddOrder').value = "1";
-                    document.getElementById('<%=btnCreateProduct.ClientID %>').click();
+                    checkDate();
                 }
             })
+        }
+        function checkDate() {
+            var date = document.getElementById('calendario').value;
+            var dateFormat = /^\d{4}-\d{2}-\d{2}$/;
+            if (date != "") {
+                if (!date.match(dateFormat)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Favor de ingresar un formato aceptable de fecha'
+                    });
+                } else {
+                    const today = new Date();
+                    const todayFormat = today.toISOString();
+                    const arrayDate = todayFormat.split("T");
+                    const todayDate = arrayDate[0];
+
+                    if (date < todayDate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Favor de ingresar una fecha superior a la fecha actual'
+                        });
+                    } else {
+                        document.getElementById('hiddenIdAddOrder').value = "1";
+                        document.getElementById('<%=btnCreateProduct.ClientID %>').click();
+                    }
+
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Favor de ingresar la fecha de entrega'
+                });
+            }
         }
     </script>
 </asp:Content>

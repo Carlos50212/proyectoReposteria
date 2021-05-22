@@ -18,6 +18,17 @@ namespace LaLombriz.Clases
         private UsuariosBD userBD;
 
         public Usuario() { }  //constructor vacio
+        public Usuario(string nombre, string correo, string pass, string telefono, int idUsuario)  //constructor sobrecargado
+        {
+            this.nombre = nombre;
+            this.correo = correo;
+            this.telefono = telefono;
+            this.idUsuario = idUsuario;
+        }
+        public Usuario(UsuariosBD userBD)
+        {
+            this.userBD = userBD;
+        }
         public Usuario(UsuariosBD userBD, string nombre, string correo, string pass, string telefono)
         {
             this.userBD = userBD;
@@ -39,13 +50,6 @@ namespace LaLombriz.Clases
             this.pass = pass;
             this.telefono = telefono;
         }
-        public Usuario(string nombre, string correo, string telefono,int idUsuario)  //constructor sobrecargado
-        {
-            this.nombre = nombre;
-            this.correo = correo;
-            this.telefono = telefono;
-            this.idUsuario = idUsuario;
-        }
         //getters y setters, atributos 
 
         public int IdUsuario { set { idUsuario = value; } get { return idUsuario; } }
@@ -58,7 +62,7 @@ namespace LaLombriz.Clases
         {
             return this.userBD.createUserModel(strConnection,this.Nombre,this.Correo,this.Pass,this.Telefono);
         }
-        public virtual bool IniciarSesion(string mail, string contra, string strConnection)
+        public virtual  Usuario IniciarSesion(string mail, string contra, string strConnection)
         {
             return this.userBD.IniciarSesionModel(mail, contra, strConnection);
         }

@@ -17,9 +17,10 @@ namespace LaLombriz
     public partial class SiteMaster : MasterPage
     {
         private static string strConnection="Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
-        Usuario us1 = new Usuario();
+        //Usuario us1 = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
             if (!IsPostBack)
             {
                 //lblOptions.Text = "Iniciar Sesión";
@@ -33,14 +34,21 @@ namespace LaLombriz
             else
             {
                 lblOptions.Text = "Iniciar Sesión";
-            }
+            }*/
         }
+        //Botón cerrar sesión
+        public void btnLogOutOnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
+        /*
         public void btnCerrar(object sender, EventArgs e)
         {
             Session["CORREO_USUARIO"] = null;
             lblOptions.Text = "Iniciar Sesión";
             Response.Redirect("Inicio.aspx");
         }
+        /*
         public void btnIngresarOnClick(object sender, EventArgs e)
         {
                 if (CamposVaciosInicio())
@@ -75,7 +83,8 @@ namespace LaLombriz
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Formato de correo incorrecto'})</script>");
                     }
                 }
-        }
+        }*/
+        /*
         public void btnRegistrarOnClick(object sender, EventArgs e)
         {
             if (CamposVacios())
@@ -273,6 +282,7 @@ namespace LaLombriz
             else
                 return false;
         }
+        /*
         public bool CamposVacios() //Función para validar campos vacíos al registrar usuario
         {
             if (txtNombreUser.Text == "" || txtCorreroRegistro.Text == "" || txtPasswordRegistro.Text == "" || txtNoTel.Text == "")
@@ -286,6 +296,6 @@ namespace LaLombriz
                 return true;
             else
                 return false;
-        }
+        }*/
     }
 }

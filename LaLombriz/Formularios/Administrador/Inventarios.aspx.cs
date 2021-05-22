@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getInventario()
         {
-            Productos producto = new Productos();
+            Productos producto = new Productos(new ProductosModel());
 
             List<Productos> productos = producto.getAll(strConnection);
 

@@ -36,11 +36,11 @@ namespace LaLombriz.Modelos
             }
         }
 
-        public virtual bool IniciarSesionModel(string mail, string contra, string strConnection)
+        public virtual Usuario IniciarSesionModel(string mail, string contra, string strConnection)
         {
-            Usuario user;
+            Usuario user = null;
             //Sentencia
-            string query = "SELECT NOMBRE_USUARIO, CORREO, TELEFONO,ID_USUARIO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
+            string query = "SELECT NOMBRE_USUARIO,PASSWORD, CORREO, TELEFONO,ID_USUARIO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -55,22 +55,18 @@ namespace LaLombriz.Modelos
                 {
                     while (reader.Read()) //asignamos datos a los atributos de la clase 
                     {
-                        user = new Usuario(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                        user = new Usuario(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), Convert.ToInt32(reader.GetString(4)));
                     }
                     dbConnection.Close();
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return user;
 
             }
             catch (Exception e)
             {
                 //Mensjae de error
                 Console.WriteLine("Error" + e);
-                return false;
+                return user;
             }
         }
 
@@ -174,6 +170,7 @@ namespace LaLombriz.Modelos
                 return typeUser;
             }
         }
+
 
     }
 }

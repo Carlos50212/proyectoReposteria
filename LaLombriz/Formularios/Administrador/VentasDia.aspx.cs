@@ -1,4 +1,5 @@
 ﻿using LaLombriz.Clases;
+using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,8 @@ namespace LaLombriz.Formularios.Administrador
         public static string getAllSellsDay()
         {
             DateTime fecha = DateTime.Now;
-            Ventas ventas = new Ventas();
-            Productos productos = new Productos();
+            Ventas ventas = new Ventas(new VentasBD());
+            Productos productos = new Productos(new ProductosModel());
 
             List<Ventas> ventasDay = ventas.getAllSellsDay(fecha,strConnection);
             List<string> productosFinal = new List<string>();

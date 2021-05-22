@@ -99,5 +99,13 @@ namespace LaLombriz.Clases
                 return false;
             }
         }
+
+        public virtual bool sendText(int idUser,string date,string description, string strConnection)
+        {
+            bool isSaved = this.cotizacionBD.sendTextModel(idUser, date, description, strConnection);
+
+
+            return isSaved;
+        }
     }
 }

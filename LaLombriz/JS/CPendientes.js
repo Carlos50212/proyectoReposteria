@@ -14,11 +14,17 @@ $(document).ready(function () {
     $('#gridPendientes').on('click', '.btn-link', function (e) {
         e.preventDefault();
         var cotizacionId = $(e.target).data('cotizacion-id');
-
+        var contMessage = 0;
         $('#txtIdHidden').val(cotizacionId);
         $('#modal-title-cotizacion-id').text(cotizacionId);
-        $('#taQuestion').val(mensajes[cotizacionId - 1]);
-
+        for (var message in mensajes) {
+            console.log("ID: " + mensajes[contMessage]['id']);
+            if (mensajes[contMessage]['id'] === cotizacionId) {
+                console.log("ENTRO");
+                $('#taQuestion').val(mensajes[contMessage]['msj']);
+            }
+            contMessage++;
+        }
 
         var seeCotizacionModal = new bootstrap.Modal(document.getElementById('modal-see-cotizacion'), {
             keyboard: false,
@@ -51,7 +57,9 @@ function buildGrid(cotizacion) {
     for (var cot in cotizacion) {
         var cotizacionTmp = JSON.parse(cotizacion[i]);
         cotizacionFinal.push({id_cotizacion: cotizacionTmp['id_cotizacion'], id_cliente: cotizacionTmp['id_cliente'], correo: cotizacionTmp['correo'], fecha_contacto: cotizacionTmp['fecha_contacto'] });
-        mensajes.push(cotizacionTmp['mensaje']);
+        console.log("MENSAJE1: " + cotizacionTmp['mensaje']);
+        var mensaje = { id: cotizacionTmp['id_cotizacion'], msj: cotizacionTmp['mensaje'] };
+        mensajes.push(mensaje);
         i++;
     }
 

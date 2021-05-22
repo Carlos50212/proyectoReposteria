@@ -67,6 +67,9 @@
     <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
       <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
+    <Reference Include="MercadoPago, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mercadopago-sdk.2.0.0\lib\net461\MercadoPago.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
     </Reference>
@@ -165,6 +168,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Proyecto\packages\MySql.Data.8.0.23\lib\netstandard2.0\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.13.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.13.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -192,6 +198,7 @@
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -240,9 +247,6 @@
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.23\lib\net452\Ubiety.Dns.Core.dll</HintPath>
@@ -1936,6 +1940,7 @@
     <Content Include="Estilos\MasterStyles.css" />
     <Content Include="Estilos\MasVendidos.css" />
     <Content Include="Estilos\MenuStyles.css" />
+    <Content Include="Estilos\Pago.css" />
     <Content Include="Estilos\PedidosAdmin.css" />
     <Content Include="Estilos\PedidosStyles.css" />
     <Content Include="Estilos\RecoverStyles.css" />
@@ -1956,6 +1961,7 @@
     <Content Include="Formularios\Inicio.aspx" />
     <Content Include="Formularios\Login.aspx" />
     <Content Include="Formularios\Menu.aspx" />
+    <Content Include="Formularios\Pago.aspx" />
     <Content Include="Formularios\Pedidos.aspx" />
     <Content Include="Formularios\Recuperacion.aspx" />
     <Content Include="Formularios\Registrar.aspx" />
@@ -2033,6 +2039,7 @@
     <Content Include="JS\Inventarios.js" />
     <Content Include="JS\LoginJS.js" />
     <Content Include="JS\MasVendidos.js" />
+    <Content Include="JS\Menu.js" />
     <Content Include="JS\NuevosPedidos.js" />
     <Content Include="JS\OldOrders.js" />
     <Content Include="JS\VentasDia.js" />
@@ -2207,6 +2214,13 @@
     </Compile>
     <Compile Include="Formularios\Menu.aspx.designer.cs">
       <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Pago.aspx.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Pago.aspx.designer.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formularios\Pedidos.aspx.cs">
       <DependentUpon>Pedidos.aspx</DependentUpon>

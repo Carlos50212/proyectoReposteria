@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Text;
+using LaLombriz.Modelos;
 
 namespace LaLombriz.Formularios
 {
@@ -34,18 +35,23 @@ namespace LaLombriz.Formularios
             {
                 if (ExpCorreo(txtCorreoLogin.Text))
                 {
-                    Usuario us1 = new Usuario();
+                    Usuario us1 = new Usuario(new UsuariosBD());
+                    Usuario user = new Usuario(new UsuariosBD());
+
                     Security encripta = new Security();
                     string pass = "";
                     pass = encripta.encriptar(txtPasswdLogin.Text); //Encriptamos la contraseña ingresada para la BD 
-                    if (us1.IniciarSesion(txtCorreoLogin.Text, pass, strConnection))
+
+                    user = us1.IniciarSesion(txtCorreoLogin.Text, pass, strConnection);
+
+                    if (user != null)
                     {
                         //Datos asignados a la clase en base al inicio de sesión
                         txtCorreoLogin.Text = "";
                         txtPasswdLogin.Text = "";
-                        Session["CORREO_USUARIO"] = us1.Correo;
-                        Session["ID_USUARIO"] = us1.IdUsuario;
-                        if(us1.getTypeUser(strConnection,us1.IdUsuario) == 1)
+                        Session["CORREO_USUARIO"] = user.Correo;
+                        Session["ID_USUARIO"] = user.IdUsuario;
+                        if(us1.getTypeUser(strConnection,user.IdUsuario) == 1)
                         {
                             Response.Redirect("Administrador/NewOrders.aspx");
                         }

@@ -98,5 +98,31 @@ namespace LaLombriz.Modelos
             }
         }
 
+        public virtual bool sendTextModel(int idUser, string date, string description, string strConnection)
+        {
+            //Sentencia
+            string query = "INSERT INTO cotizaciones(`ID_CLIENTE`, `ID_ADMINISTRADOR`, `ESTATUS`, `FECHA_CONTACTO`, `FECHA_RESPUESTA`, `MSJ_CLIENTE`) VALUES (" + idUser + ",1, 0, '" + date + "', '1900-01-01', '" + description + "')";
+            //Conexiones 
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+
+            try
+            {
+                //Abrir base de datos
+                dbConnection.Open();
+                //Insertamos
+                MySqlDataReader myReader = cmdDB.ExecuteReader();
+                //Cerramos base de datos 
+                dbConnection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error " + e);
+                return false;
+            }
+        }
+
     }
 }
