@@ -94,4 +94,5 @@
             document.getElementById('<%=btnDownloadPDF.ClientID %>').click();
         }
     </script>
+    <script src="../JS/Pedidos.js"></script>
 </asp:Content>

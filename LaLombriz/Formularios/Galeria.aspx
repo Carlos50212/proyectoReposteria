@@ -12,19 +12,5 @@
         <span class="close">&times;</span>
         <img class="modalContent" id="imgSelection" src="/Recursos/imagen.png"/>
     </div>
-    <script>
-        var modal = document.getElementById("modalZoom");
-        function getImage(comp) {
-            document.getElementsByTagName("html")[0].style.overflow = "hidden"; /*Quitamos scroll principal*/
-            var imgSelected = document.getElementById(comp.id);
-            var imgModal = document.getElementById("imgSelection");
-            modal.style.display = "block";
-            imgModal.src = imgSelected.src;
-            var close = document.getElementsByClassName("close")[0];
-            close.onclick = function () {
-                modal.style.display = "none";
-                document.getElementsByTagName("html")[0].style.overflow = "auto"; /*Aparecer scroll principal*/
-            }
-        }
-    </script>
+    <script src="../JS/Galeria.js"></script>
 </asp:Content>

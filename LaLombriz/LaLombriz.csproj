@@ -2062,13 +2062,17 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="JS\CancelOrders.js" />
     <Content Include="JS\Contestadas.js" />
+    <Content Include="JS\Cotizaciones.js" />
     <Content Include="JS\CPendientes.js" />
+    <Content Include="JS\Galeria.js" />
+    <Content Include="JS\Index.js" />
     <Content Include="JS\Inventarios.js" />
     <Content Include="JS\LoginJS.js" />
     <Content Include="JS\MasVendidos.js" />
     <Content Include="JS\Menu.js" />
     <Content Include="JS\NuevosPedidos.js" />
     <Content Include="JS\OldOrders.js" />
+    <Content Include="JS\Pedidos.js" />
     <Content Include="JS\VentasDia.js" />
     <Content Include="JS\VentasMes.js" />
     <Content Include="Scripts\bootstrap.js" />

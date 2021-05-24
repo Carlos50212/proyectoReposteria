@@ -46,7 +46,7 @@ namespace LaLombriz.Formularios.Administrador
             ProductosPedidos productoPedido = new ProductosPedidos();
             Dictionary<int,string> productosId = productoPedido.getAllProducts(strConnection, Convert.ToInt32(idPedido));
 
-            Productos productos = new Productos();
+            Productos productos = new Productos(new ProductosModel());
             Productos producto = new Productos();
 
             List<string> productosFinal = new List<string>();

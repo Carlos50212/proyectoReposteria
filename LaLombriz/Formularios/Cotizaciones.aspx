@@ -16,4 +16,5 @@
             </div>
         </div>
     </div>
+    <script src="../JS/Cotizaciones.js"></script>
 </asp:Content>
