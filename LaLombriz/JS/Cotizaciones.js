@@ -1,4 +1,4 @@
 ﻿$(document).ready(function () {
     $(".selected").removeClass("selected");
-    $("#user-link-menu").addClass("selected");
+    $("#user-link-cotizaciones").addClass("selected");
 })

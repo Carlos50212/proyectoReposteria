@@ -1,6 +1,18 @@
 ﻿.containerOptions {
     margin: 0px 30px;
 }
+.carouselStyles{
+    height:100%;
+}
+#carousel-container {
+    margin-bottom: 30px;
+    height: 330px;
+    padding: 0px;
+}
+.btnCarouselStyles {
+    background-color: transparent;
+    border-color: transparent;
+}
 #welcomeText {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Recursos/bienvenida.jpg);
     background-size: cover;
@@ -72,6 +84,13 @@
     font-family: Cambria;
 }
 /*Responsive desing*/
+/*Responsive desing*/
+@media(min-width:600px) {
+    #carousel-container {
+        height: 560px;
+    }
+}
+
 @media(min-width:768px) {
     #btnMenu {
         width: 65%;

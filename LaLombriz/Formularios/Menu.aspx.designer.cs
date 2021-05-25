@@ -87,6 +87,24 @@ namespace LaLombriz.Formularios
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl productsContainer;
 
         /// <summary>
+        /// Control notOrders.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl notOrders;
+
+        /// <summary>
+        /// Control ordersContainer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ordersContainer;
+
+        /// <summary>
         /// Control btnSeeCarOption.
         /// </summary>
         /// <remarks>

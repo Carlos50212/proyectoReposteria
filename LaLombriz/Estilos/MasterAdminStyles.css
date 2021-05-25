@@ -15,8 +15,9 @@
 .navOptions:hover {
     color: white;
 }
-.logOut:hover{
-    background-color:rebeccapurple;
+.logOut:hover {
+    background-color: rebeccapurple;
+    border-color: transparent;
 }
 .options{
     text-align:center;

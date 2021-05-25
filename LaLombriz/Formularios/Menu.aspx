@@ -17,46 +17,55 @@
                     <asp:LinkButton runat="server" ID="btnBurger" Text="Macarons" OnClick="btnBurgerOnClick"></asp:LinkButton>
                 </div>
                 <div id="packBefore" class="btnOptions col-xs-12 col-md-6">
-                    <asp:LinkButton runat="server" ID="btnPack" Text="Mesa de dulces" OnClick="btnPackOnClick"></asp:LinkButton>
+                    <asp:LinkButton runat="server" ID="btnPack" Text="Paquetes" OnClick="btnPackOnClick"></asp:LinkButton>
                 </div>
                 <div id="otherBefore" class="btnOptions col-xs-12 col-md-6">
                     <asp:LinkButton runat="server" ID="btnOther" Text="Otros" OnClick="btnOtherOnClick"></asp:LinkButton>
                 </div>
             </div>
             <div runat="server" id="productsContainer">
-                <div  id="selectionContainer">
-                    <h1>¡Selecciona tus productos!</h1>
-                    <div id="cart-container">
-                        <asp:LinkButton runat="server" ID="btnSeeCarOption" CssClass="linkCart" OnClick="btnSeeCarOptionOnClick">
-                            <img src="../Recursos/cart.png" alt="" width="45" height="40" class="d-inline-block align-top">
-                            <asp:Label runat="server" ID="lblConteoCarro" Text=""></asp:Label>
-                        </asp:LinkButton>
+                <div id="selectionContainer">
+                    <div runat="server" id="notOrders" class="infoContainer" style="display: none;">
+                        <div id="notProducts-container">
+                            <h2>¡Lo sentimos!. No hay productos en existencia</h2>
+                            <img id="imgNotPrudct" src="../Recursos/NotOrder.png" alt="Not products" class="imgInfo" />
+                            <p>Favor de regresar más tarde</p>
+                        </div>
                     </div>
-                    <div runat="server" id="products" class="row">
-                        <asp:Literal ID="ltProduct" runat="server"></asp:Literal>
-                        <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>         
-                    </div>
-                    <div runat="server" id="detailCart" class="detailCartStyle" style="display: none;">
-                        <div class='cartProductsContainer'>
-                            <div class="inputDate">
-                                <p>Seleccione la fecha de entrega</p>
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input id="calendario" />
+                    <div id="ordersContainer" runat="server">
+                        <h1>¡Selecciona tus productos!</h1>
+                        <div id="cart-container">
+                            <asp:LinkButton runat="server" ID="btnSeeCarOption" CssClass="linkCart" OnClick="btnSeeCarOptionOnClick">
+                                <img src="../Recursos/cart.png" alt="" width="45" height="40" class="d-inline-block align-top">
+                                <asp:Label runat="server" ID="lblConteoCarro" Text=""></asp:Label>
+                            </asp:LinkButton>
+                        </div>
+                        <div runat="server" id="products" class="row">
+                            <asp:Literal ID="ltProduct" runat="server"></asp:Literal>
+                            <asp:Literal ID="ltProductSpecial" runat="server"></asp:Literal>
+                        </div>
+                        <div runat="server" id="detailCart" class="detailCartStyle" style="display: none;">
+                            <div class='cartProductsContainer'>
+                                <div class="inputDate">
+                                    <p>Seleccione la fecha de entrega</p>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input id="calendario" />
+                                    </div>
                                 </div>
+                                <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
                             </div>
-                            <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
+                            <div class="btnReturnClass">
+                                <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick" />
+                                <asp:Button runat="server" ID="btnCreateProduct" Style="display: none;" />
+                                <button type="button" class="btn btn-primary" onclick="Comprar();">Siguiente </button>
+                            </div>
                         </div>
-                        <div class="btnReturnClass">
-                            <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick"/>
-                            <asp:Button runat="server" ID="btnCreateProduct"  style="display:none;"/>
-                            <button type="button" class="btn btn-primary" onclick="Comprar();"> Siguiente </button>
-                        </div>
-                    </div>
-                    <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
-                        <div id="containerNotNewOrders">
-                            <h2>No tienes productos</h2>
-                            <img id="imgNotOrder" src="../Recursos/NotOrder.png" alt="Not orders" class="imgInfo" />
-                            <p>¡Que esperas! Selecciona nuevos productos <a id="goMenu" style="text-decoration: none" href="Menu.aspx">aquí</a></p>
+                        <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
+                            <div id="containerNotNewOrders">
+                                <h2>No tienes productos</h2>
+                                <img id="imgNotOrder" src="../Recursos/NotOrder.png" alt="Not orders" class="imgInfo" />
+                                <p>¡Que esperas! Selecciona nuevos productos <a id="goMenu" style="text-decoration: none" href="Menu.aspx">aquí</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,4 +158,6 @@
             }
         }
     </script>
+
+    <script src="../JS/Menu.js"></script>
 </asp:Content>

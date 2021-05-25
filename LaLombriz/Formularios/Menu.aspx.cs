@@ -68,13 +68,14 @@ namespace LaLombriz.Formularios
                     {
                         ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
                     }
-                    }
+                }
+                drawInterface(0, descriptionProduct);
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                ordersContainer.Style["display"] = "none";
+                notOrders.Style["display"] = "flex";
             }
-            drawInterface(0,descriptionProduct);
         }
         //Boton macarons
         public void btnBurgerOnClick(object sender, EventArgs e)
@@ -96,12 +97,13 @@ namespace LaLombriz.Formularios
                         ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
                     }
                 }
+                drawInterface(0, descriptionProduct);
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                ordersContainer.Style["display"] = "none";
+                notOrders.Style["display"] = "flex";
             }
-            drawInterface(0,descriptionProduct);
         }
         //Boton mesas de dulces
         public void btnPackOnClick(object sender,EventArgs e)
@@ -110,7 +112,7 @@ namespace LaLombriz.Formularios
             showSecondForm();
             productsName = getProducts(82, 86);
             descriptionProduct = getDescriptionProducts(82, 86);
-            if (productsName.Count > 0 && descriptionProduct.Count>0)
+            if (productsName.Count > 0 && descriptionProduct.Count > 0)
             {
                 foreach (string product in productsName)
                 {
@@ -124,12 +126,13 @@ namespace LaLombriz.Formularios
                         ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
                     }
                 }
+                drawInterface(2, descriptionProduct);
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                ordersContainer.Style["display"] = "none";
+                notOrders.Style["display"] = "flex";
             }
-            drawInterface(2,descriptionProduct);
         }
         //Boton otros
         public void btnOtherOnClick(object sender, EventArgs e)
@@ -157,13 +160,14 @@ namespace LaLombriz.Formularios
                         ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
                     }
                 }
+                //Se dibuja la interfaz para los productos "normales"
+                drawInterface(0, descriptionProduct);
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
+                ordersContainer.Style["display"] = "none";
+                notOrders.Style["display"] = "flex";
             }
-            //Se dibuja la interfaz para los productos "normales"
-            drawInterface(0, descriptionProduct);
         }
         //Metodo onclick para agregar los productos al carrito 
         public void btnAddOnClick(object sender, EventArgs e)
@@ -388,16 +392,31 @@ namespace LaLombriz.Formularios
                 //Se valida si el producto es macarons, pasteles u otros "normales"
                 if (numProduct == 0)
                 {
+                    string subcadena = product.Key.Substring(0,6);
                     sb.Append("<h4>Precios</h4>");
                     sb.Append("</br>");
                     foreach (KeyValuePair<string, string> prices in product.Value)
                     {
-                        sb.Append("<span style='float:left'>");
-                        sb.Append("<input class='form-check-input' type='radio' name='"+nameImage+"' id='"+nameImage+""+contTamanio+"' value='"+prices.Key+"'>");
-                        sb.Append("<label class='form-check-label' for='"+nameImage+""+contTamanio+"'>");
-                        sb.Append("&nbsp"+prices.Key);
-                        sb.Append("</label></span>");
-                        sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
+                        if(subcadena == "Pastel" && prices.Key == "Grande")
+                        {
+                            double price = Convert.ToDouble(prices.Value);
+                            sb.Append("<h5>Descuento del 25%</h5>");
+                            sb.Append("<span style='float:left'>");
+                            sb.Append("<input class='form-check-input' type='radio' name='" + nameImage + "' id='" + nameImage + "" + contTamanio + "' value='" + prices.Key + "'>");
+                            sb.Append("<label class='form-check-label' for='" + nameImage + "" + contTamanio + "'>");
+                            sb.Append("&nbsp" + prices.Key);
+                            sb.Append("</label></span>");
+                            sb.Append("<span style='float:right'><strike>$" + prices.Value + "</strike> $" + Convert.ToInt32(price*0.25) + "</span></br></br>");
+                        }
+                        else
+                        {
+                            sb.Append("<span style='float:left'>");
+                            sb.Append("<input class='form-check-input' type='radio' name='" + nameImage + "' id='" + nameImage + "" + contTamanio + "' value='" + prices.Key + "'>");
+                            sb.Append("<label class='form-check-label' for='" + nameImage + "" + contTamanio + "'>");
+                            sb.Append("&nbsp" + prices.Key);
+                            sb.Append("</label></span>");
+                            sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
+                        }
                         contTamanio++;
                     }
                     sb.Append("<h4>Cantidad</h4>");
@@ -410,9 +429,11 @@ namespace LaLombriz.Formularios
                 {
                     //Si no, es de la categoría paquetes
                     sb.Append("<h4>Precio</h4>");
+                    sb.Append("<h5>Descuento del 50%</h5>");
                     foreach (KeyValuePair<string, string> prices in product.Value)
                     {
-                        sb.Append("<p>" + prices.Value + "</p>");
+                        double price = Convert.ToDouble(prices.Value);
+                        sb.Append("<p><strike>$" + prices.Value + "</strike> $"+ Convert.ToInt32(price*0.50) + "</p>");
                     }
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number'  id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
@@ -631,7 +652,7 @@ namespace LaLombriz.Formularios
         //Metodo para traer productos y llenar gridview
         public List<string> getProducts(int min, int max)
         {
-            string query = "SELECT DISTINCT NOMBRE_PRODUCTO FROM `productos` WHERE (id_producto BETWEEN " + min + " AND " + max + ")";
+            string query = "SELECT DISTINCT NOMBRE_PRODUCTO FROM `productos` WHERE (id_producto BETWEEN " + min + " AND " + max + ") AND STOCK>0";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;

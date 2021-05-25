@@ -5,9 +5,31 @@
     /*z-index: 2;*/
     position: relative;
 }
-.header a{
-    margin-left:10px;
+.options:hover {
+    background: rebeccapurple;
 }
+.navOptions {
+    color: white !important;
+}
+
+    .navOptions:hover {
+        color: white !important;
+    }
+
+.logOut:hover {
+    background-color: rebeccapurple;
+    border-color: transparent;
+}
+
+.options {
+    text-align: center;
+}
+
+.logOut {
+    background-color: transparent;
+    border-color: transparent;
+}
+
 .navbar-light .navbar-toggler-icon {
     background-image: url(../Recursos/menu.png);
 }
@@ -38,21 +60,13 @@
     background-color: rebeccapurple;
     border-color: rebeccapurple;
 }
-.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show > .nav-link {
-    color:white;
-}
-.navbar-light .navbar-nav .nav-link {
-    text-align: center;
+.selected {
+    background-color: rebeccapurple;
 }
 #menu-container {
     margin: 0px 10px;
 }
-.showButtom{
-    display:block;
-}
-.hideButton{
-    display:none;
-}
+
 /*Estilos place holder*/
 #content-container {
     min-height: 703px;
@@ -137,6 +151,17 @@
             transform:rotateX(0);
         }
     }
+
+    .options {
+        margin: 0px 10px;
+        padding: 0px 5px;
+    }
+
+    .navbar-expand-lg .navbar-collapse {
+        justify-content: flex-end;
+        padding-right: 30px;
+    }
+
     #instagramLogo {
         margin-left: 27px;
     }

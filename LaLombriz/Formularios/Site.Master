@@ -99,14 +99,26 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav ml-auto" id="navbar-options">
-                                <a class="nav-link active menuClass" href="Inicio.aspx">Inicio</a>
-                                <a class="nav-link active menuClass" href="Menu.aspx">Menú</a>
-                                <a class="nav-link active menuClass" href="Pedidos.aspx">Pedidos</a>
-                                <a class="nav-link active menuClass" href="Cotizaciones.aspx">Cotizaciones</a>
-                                <a class="nav-link active menuClass" href="Galeria.aspx">Galería</a>
-                                <asp:Button runat="server" ID="btnLogOut" Text="Cerrar Sesión" CssClass="btn btn-primary logOut" OnClick="btnLogOutOnClick"/>
-                            </div>
+                            <ul class="navbar-nav">
+                                <li id="user-link-index" class="nav-item  options">
+                                    <a id="user-index" class="nav-link navOptions" aria-current="page" href="Inicio.aspx">Inicio</a>
+                                </li>
+                                <li id="user-link-menu" class="nav-item options">
+                                    <a id="user-menu" class="nav-link navOptions" href="Menu.aspx">Menú</a>
+                                </li>
+                                <li id="user-link-orders" class="nav-item options">
+                                    <a id="user-orders" class="nav-link navOptions" href="Pedidos.aspx">Pedidos</a>
+                                </li>
+                                <li id="user-link-cotizaciones" class="nav-item options">
+                                    <a id="user-cotizaciones" class="nav-link navOptions" href="Cotizaciones.aspx">Cotizaciones</a>
+                                </li>
+                                <li id="user-link-galeria" class="nav-item options">
+                                    <a id="user-galeria" class="nav-link navOptions" href="Galeria.aspx">Galería</a>
+                                </li>
+                                <li class="options">
+                                    <asp:Button runat="server" ID="btnLogOut" Text="Cerrar Sesión" CssClass="btn btn-primary logOut" OnClick="btnLogOutOnClick" />
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
