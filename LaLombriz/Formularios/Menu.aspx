@@ -54,11 +54,12 @@
                                 </div>
                                 <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
                             </div>
-                            <div class="btnReturnClass">
-                                <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick" />
-                                <asp:Button runat="server" ID="btnCreateProduct" Style="display: none;" />
-                                <button type="button" class="btn btn-primary" onclick="Comprar();">Siguiente </button>
-                            </div>
+                        </div>
+                        <div class="btnReturnClass">
+                            <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick"/>
+                            <asp:Button runat="server" ID="btnCreateProduct"  style="display:none;"/>
+                            <button type="button" class="btn btn-primary" onclick="Comprar();"> Siguiente </button>
+                            <asp:Button runat="server" ID="btnPasarDatos" style="display:none" onclick="btnPasarDatosOnClick"/>
                         </div>
                         <div runat="server" id="notProductsCart" class="infoContainer" style="display: none;">
                             <div id="containerNotNewOrders">
@@ -145,7 +146,10 @@
                         });
                     } else {
                         document.getElementById('hiddenIdAddOrder').value = "1";
-                        document.getElementById('<%=btnCreateProduct.ClientID %>').click();
+                        document.getElementById('<%=btnPasarDatos.ClientID%>').click();
+                        
+                        //ONCLICK DEL BOTON CREAR PRODUCTO
+                        
                     }
 
                 }

@@ -12,6 +12,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
+
 namespace LaLombriz.Formularios
 {
     public partial class Menu : System.Web.UI.Page
@@ -25,9 +26,9 @@ namespace LaLombriz.Formularios
         private static Dictionary<string, string> pricestProduct = new Dictionary<string, string>();
         private static Dictionary<string, string> pricesSpecialProduct = new Dictionary<string, string>();
         private static Dictionary<int, Dictionary<string, string>> specialProductsName = new Dictionary<int, Dictionary<string, string>>();
-        private static Dictionary<string, Dictionary<string,string>> productsInfo = new Dictionary<string, Dictionary<string, string>>();
+        private static Dictionary<string, Dictionary<string, string>> productsInfo = new Dictionary<string, Dictionary<string, string>>();
         private static Dictionary<Dictionary<string, string>, Dictionary<string, string>> specialProductsInfo = new Dictionary<Dictionary<string, string>, Dictionary<string, string>>();
-        private static Dictionary<int,string[]> carroProductos = new Dictionary<int,string[]>();
+        private static Dictionary<int, string[]> carroProductos = new Dictionary<int, string[]>();
         public static ProductosPedidos pedidoContenido;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -45,9 +46,9 @@ namespace LaLombriz.Formularios
             }
             if (isCartOptionActivated)
             {
-                
+
             }
-            
+
         }
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
@@ -69,6 +70,7 @@ namespace LaLombriz.Formularios
                         ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Ocurrió un error, vuelve a intentarlo más tarde'})</script>");
                     }
                 }
+
                 drawInterface(0, descriptionProduct);
             }
             else
@@ -76,6 +78,8 @@ namespace LaLombriz.Formularios
                 ordersContainer.Style["display"] = "none";
                 notOrders.Style["display"] = "flex";
             }
+
+            drawInterface(0, descriptionProduct);
         }
         //Boton macarons
         public void btnBurgerOnClick(object sender, EventArgs e)
@@ -104,9 +108,10 @@ namespace LaLombriz.Formularios
                 ordersContainer.Style["display"] = "none";
                 notOrders.Style["display"] = "flex";
             }
+            drawInterface(0, descriptionProduct);
         }
         //Boton mesas de dulces
-        public void btnPackOnClick(object sender,EventArgs e)
+        public void btnPackOnClick(object sender, EventArgs e)
         {
             clearCollections();
             showSecondForm();
@@ -133,6 +138,8 @@ namespace LaLombriz.Formularios
                 ordersContainer.Style["display"] = "none";
                 notOrders.Style["display"] = "flex";
             }
+            drawInterface(2, descriptionProduct);
+
         }
         //Boton otros
         public void btnOtherOnClick(object sender, EventArgs e)
@@ -140,7 +147,7 @@ namespace LaLombriz.Formularios
             clearCollections();
             showSecondForm();
             //Se traen los productos "normales" aquellos que no tengan descripción.
-            productsName = getProducts(40,81);
+            productsName = getProducts(40, 81);
             //Se valida que haya datos en la lista
             if (productsName.Count > 0)
             {
@@ -188,16 +195,16 @@ namespace LaLombriz.Formularios
                 {
                     //La variable del nombre guardada en product
                     size = "-";
-                    Agregar(product, size, quantity,1);
+                    Agregar(product, size, quantity, 1);
                 }
             }
             else
             {
-                Agregar(product, size, quantity,0);
+                Agregar(product, size, quantity, 0);
             }
-            
+
         }
-        public void Agregar (string product, string size, string quantity, int caso) //Función para guardar el producto en el diccionario
+        public void Agregar(string product, string size, string quantity, int caso) //Función para guardar el producto en el diccionario
         {
             string[] productInformation = new string[3];
             productInformation[0] = product;
@@ -286,7 +293,7 @@ namespace LaLombriz.Formularios
                 }
                 drawInterfaceCart();
             }
-            
+
         }
         //Metodo para eliminar el pedido 
         public void btnDeleteOnClick(object sender, EventArgs args)
@@ -295,12 +302,12 @@ namespace LaLombriz.Formularios
             //Quitamos producto del diccionario
             carroProductos.Remove(Convert.ToInt32(idProduct));
             int aux = 0;
-            aux = (int)Session["NoProductos"]-1; //Descontamos una unidad al contador de productos 
+            aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
             if (aux == 0) //Eliminamos todos los pedidos
                 Session["NoProductos"] = null;
             else //Aún queda al menos un producto
                 Session["NoProductos"] = aux;
-            
+
             if (carroProductos.Count > 0)
             {
                 lblConteoCarro.Text = aux.ToString();
@@ -322,7 +329,7 @@ namespace LaLombriz.Formularios
         public int getIDProduct(string nombre, string tamaño) //Recuperamos el ID del producto que se añadió al carro
         {
             int id = 0;
-            string query = "SELECT ID_PRODUCTO FROM productos where NOMBRE_PRODUCTO='" + nombre+ "' AND TAMANIO='" + tamaño+"'";
+            string query = "SELECT ID_PRODUCTO FROM productos where NOMBRE_PRODUCTO='" + nombre + "' AND TAMANIO='" + tamaño + "'";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
@@ -367,26 +374,26 @@ namespace LaLombriz.Formularios
             specialProductsName.Clear();
         }
         //Método para mostrar productos
-        public void drawInterface(int numProduct,List<string>descriptions)
+        public void drawInterface(int numProduct, List<string> descriptions)
         {
-            int contProduct = 0,contTamanio=0;
+            int contProduct = 0, contTamanio = 0;
             StringBuilder sb = new StringBuilder();
-            foreach(KeyValuePair<string,Dictionary<string,string>> product in productsInfo)
+            foreach (KeyValuePair<string, Dictionary<string, string>> product in productsInfo)
             {
                 string nameImage = product.Key.Replace(" ", "_");
-                sb.Append("<div id='"+product.Key+"' class='infoProduct row col-xs-12 col-md-6'>");
-                sb.Append("<div id='image-container'class='imageContainer col-xs-12 col-md-6' style='background-image:url(../Recursos/Menu/"+nameImage+".jpg);'>");
+                sb.Append("<div id='" + product.Key + "' class='infoProduct row col-xs-12 col-md-6'>");
+                sb.Append("<div id='image-container'class='imageContainer col-xs-12 col-md-6' style='background-image:url(../Recursos/Menu/" + nameImage + ".jpg);'>");
                 sb.Append("</div>");
                 sb.Append("<div id='info-container' class='productContainer col-xs-12 col-md-6'>");
                 sb.Append("<div style='min-height:120px;'>");
                 sb.Append("<h2>" + product.Key + "</h2>");
                 sb.Append("</div>");
                 //Se valida si el producto es de la categoría de paquetes
-                if (numProduct==2)
+                if (numProduct == 2)
                 {
                     //Se agrega la parte de descripción y se aumenta en uno el contador
                     sb.Append("<h4>Descripción</h4>");
-                    sb.Append("<p style='text-align:justify;'>"+descriptions[contProduct]+"</p>");
+                    sb.Append("<p style='text-align:justify;'>" + descriptions[contProduct] + "</p>");
                     contProduct++;
                 }
                 //Se valida si el producto es macarons, pasteles u otros "normales"
@@ -417,12 +424,18 @@ namespace LaLombriz.Formularios
                             sb.Append("</label></span>");
                             sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
                         }
+                        sb.Append("<span style='float:left'>");
+                        sb.Append("<input class='form-check-input' type='radio' name='" + nameImage + "' id='" + nameImage + "" + contTamanio + "' value='" + prices.Key + "'>");
+                        sb.Append("<label class='form-check-label' for='" + nameImage + "" + contTamanio + "'>");
+                        sb.Append("&nbsp" + prices.Key);
+                        sb.Append("</label></span>");
+                        sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
                         contTamanio++;
                     }
                     sb.Append("<h4>Cantidad</h4>");
-                    sb.Append("<input type='number' id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    sb.Append("<input type='number' id='" + nameImage + "Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<div class='addToCart'>");
-                    sb.Append("<button id='"+nameImage+"' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
+                    sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
                     sb.Append("</div>");
                 }
                 else
@@ -436,7 +449,7 @@ namespace LaLombriz.Formularios
                         sb.Append("<p><strike>$" + prices.Value + "</strike> $"+ Convert.ToInt32(price*0.50) + "</p>");
                     }
                     sb.Append("<h4>Cantidad</h4>");
-                    sb.Append("<input type='number'  id='"+nameImage+"Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
+                    sb.Append("<input type='number'  id='" + nameImage + "Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<div class='addToCart'>");
                     sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
                     sb.Append("</div>");
@@ -445,21 +458,21 @@ namespace LaLombriz.Formularios
                 sb.Append("</div>");
                 //Se asigna la interfaz a la literal
                 ltProduct.Text = sb.ToString();
-            }   
+            }
         }
-        
+
         //Validación de fecha ingresada
         public bool FechaValida(string fecha_entrega)
         {
             DateTime fecha_actual;
             fecha_actual = DateTime.Today;
             string[] datos_creacion = fecha_actual.ToString().Split('/', ' ');
-            string[] datos_entrega = fecha_entrega.Split('/',' ');
+            string[] datos_entrega = fecha_entrega.Split('/', ' ');
             int dias_creacion = 0, dias_entrega = 0, condicion = 0;
             dias_creacion = dias_acum(Convert.ToInt32(datos_creacion[0]), Convert.ToInt32(datos_creacion[1])); //días acumulados hasta la fecha actual
             dias_entrega = dias_acum(Convert.ToInt32(datos_entrega[2]), Convert.ToInt32(datos_entrega[1])); //días acumulados hasta la fecha de entrega
             condicion = dias_entrega - dias_creacion;
-             if (condicion > 0) //Fecha valida
+            if (condicion > 0) //Fecha valida
             {
                 return true;
             }
@@ -485,7 +498,7 @@ namespace LaLombriz.Formularios
         }
         public bool GuardarPedido(int id_pedido, int id_usuario, string fe, string fc, float precio, int estatus)
         {
-            string query = "INSERT INTO pedidos (`id_pedido`,`id_usuario`, `fecha_entrega`, `fecha_creacion`, `precio`, `estatus`) VALUES ('"+id_pedido+"','" + id_usuario + "','" + fe + "', '" + fc + "', '" + precio + "', '" + estatus + "')";
+            string query = "INSERT INTO pedidos (`id_pedido`,`id_usuario`, `fecha_entrega`, `fecha_creacion`, `precio`, `estatus`) VALUES ('" + id_pedido + "','" + id_usuario + "','" + fe + "', '" + fc + "', '" + precio + "', '" + estatus + "')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -504,12 +517,12 @@ namespace LaLombriz.Formularios
             catch (Exception e)
             {
                 Console.WriteLine("Error " + e);
-                return false; 
+                return false;
             }
         }
         public void GuardarProductoPedido(int pedido, int producto, int cantidad)
         {
-            string query = "INSERT INTO productos_pedido(`id_pedido`,`id_producto`, `cantidad`) VALUES ('"+pedido+"','" + producto + "', '" + cantidad + "')";
+            string query = "INSERT INTO productos_pedido(`id_pedido`,`id_producto`, `cantidad`) VALUES ('" + pedido + "','" + producto + "', '" + cantidad + "')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -546,7 +559,7 @@ namespace LaLombriz.Formularios
                 {
                     while (reader.Read())
                     {
-                        contador= Convert.ToInt32(reader.GetString(0));
+                        contador = Convert.ToInt32(reader.GetString(0));
                     }
                 }
                 dbConnection.Close();
@@ -628,7 +641,7 @@ namespace LaLombriz.Formularios
                 sb.Append("<div id='" + producto.Key + "Order'  class='oneProduct'>");
                 sb.Append("<div class='containerDeleteOption'>");
                 sb.Append("<div class='dropdown'>");
-                sb.Append("<button class='btnDeleteOption' type='button' id='"+producto.Key+"' onclick='deleteProduct(this)'><img src='../Recursos/delete.png' alt='eliminar' class='imgDotOptions'/></button>");
+                sb.Append("<button class='btnDeleteOption' type='button' id='" + producto.Key + "' onclick='deleteProduct(this)'><img src='../Recursos/delete.png' alt='eliminar' class='imgDotOptions'/></button>");
                 sb.Append("</div>");
                 sb.Append("</div>");
                 sb.Append("<div class='tableInformation'>");
@@ -648,7 +661,7 @@ namespace LaLombriz.Formularios
                 sb.Append("</div>");
                 tbProductsCart.Text = sb.ToString();
             }
-        }   
+        }
         //Metodo para traer productos y llenar gridview
         public List<string> getProducts(int min, int max)
         {
@@ -681,17 +694,17 @@ namespace LaLombriz.Formularios
             }
         }
         //Metodo para traer productos y su descripcion de la sección "otros"
-        public Dictionary<int,Dictionary<string,string>> getSpecialProducts(int val1, int val2)
+        public Dictionary<int, Dictionary<string, string>> getSpecialProducts(int val1, int val2)
         {
             //Contador para llave de deccionario
             int contProducts = 0;
-            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO = "+val1+") OR (ID_PRODUCTO ="+ val2 + ")";
+            string query = "SELECT NOMBRE_PRODUCTO,DESCRIPCION FROM productos where (ID_PRODUCTO = " + val1 + ") OR (ID_PRODUCTO =" + val2 + ")";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
             MySqlDataReader reader;
             //Se crea diccionario conformado por un entero (llave) y otro diccionario, ese segundo esta conformado por el nombre de producto y la descripción del mismo
-            Dictionary<int, Dictionary<string,string>> listSpecialProduct = new Dictionary<int,Dictionary<string,string>>();
+            Dictionary<int, Dictionary<string, string>> listSpecialProduct = new Dictionary<int, Dictionary<string, string>>();
             try
             {
                 dbConnection.Open();
@@ -703,9 +716,9 @@ namespace LaLombriz.Formularios
                     {
                         //Creamos un diccionario "temporal" en el cual se le asigna el nombre del producto y la descripción
                         Dictionary<string, string> temporaryDictionary = new Dictionary<string, string>();
-                        temporaryDictionary.Add(reader.GetString(0),reader.GetString(1));
+                        temporaryDictionary.Add(reader.GetString(0), reader.GetString(1));
                         //Se agrega el contador y el diccionario temporal al diccionario principal
-                        listSpecialProduct.Add(contProducts,temporaryDictionary);
+                        listSpecialProduct.Add(contProducts, temporaryDictionary);
                         contProducts++;
 
                     }
@@ -721,14 +734,14 @@ namespace LaLombriz.Formularios
             }
         }
         //Metodo para traer precios de los productos
-        public Dictionary<string,string> getPricesProduct(string nameProduct)
+        public Dictionary<string, string> getPricesProduct(string nameProduct)
         {
             string query = "SELECT TAMANIO,PRECIO FROM `productos` WHERE NOMBRE_PRODUCTO='" + nameProduct + "'";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
             MySqlDataReader reader;
-            Dictionary<string,string> listCost = new Dictionary<string, string>();
+            Dictionary<string, string> listCost = new Dictionary<string, string>();
             try
             {
                 dbConnection.Open();
@@ -738,20 +751,20 @@ namespace LaLombriz.Formularios
                 {
                     while (reader.Read())
                     {
-                        listCost.Add(reader.GetString(0),reader.GetString(1));
+                        listCost.Add(reader.GetString(0), reader.GetString(1));
                     }
                 }
                 dbConnection.Close();
                 return listCost;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Error " + e);
                 return listCost;
             }
         }
         //Metodo para traer descripciones de productos
-        public List<string> getDescriptionProducts(int min,int max)
+        public List<string> getDescriptionProducts(int min, int max)
         {
             string query = "SELECT DESCRIPCION FROM `productos` WHERE (id_producto BETWEEN " + min + " AND " + max + ")";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
@@ -841,7 +854,7 @@ namespace LaLombriz.Formularios
                 {
                     while (reader.Read())
                     {
-                        usuario = new Usuario(reader.GetString(0), reader.GetString(1), "", reader.GetString(2),idUser);
+                        usuario = new Usuario(reader.GetString(0), reader.GetString(1), "", reader.GetString(2), idUser);
                     }
                 }
                 dbConnection.Close();
@@ -912,6 +925,28 @@ namespace LaLombriz.Formularios
                 Console.WriteLine("Error: " + e);
                 return producto;
             }
+        }
+
+        //Pasar datos al formulario de pago
+        public void btnPasarDatosOnClick(object sender, EventArgs args)
+        {
+            int identificador = 0, cantidad = 0;
+            float total = 0, precio = 0;
+            string cadenaIds = "", cadenasCantidad = "";
+            foreach (KeyValuePair<int, string[]> producto in carroProductos) //Calculamos el total a pagar 
+            {
+                identificador = producto.Key;
+                cantidad = Convert.ToInt32(producto.Value[2]);
+                precio = getPrecio(identificador);
+                total = total + (precio * cantidad);
+                cadenaIds += Convert.ToString(identificador) + "/";
+                cadenasCantidad += Convert.ToString(cantidad) + "/";
+            }
+            Session["Monto"] = total; //Guardamos el total en la variable de sesión
+            Session["IDs_Prdocutos"] = cadenaIds;
+            Session["Cantidades_Productos"] = cadenasCantidad;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script> window.open('Pago.aspx',null,'centerscreen'); </script>");
+
         }
     }
 }
