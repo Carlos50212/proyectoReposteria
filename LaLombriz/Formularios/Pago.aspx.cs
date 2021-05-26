@@ -32,30 +32,32 @@ namespace LaLombriz.Formularios
             string[] cantidadesProd = cadenaCantidades.Split('/');
             productos = Convert.ToInt32(Session["NoProductos"]);
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i<productos; i++)
+            sb.Append("<div id='allDescription'>");
+            sb.Append("<div class='tableInformation'>");
+            sb.Append("<table class='table table-borderless tableNewOrder'>");
+            sb.Append("<thead>");
+            sb.Append("<tr>");
+            sb.Append("<th scope='col' style='width:200px;padding-left: 20px;'>Descripción</th><th scope='col' style='width:200px;text-align:center;'>Precio</th>");
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            for (int i = 0; i < productos; i++)
             {
                 info = getInforProduct(idproductos[i]);
                 string[] informacion = info.Split('/');
-                sb.Append("<div id='" + i+1 + "Order'  class='oneProduct'>");
-                sb.Append("<div class='containerDeleteOption'>");
-                sb.Append("<div class='tableInformation'>");
-                sb.Append("<table class='table table-borderless tableNewOrder'>");
-                sb.Append("<thead>");
-                sb.Append("<tr>");
-                sb.Append("<th scope='col' style='width:200px'>Nombre de producto</th><th scope='col' style='width:200px'>Tamaño</th><th scope='col' style='width:200px'>Cantidad</th><th scope='col' style='width:200px'>Precio</th>");
+                sb.Append("<tr id='" + i + 1 + "Order' class='oneProduct'>");
+                sb.Append("<td style='padding-left: 20px;'>" + informacion[0] + " - " + informacion[1] +" (x"+ cantidadesProd[i] + ")</td><td style='text-align:center;'> $" + informacion[2] + "</td>");
                 sb.Append("</tr>");
-                sb.Append("</thead>");
-                sb.Append("<tbody>");
-                sb.Append("<tr>");
-                sb.Append("<td>" + informacion[0] + "</td><td>" + informacion[1] + "</td><td>" + cantidadesProd[i] + "pz</td><td> $" + informacion[2] + "</td>");
-                sb.Append("</tr>");
-                sb.Append("</tbody>");
-                sb.Append("</table>");
-                sb.Append("</div>");
-                sb.Append("</div>");
-                tbProductsOrder.Text = sb.ToString();
                 info = " ";
             }
+            sb.Append("<tr id='totalOrder'>");
+            sb.Append("<td style='text-align:right;'><b>Total: </b></td><td style='text-align:center;'> $Aquí va el total</td>");
+            sb.Append("</tr>");
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            tbProductsOrder.Text = sb.ToString();
         }
         public string getInforProduct(string id) //Recuperamos la info del producto
         {

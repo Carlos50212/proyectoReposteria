@@ -53,6 +53,7 @@ namespace LaLombriz.Formularios
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
         {
+            List<String> getProductsExist = new List<string>();
             clearCollections();
             showSecondForm();
             productsName = getProducts(1, 15);
@@ -424,12 +425,6 @@ namespace LaLombriz.Formularios
                             sb.Append("</label></span>");
                             sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
                         }
-                        sb.Append("<span style='float:left'>");
-                        sb.Append("<input class='form-check-input' type='radio' name='" + nameImage + "' id='" + nameImage + "" + contTamanio + "' value='" + prices.Key + "'>");
-                        sb.Append("<label class='form-check-label' for='" + nameImage + "" + contTamanio + "'>");
-                        sb.Append("&nbsp" + prices.Key);
-                        sb.Append("</label></span>");
-                        sb.Append("<span style='float:right'>" + prices.Value + "</span></br></br>");
                         contTamanio++;
                     }
                     sb.Append("<h4>Cantidad</h4>");
@@ -736,7 +731,7 @@ namespace LaLombriz.Formularios
         //Metodo para traer precios de los productos
         public Dictionary<string, string> getPricesProduct(string nameProduct)
         {
-            string query = "SELECT TAMANIO,PRECIO FROM `productos` WHERE NOMBRE_PRODUCTO='" + nameProduct + "'";
+            string query = "SELECT TAMANIO,PRECIO FROM `productos` WHERE NOMBRE_PRODUCTO='" + nameProduct + "' AND STOCK>0";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
