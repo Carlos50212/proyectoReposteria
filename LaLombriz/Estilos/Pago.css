@@ -1,9 +1,32 @@
-﻿body{
-    background-color:red;
+﻿body {
+    background-color: #E9E6E6;
 }
 .sandbox-badge {
     display: none;
 }
 .layout__col-sidebar{
     display:none;
+}
+.oneProduct {
+    border-bottom: 1px solid #C6C1C2;
+}
+#sellOption {
+    display: flex;
+    justify-content: flex-end;
+    padding: 50px 10px 0px 0px;
+}
+#title-cart-container{
+    text-align:center;
+}
+@media(min-width:680px){
+    .cartProductsContainer {
+        padding: 50px 50px 10px 60px;
+    }
+
+    .tableInformation {
+        padding: 0px 35px 0px 35px;
+    }
+    #sellOption {
+        padding: 50px 84px 0px 0px;
+    }
 }
