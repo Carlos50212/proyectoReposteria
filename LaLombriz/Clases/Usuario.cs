@@ -39,8 +39,9 @@ namespace LaLombriz.Clases
             this.correo = correo;
             this.pass = pass;
         }
-        public Usuario(string correo) //constructor para validación
+        public Usuario(UsuariosBD userBD,string correo) //constructor para validación
         {
+            this.userBD = userBD;
             this.correo = correo;
         }
         public Usuario (string nombre, string correo,string pass, string telefono)  //constructor sobrecargado

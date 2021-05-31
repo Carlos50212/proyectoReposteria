@@ -167,8 +167,10 @@ namespace LaLombriz.Formularios
                     document.Open();
                     //Header
                     //Insertamos logo
-                    iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\Gio\\Documents\\proyectosDotNet\\LaLombriz\\LaLombriz\\Recursos\\imagen.png");
-                    //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance("C:\\Users\\CARLOS\\proyecto\\LaLombriz\\Recursos\\imagen.png");
+                    //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(patimage);
+                    string pathImage = Server.MapPath("~/Recursos/") + "imagen.png";
+                    iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(pathImage);
+                  
                     logo.BorderWidth = 0;
                     //Tamaño 
                     logo.ScaleToFit(80f, 80f);
@@ -422,7 +424,8 @@ namespace LaLombriz.Formularios
         public void downloadPDFOnClick(object sender, EventArgs args)
         {
             archivoPDF pdfFile = new archivoPDF(pedidoContenido);
-            pdfFile.createPDF();
+            string pathImage = Server.MapPath("~/Recursos/") + "imagen.png";
+            pdfFile.createPDF(pathImage);
         }
         //Metodo para dibujar los pedidos recientes que tiene el usuario
         public void drawInterfaceNewOrder()

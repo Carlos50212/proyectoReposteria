@@ -123,31 +123,54 @@ function updateProduct(){
     var descripcion = $('#txtDescription').val();
     var precio = $('#txtPrice').val();
     var stock = $('#txtStock').val();
+    console.log("STOCK: " + stock);
     if (descripcion === "" || precio === "" || stock === "") {
         Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Favor de no dejar campos vacíos'
         });
-    }
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "Inventarios.aspx/updateProduct",
-        dataType: "json",
-        data: "{idProducto:'" + inventarioId + "', descripcion: '" + descripcion + "', precio:'" + precio + "', disponible:'" + stock + "'}",
-        success: function (result) {
-            console.log("FUNCIONA");
+    } else {
+        if (precio < 10) {
             Swal.fire({
-                icon: 'success',
-                title: 'Producto actualizado correctamente',
-                showConfirmButton: true
-            }).then(function () {
-                location.reload();
+                icon: 'error',
+                title: 'Error',
+                text: 'El precio de venta mínimo debe de ser de $10'
             });
-        },
-        error: function (result) {
-            console.log("NO FUNCIONA" + result);
+        } else {
+            if (stock < 1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El stock debe de ser mínimo de 1pz'
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "Inventarios.aspx/updateProduct",
+                    dataType: "json",
+                    data: "{idProducto:'" + inventarioId + "', descripcion: '" + descripcion + "', precio:'" + precio + "', disponible:'" + stock + "'}",
+                    success: function (result) {
+                        console.log("FUNCIONA" + result);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Producto actualizado correctamente',
+                            showConfirmButton: true
+                        }).then(function () {
+                            location.reload();
+                        });
+                    },
+                    error: function (result) {
+                        console.log("NO FUNCIONA" + result);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ocurrió un error, favor de intentarlo más tarde',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+            }
         }
-    });
+    }
 }

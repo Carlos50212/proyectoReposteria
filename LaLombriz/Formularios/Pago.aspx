@@ -29,13 +29,15 @@
              </div>
          </div>
     </form>
-    <div id="sellOption">
-        <form action="https://localhost:44393/api/myApi/Pago" method="post">
-            <asp:Literal runat="server" ID="pagoscript"></asp:Literal>
-            <input runat="server" type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
-            <input runat="server" type="hidden" name="correo" id="correo" value="" />
-            <input type="hidden" name="description" id="description" value="Compra LaLombriz"/>
-        </form>
+    <div id="sell-container">
+        <div id="sellOption">
+            <form action="https://localhost:44393/api/myApi/Pago" method="post">
+                <asp:Literal runat="server" ID="pagoscript"></asp:Literal>
+                <input runat="server" type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
+                <input runat="server" type="hidden" name="correo" id="correo" value="" />
+                <input type="hidden" name="description" id="description" value="Compra LaLombriz" />
+            </form>
+        </div>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

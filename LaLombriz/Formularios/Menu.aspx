@@ -57,7 +57,6 @@
                             </div>
                             <div class="btnReturnClass">
                                 <asp:Button runat="server" ID="btnReturnMenu" CssClass="btn btn-secondary" Text="Regresar" OnClick="btnReturnMenuOnlick" />
-                                <asp:Button runat="server" ID="btnCreateProduct" Style="display: none;" />
                                 <button type="button" class="btn btn-primary" onclick="Comprar();">Siguiente </button>
                                 <asp:Button runat="server" ID="btnPasarDatos" Style="display: none" OnClick="btnPasarDatosOnClick" />
                             </div>

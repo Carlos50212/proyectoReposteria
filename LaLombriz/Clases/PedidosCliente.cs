@@ -43,6 +43,11 @@ namespace LaLombriz.Clases
             List<PedidosCliente> pedidos = this.pedidosClienteBD.getOrdersModel(strConnection, estatus);
             return pedidos;
         }
+        public virtual PedidosCliente getOrder(string strConnection,int idPedido)
+        {
+            PedidosCliente pedidos = this.pedidosClienteBD.getOrderModel(strConnection, idPedido);
+            return pedidos;
+        }
         public virtual bool deliverOrder(string strConnection,int idOrder)
         {
             return this.pedidosClienteBD.deliverOrderModel(strConnection, idOrder);

@@ -23,7 +23,7 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = true)]
         public static string getAllSellsDay()
         {
-            DateTime fecha = DateTime.Now;
+            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
             Ventas ventas = new Ventas(new VentasBD());
             Productos productos = new Productos(new ProductosModel());
 

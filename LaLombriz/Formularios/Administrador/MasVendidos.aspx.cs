@@ -25,7 +25,7 @@ namespace LaLombriz.Formularios.Administrador
         {
             //int sizeDay = 3;
             //int sizeMonth = 3;
-            DateTime fecha = DateTime.Now;
+            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
             Ventas ventas = new Ventas(new VentasBD());
             Ventas ventaTmp = new Ventas();
             Productos productos = new Productos(new ProductosModel());

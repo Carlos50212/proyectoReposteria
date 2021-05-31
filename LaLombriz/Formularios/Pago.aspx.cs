@@ -43,6 +43,7 @@ namespace LaLombriz.Formularios
             int productos = 0;
             string info = " ";
             double total = 0;
+            double subtotal = 0;
             string cadenaID = Session["IDs_Productos"].ToString();
             string cadenaCantidades = Session["Cantidades_Productos"].ToString();
             string[] idproductos = cadenaID.Split('/');
@@ -54,7 +55,7 @@ namespace LaLombriz.Formularios
             sb.Append("<table class='table table-borderless tableNewOrder'>");
             sb.Append("<thead>");
             sb.Append("<tr>");
-            sb.Append("<th scope='col' style='width:200px;padding-left: 20px;'>Descripción</th><th scope='col' style='width:200px;text-align:center;'>Precio</th>");
+            sb.Append("<th scope='col' style='width:100px;padding-left: 20px;'>Descripción</th><th scope='col' style='width:200px;text-align:center;'>Precio</th>");
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
@@ -69,6 +70,7 @@ namespace LaLombriz.Formularios
                 total += Convert.ToDouble(cantidadesProd[i]) * Convert.ToDouble(informacion[2]);
                 info = " ";
             }
+            subtotal = total;
             if (total > 300)
             {
                 total = total - (total * .2);
@@ -80,6 +82,13 @@ namespace LaLombriz.Formularios
             aux = valor.ToString("0.00");
             Session["Monto"] = aux;
             //transactionAmount.Value = Session["Monto"].ToString();
+            sb.Append("<tr id='subOrder'>");
+            sb.Append("<td style='text-align:right;'><b>Subtotal: </b></td><td style='text-align:center;'> $" + subtotal + "</td>");
+            if (subtotal > 300)
+            {
+                sb.Append("<td style='text-align:left;width:20px;'><b>-20%</b></td>");
+            }
+            sb.Append("</tr>");
             sb.Append("<tr id='totalOrder'>");
             sb.Append("<td style='text-align:right;'><b>Total: </b></td><td style='text-align:center;'> $"+Session["Monto"].ToString()+"</td>");
             sb.Append("</tr>");
@@ -188,8 +197,8 @@ namespace LaLombriz.Formularios
                     if(oldquantity!=-1)
                     ActualizarStock(identificador, oldquantity, quantity); //Actualizamos el stock del producto descontando la cantidad comprada del mismo
                 }
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: '¡Gracias por tu compra!',text: 'Tu pedido ha sido generado, puedes checarlo en tu Sección de Pedidos por Entregar'})</script>");
-                Response.Redirect("/Formularios/Menu.aspx?metric=1asd");
+                Session["isDone"] = 1;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: '¡Gracias por tu compra!',text: 'Tu pedido ha sido generado, puedes checarlo en tu Sección de Pedidos por Entregar'}).then(function () {window.location.href = '/Formularios/Menu.aspx?metric=1asd';})</script>");
             }
             else
             {
