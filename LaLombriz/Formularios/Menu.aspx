@@ -50,6 +50,7 @@
                                     <p>Seleccione la fecha de entrega</p>
                                     <div class='input-group date' id='datetimepicker1'>
                                         <input id="calendario" />
+                                        <input type='text' name='ValorCalendario' id="ValorCalendario" class="form-control" style="display:none" />
                                     </div>
                                 </div>
                                 <asp:Literal runat="server" ID="tbProductsCart"></asp:Literal>
@@ -145,11 +146,9 @@
                             text: 'Favor de ingresar una fecha superior a la fecha actual'
                         });
                     } else {
+                        document.getElementById('ValorCalendario').value = date;
                         document.getElementById('hiddenIdAddOrder').value = "1";
                         document.getElementById('<%=btnPasarDatos.ClientID%>').click();
-                        
-                        //ONCLICK DEL BOTON CREAR PRODUCTO
-                        
                     }
 
                 }

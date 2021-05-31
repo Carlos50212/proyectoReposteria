@@ -40,7 +40,7 @@ namespace LaLombriz.Modelos
         {
             Usuario user = null;
             //Sentencia
-            string query = "SELECT NOMBRE_USUARIO,PASSWORD, CORREO, TELEFONO,ID_USUARIO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
+            string query = "SELECT NOMBRE_USUARIO, CORREO, PASSWORD,TELEFONO,ID_USUARIO FROM usuarios  WHERE correo='" + mail + "' AND password='" + contra + "'";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);

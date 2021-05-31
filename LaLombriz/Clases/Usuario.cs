@@ -22,6 +22,7 @@ namespace LaLombriz.Clases
         {
             this.nombre = nombre;
             this.correo = correo;
+            this.pass = pass;
             this.telefono = telefono;
             this.idUsuario = idUsuario;
         }

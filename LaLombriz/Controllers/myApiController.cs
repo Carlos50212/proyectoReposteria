@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using LaLombriz.Clases;
 using MercadoPago.Client.Common;
@@ -22,6 +21,7 @@ namespace LaLombriz.Controllers
         {
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 MercadoPagoConfig.AccessToken = "TEST-3969616877780286-040702-dea28e2430645874fedab6a0223727c6-169461027";
                 pago.transactionAmount = HttpUtility.HtmlEncode(pago.transactionAmount);
                 pago.correo = HttpUtility.HtmlEncode(pago.correo);
@@ -50,11 +50,12 @@ namespace LaLombriz.Controllers
                 var client = new PaymentClient();
                 Payment payment = await client.CreateAsync(paymentRequest);
                 Console.WriteLine(payment.Status);
-                return Redirect("https://localhost:44393//Formularios/Menu.aspx");
+                return Redirect("https://localhost:44393//Formularios/Pago.aspx"+"?status="+payment.Status); 
                 //return Request.CreateResponse(HttpStatusCode.OK, payment.Status);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return Redirect("https://localhost:44393//Formularios/Inicio.aspx");
                 //return Request.CreateResponse(HttpStatusCode.OK, "Algo salió mal dentro del controlador :u");
             }
