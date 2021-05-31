@@ -18,15 +18,25 @@
 #title-cart-container{
     text-align:center;
 }
+#detailOrder {
+    display: flex;
+    justify-content: center;
+}
 @media(min-width:680px){
     .cartProductsContainer {
-        padding: 50px 50px 10px 60px;
+        padding: 150px 120px 10px 120px;
+        width: 1140px;
     }
 
     .tableInformation {
         padding: 0px 35px 0px 35px;
     }
     #sellOption {
-        padding: 50px 84px 0px 0px;
+        padding: 50px 148px 0px 0px;
+        width: 1140px;
+    }
+    #sell-container {
+        display: flex;
+        justify-content: center;
     }
 }

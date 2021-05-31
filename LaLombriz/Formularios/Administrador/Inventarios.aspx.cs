@@ -43,10 +43,8 @@ namespace LaLombriz.Formularios.Administrador
         [ScriptMethod(UseHttpGet = false)]
         public static bool updateProduct(string idProducto,string descripcion, string precio,string disponible)
         {
-            Productos producto = new Productos();
-
+            Productos producto = new Productos(new ProductosModel());
             bool isUpdated = producto.updateProduct(strConnection, Convert.ToInt32(idProducto), descripcion, Convert.ToDouble(precio), Convert.ToInt32(disponible));
-
             return isUpdated;
         }
     }

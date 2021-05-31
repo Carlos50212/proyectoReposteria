@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Text;
+using LaLombriz.Modelos;
 
 namespace LaLombriz.Formularios
 {
@@ -39,7 +40,7 @@ namespace LaLombriz.Formularios
                     if (CompPass(txtUserPasswd.Text, txtConfirmPasswd.Text))
                     {
                         //Las contraseñas coinciden y verificamos que el correo no este registrado previamente
-                        Usuario prueba = new Usuario(txtUserEmail.Text);
+                        Usuario prueba = new Usuario(new UsuariosBD(),txtUserEmail.Text);
                         if (prueba.CorreoDoble(strConnection))
                         {
                             //Alerta o modal avisando que el correo ya está registrado
@@ -50,7 +51,7 @@ namespace LaLombriz.Formularios
                             string pass = "";
                             Security encriptador = new Security();
                             pass = encriptador.encriptar(txtUserPasswd.Text);
-                            Usuario usuario = new Usuario(txtUserName.Text, txtUserEmail.Text, pass, txtUserPhone.Text);
+                            Usuario usuario = new Usuario(new UsuariosBD(),txtUserName.Text, txtUserEmail.Text, pass, txtUserPhone.Text);
                             if (usuario.createUser(strConnection))
                             {
                                 txtUserName.Text = "";

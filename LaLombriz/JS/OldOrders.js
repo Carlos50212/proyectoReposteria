@@ -137,3 +137,8 @@ function buildModalDetails(details) {
 
 
 }
+function cleanInterface() {
+    $('#modal-see-order').modal('hide');
+    detailsContent = document.getElementById("productos-container");
+    detailsContent.innerHTML = "";
+}

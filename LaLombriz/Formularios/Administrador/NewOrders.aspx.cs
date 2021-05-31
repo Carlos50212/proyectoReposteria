@@ -69,10 +69,57 @@ namespace LaLombriz.Formularios.Administrador
         public static bool deliverOrder(int idPedido)
         {
             PedidosCliente pedidoCliente = new PedidosCliente(new PedidosClienteBD());
+            ProductosPedidos productosPedidos = new ProductosPedidos();
+            Productos productoC = new Productos(new ProductosModel());
+            Ventas ventas = new Ventas(new VentasBD());
+            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+            double priceUnit = 0;
+            bool isSaved = false;
+            bool isNew = true;
 
-            bool isDelivered = pedidoCliente.deliverOrder(strConnection, idPedido);
+            pedidoCliente.deliverOrder(strConnection, idPedido);
+            PedidosCliente pedido = pedidoCliente.getOrder(strConnection, idPedido);
+            List<ProductosPedidos> productos = productosPedidos.getProductOrder(strConnection, pedido.Id_pedido);
+            List<Ventas> sellsPerDay = ventas.getAllSellsDayWD(fecha, strConnection);
 
-            return isDelivered;
+
+            foreach(ProductosPedidos producto in productos)
+            {
+                Productos prod = productoC.getProduct(strConnection, producto.Id_producto);
+                string subcadenaPastel = prod.Nombre_producto.Substring(0, 6);
+                string subcadenaPaq = prod.Nombre_producto.Substring(0, 7);
+                priceUnit = prod.Precio;
+                if (subcadenaPastel == "Pastel" && prod.Tamanio == "Grande")
+                {
+                    priceUnit = prod.Precio - (prod.Precio * .25);
+                }
+                else
+                {
+                    if (subcadenaPaq == "Paquete")
+                    {
+                        priceUnit = prod.Precio - (prod.Precio * .50);
+                    }
+                }
+
+                foreach (Ventas venta in sellsPerDay)
+                {
+                    if(producto.Id_producto == venta.IdProduct)
+                    {
+                        int total = producto.Cantidad + venta.Unidades;
+                        double totalPrice = venta.Total + (priceUnit * producto.Cantidad);
+                        ventas.updateProduct(producto.Id_producto,fecha,total,totalPrice, strConnection);
+                        isNew = false;
+                    }
+                }
+                if (isNew)
+                {
+                    double totalPriceNew = priceUnit * producto.Cantidad;
+                    ventas.newProduct(producto.Id_producto, fecha, producto.Cantidad, totalPriceNew, strConnection);
+                }
+            }
+            isSaved = true;
+            return isSaved; 
+
         }
 
         [WebMethod]

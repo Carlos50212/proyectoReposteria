@@ -33,29 +33,33 @@ namespace LaLombriz.Formularios
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             try
             {
-                PagoFinalizado();
+                if (Convert.ToInt32(Session["isDone"]) == 1)
+                {
+                    PagoFinalizado();
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-                btnCreateProduct.Attributes.Add("OnClick", "window.open('Pago.aspx',null,'centerscreen');");
-                if (!IsPostBack)
-                {
-                    productsContainer.Visible = false;
-                    lblConteoCarro.Text = "0";
+            //btnCreateProduct.Attributes.Add("OnClick", "window.open('Pago.aspx',null,'centerscreen');");
+            if (!IsPostBack)
+            {
+                productsContainer.Visible = false;
+                lblConteoCarro.Text = "0";
                     //tableCake.Visible = false;
-                }
-                if (Session["NoProductos"] != null)
-                {
-                    lblConteoCarro.Text = ((int)Session["NoProductos"]).ToString();
-                }
-                if (isCartOptionActivated)
-                {
+            }
+            if (Session["NoProductos"] != null)
+            {
+                lblConteoCarro.Text = ((int)Session["NoProductos"]).ToString();
+            }
+            if (isCartOptionActivated)
+            {
 
-                }
+            }
         }
         //Boton pasteles
         public void btnCakeOnClick(object sender, EventArgs e)
@@ -421,7 +425,7 @@ namespace LaLombriz.Formularios
                             sb.Append("<label class='form-check-label' for='" + nameImage + "" + contTamanio + "'>");
                             sb.Append("&nbsp" + prices.Key);
                             sb.Append("</label></span>");
-                            sb.Append("<span style='float:right'><strike>$" + prices.Value + "</strike> $" + Convert.ToInt32(price*0.25) + "</span></br></br>");
+                            sb.Append("<span style='float:right'><strike>$" + prices.Value + "</strike> $" + (price - Convert.ToInt32(price*0.25)) + "</span></br></br>");
                         }
                         else
                         {
@@ -448,7 +452,7 @@ namespace LaLombriz.Formularios
                     foreach (KeyValuePair<string, string> prices in product.Value)
                     {
                         double price = Convert.ToDouble(prices.Value);
-                        sb.Append("<p><strike>$" + prices.Value + "</strike> $"+ Convert.ToInt32(price*0.50) + "</p>");
+                        sb.Append("<p><strike>$" + prices.Value + "</strike> $"+(price - Convert.ToInt32(price*0.50)) + "</p>");
                     }
                     sb.Append("<h4>Cantidad</h4>");
                     sb.Append("<input type='number'  id='" + nameImage + "Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
@@ -950,38 +954,36 @@ namespace LaLombriz.Formularios
             Session["IDs_Productos"] = cadenaIds;
             Session["Cantidades_Productos"] = cadenasCantidad;
             Session["FechaEntrega"] = fecha_validar;
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script> window.open('Pago.aspx',null,'centerscreen'); </script>");
+            Response.Redirect("/Formularios/Pago.aspx");
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script> window.open('Pago.aspx',null,'centerscreen'); </script>");
         }
         public void PagoFinalizado()
         {
             string valor = "";
-            valor = Convert.ToString(Request.QueryString["metric"]);
-            if (valor == "1asd")
+            int veces = 0;
+            veces = Convert.ToInt32(Session["NoProductos"]); // Cantidad productos comprados
+            string cadenaID = Session["IDs_Productos"].ToString(); //String de IDs
+            string[] idproductos = cadenaID.Split('/'); //IDs separados
+            for (int j = 0; j < veces; j++)
             {
-                int veces = 0;
-                veces = Convert.ToInt32(Session["NoProductos"]); // Cantidad productos comprados
-                string cadenaID = Session["IDs_Productos"].ToString(); //String de IDs
-                string[] idproductos = cadenaID.Split('/'); //IDs separados
-                for (int j = 0; j < veces; j++)
-                {
-                    carroProductos.Remove(Convert.ToInt32(idproductos[j]));
-                    int aux = 0;
-                    aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
-                    if (aux == 0) //Eliminamos todos los productos
-                        Session["NoProductos"] = null;
-                    else //Aún queda al menos un producto
-                        Session["NoProductos"] = aux;
-                }
-                lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
-                detailCart.Style["display"] = "none";
-                notProductsCart.Style["display"] = "flex";
-                Session["Monto"] = null; //Guardamos el total en la variable de sesión
-                Session["IDs_Productos"] = null;
-                Session["Cantidades_Productos"] = null;
-                Session["FechaEntrega"] = null;
-                valor = "";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess","<script> window.close(); </script>");
+                carroProductos.Remove(Convert.ToInt32(idproductos[j]));
+                int aux = 0;
+                aux = (int)Session["NoProductos"] - 1; //Descontamos una unidad al contador de productos 
+                if (aux == 0) //Eliminamos todos los productos
+                    Session["NoProductos"] = null;
+                else //Aún queda al menos un producto
+                    Session["NoProductos"] = aux;
             }
+            lblConteoCarro.Text = "0"; //Por motivos esteticos pintamos el cero de manera inmediata antes del refresh de la página
+            detailCart.Style["display"] = "none";
+            notProductsCart.Style["display"] = "none";
+            Session["Monto"] = null; //Guardamos el total en la variable de sesión
+            Session["IDs_Productos"] = null;
+            Session["Cantidades_Productos"] = null;
+            Session["FechaEntrega"] = null;
+            valor = "";
+            Session["isDone"] = 0;
+            carroProductos.Clear();
         }
     }
 }
