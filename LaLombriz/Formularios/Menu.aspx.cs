@@ -205,14 +205,33 @@ namespace LaLombriz.Formularios
                 }
                 else if (discriminador == 0) // El producto es un paquete
                 {
-                    //La variable del nombre guardada en product
-                    size = "-";
-                    Agregar(product, size, quantity, 1);
+                    int stock = 0;
+                    stock = Convert.ToInt32(RecuperarStockProd(product, size,1));
+                    if (stock < Convert.ToInt32(quantity))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Lo sentimos!',text: 'Por el momento nuestros almacenes no tienen la cantidad suficiente del producto que necesitas. Al momento solo tenemos: "+Convert.ToString(stock)+" unidades del mismo.'})</script>");
+                    }
+                    else
+                    {
+                        //La variable del nombre guardada en product
+                        size = "-";
+                        Agregar(product, size, quantity, 1);
+                    }
+                    
                 }
             }
             else
             {
-                Agregar(product, size, quantity, 0);
+                int stock = 0;
+                stock = Convert.ToInt32(RecuperarStockProd(product, size,0));
+                if (stock < Convert.ToInt32(quantity))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'warning',title: '¡Lo sentimos!',text: 'Por el momento nuestros almacenes no tienen la cantidad suficiente del producto que necesitas. Al momento solo tenemos: " + Convert.ToString(stock) + " unidades del mismo.'})</script>");
+                }
+                else
+                {
+                    Agregar(product, size, quantity, 0);
+                }
             }
 
         }
@@ -455,6 +474,7 @@ namespace LaLombriz.Formularios
                         sb.Append("<p><strike>$" + prices.Value + "</strike> $"+(price - Convert.ToInt32(price*0.50)) + "</p>");
                     }
                     sb.Append("<h4>Cantidad</h4>");
+                    
                     sb.Append("<input type='number'  id='" + nameImage + "Quantity' value='1' min='1' max='1000' step='1' class='quantity'/></br></br>");
                     sb.Append("<div class='addToCart'>");
                     sb.Append("<button id='" + nameImage + "' type='button' class='btn btn-primary' onclick='getID(this)'>Agregar</button>");
@@ -464,6 +484,45 @@ namespace LaLombriz.Formularios
                 sb.Append("</div>");
                 //Se asigna la interfaz a la literal
                 ltProduct.Text = sb.ToString();
+            }
+        }
+
+        public string RecuperarStockProd(string nombre, string tamanio, int tipo)
+        {
+            string resultado ="";
+            string query = "";
+            if(tipo == 1)
+            {
+                query = "SELECT STOCK FROM productos where NOMBRE_PRODUCTO='" + nombre + "'";
+            }
+            if(tipo == 0)
+            {
+                query = "SELECT STOCK FROM productos where NOMBRE_PRODUCTO='" + nombre + "' AND TAMANIO='" + tamanio + "'";
+            }
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        resultado = reader.GetString(0);
+                    }
+                }
+                dbConnection.Close();
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                //Mensjae de error
+                Console.WriteLine("Error" + e);
+                return "";
             }
         }
 

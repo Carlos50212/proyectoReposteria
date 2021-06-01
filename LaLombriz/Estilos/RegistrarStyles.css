@@ -32,7 +32,7 @@ video {
 }
 #create-container {
     background-color: white;
-    height: 526px;
+    min-height: 526px;
     width: 440px;
     color: black;
     border-radius: 20px;
@@ -48,7 +48,7 @@ video {
 
 #footer-create {
     text-align: end;
-    padding-right: 20px;
+    padding: 20px 20px 20px 0px
 }
 /*RESPONSIVE DESIGN*/
 @media (min-width:992px) {

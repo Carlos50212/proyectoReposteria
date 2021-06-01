@@ -32,7 +32,7 @@ video {
 }
 #login-container {
     background-color: white;
-    height: 400px;
+    min-height:400px;
     width: 440px;
     color: black;
     border-radius: 20px;
@@ -46,7 +46,7 @@ video {
 }
 #footer-login {
     text-align: center;
-    padding-top: 20px;
+    padding: 20px 0px 20px 0px;
 }
 /*RESPONSIVE DESIGN*/
 @media (min-width:992px) {

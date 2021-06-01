@@ -15,6 +15,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
     <link href="../Estilos/RegistrarStyles.css" rel="stylesheet" />
+    <script src="../JS/LoginJS.js"></script>
 </head>
 <body>
     <form id="newAccount" runat="server">
@@ -28,16 +29,16 @@
                 </div>
                 <div id="content-create">
                     <div class="form-floating mb-3">
-                        <asp:TextBox runat="server" ID="txtUserName" class="form-control" placeholder="Nombre de usuario"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtUserName" onkeypress="return FiltroLetras(event);" class="form-control" placeholder="Nombre de usuario"></asp:TextBox>
                         <label for="txtUserName">Nombre de usuario</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <asp:TextBox runat="server" ID="txtUserEmail" class="form-control" placeholder="name@example.com"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtUserEmail" onkeypress="return Correo(event);" class="form-control" placeholder="name@example.com"></asp:TextBox>
                         <label for="txtUserEmail">Correo electrónico</label>
                         <span id="validador"></span>
                     </div>
                     <div class="form-floating mb-3">
-                        <asp:TextBox runat="server" ID="txtUserPhone" class="form-control" placeholder="Número telefónico"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtUserPhone" onkeypress="return FiltroNumeros(event);" class="form-control" placeholder="Número telefónico"></asp:TextBox>
                         <label for="txtUserPhone">Número telefónico</label>
                     </div>
                     <div class="form-floating mb-3">
