@@ -61,11 +61,13 @@ namespace LaLombriz.Formularios
             sb.Append("<tbody>");
             for (int i = 0; i < productos; i++)
             {
+                double num = 0;
                 info = getInforProduct(idproductos[i]);
                 info = descuentosProd(info,idproductos[i]);
                 string[] informacion = info.Split('/');
+                num = Convert.ToInt32(cantidadesProd[i]) * Convert.ToDouble(informacion[2]);
                 sb.Append("<tr id='" + i + 1 + "Order' class='oneProduct'>");
-                sb.Append("<td style='padding-left: 20px;'>" + informacion[0] + " - " + informacion[1] +" (x"+ cantidadesProd[i] + ")</td><td style='text-align:center;'> $" + informacion[2] + "</td>");
+                sb.Append("<td style='padding-left: 20px;'>" + informacion[0] + " - " + informacion[1] +" (x"+ cantidadesProd[i] + ")</td><td style='text-align:center;'> $" + Convert.ToString(num) + "</td>");
                 sb.Append("</tr>");
                 total += Convert.ToDouble(cantidadesProd[i]) * Convert.ToDouble(informacion[2]);
                 info = " ";

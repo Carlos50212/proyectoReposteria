@@ -1972,6 +1972,7 @@
     <Content Include="Estilos\GalleryStyles.css" />
     <Content Include="Estilos\InicioStyles.css" />
     <Content Include="Estilos\Inventarios.css" />
+    <Content Include="Estilos\LoginStyles.css" />
     <Content Include="Estilos\MasterAdminStyles.css" />
     <Content Include="Estilos\MasterStyles.css" />
     <Content Include="Estilos\MasVendidos.css" />
@@ -1980,6 +1981,7 @@
     <Content Include="Estilos\PedidosAdmin.css" />
     <Content Include="Estilos\PedidosStyles.css" />
     <Content Include="Estilos\RecoverStyles.css" />
+    <Content Include="Estilos\RegistrarStyles.css" />
     <Content Include="Estilos\VentasAdmin.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

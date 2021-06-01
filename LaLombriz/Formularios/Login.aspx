@@ -14,7 +14,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
     <link href="../Estilos/LoginStyles.css" rel="stylesheet" />
-
+    <script src="../JS/LoginJS.js"> </script>
 </head>
 <body>
     <form id="login" runat="server">
@@ -28,7 +28,7 @@
                 </div>
                 <div id="content-login">
                     <div class="form-floating mb-3">
-                        <asp:TextBox runat="server" ID="txtCorreoLogin" class="form-control" placeholder="name@example.com"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtCorreoLogin" onkeypress="return CorreoDos(event);" class="form-control" placeholder="name@example.com"></asp:TextBox>
                         <label for="txtCorreoLogin">Correo electrónico</label>
                         <span id="validador2"></span>
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <asp:Button runat="server" ID="btnRecover" Text="Recuperar" class="btn btn-primary"/>
+                        <asp:Button runat="server" ID="btnRecover" Text="Recuperar" class="btn btn-primary" OnClick="btnRecoverOnClick"/>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" ></script>
 
-    <script src="../JS/LoginJS.js"></script>
+    
 
 </body>
 </html>
