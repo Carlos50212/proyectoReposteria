@@ -62,9 +62,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
+                            <h7> Ingresa el correo y número telefónico con los que registraste tu cuenta</h7>
+                        </div>
+                        <div class="form-floating mb-3">
                             <asp:TextBox runat="server" ID="txtRecoverPass" onkeypress="return CorreoTres(event);" class="form-control" placeholder="name@example.com" ></asp:TextBox>
                             <label for="txtRecoverPass">Correo electrónico</label>
                             <span id="validador3"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <asp:TextBox runat="server" ID="txtRecoverPhone" onkeypress="return FiltroNumeros(event);" class="form-control" placeholder="Número telefónico"></asp:TextBox>
+                            <label for="txtRecoverPhone">Número Telefónico</label>
                         </div>
                     </div>
                     <div class="modal-footer">

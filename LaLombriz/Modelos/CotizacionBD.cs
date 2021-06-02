@@ -101,7 +101,7 @@ namespace LaLombriz.Modelos
         public virtual bool sendTextModel(int idUser, string date, string description, string strConnection)
         {
             //Sentencia
-            string query = "INSERT INTO cotizaciones(`ID_CLIENTE`, `ID_ADMINISTRADOR`, `ESTATUS`, `FECHA_CONTACTO`, `FECHA_RESPUESTA`, `MSJ_CLIENTE`) VALUES (" + idUser + ",1, 0, '" + date + "', '1900-01-01', '" + description + "')";
+            string query = "INSERT INTO cotizaciones(`ID_CLIENTE`, `ID_ADMINISTRADOR`, `ESTATUS`, `FECHA_CONTACTO`, `FECHA_RESPUESTA`, `MSJ_CLIENTE`, `MSJ_ADMINISTRADOR`) VALUES (" + idUser + ",1, 0, '" + date + "', '1900-01-01', '" + description + "', ' ')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
