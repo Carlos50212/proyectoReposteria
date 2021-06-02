@@ -14,7 +14,7 @@
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link href="../Estilos/Pago.css" rel="stylesheet" />
+    <link href="/Estilos/Pago.css" rel="stylesheet" />
 
     <title>Pago - LaLombriz</title>
 </head>
@@ -31,7 +31,7 @@
     </form>
     <div id="sell-container">
         <div id="sellOption">
-            <form action="https://localhost:44393/api/myApi/Pago" method="post">
+            <form action="https://lalombriz.azurewebsites.net/api/myApi/Pago" method="post">
                 <asp:Literal runat="server" ID="pagoscript"></asp:Literal>
                 <input runat="server" type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
                 <input runat="server" type="hidden" name="correo" id="correo" value="" />

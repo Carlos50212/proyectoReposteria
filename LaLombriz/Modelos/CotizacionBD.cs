@@ -100,8 +100,8 @@ namespace LaLombriz.Modelos
 
         public virtual bool sendTextModel(int idUser, string date, string description, string strConnection)
         {
-            //Sentencia
-            string query = "INSERT INTO cotizaciones(`ID_CLIENTE`, `ID_ADMINISTRADOR`, `ESTATUS`, `FECHA_CONTACTO`, `FECHA_RESPUESTA`, `MSJ_CLIENTE`, `MSJ_ADMINISTRADOR`) VALUES (" + idUser + ",1, 0, '" + date + "', '1900-01-01', '" + description + "', ' ')";
+
+            string query = "INSERT INTO cotizaciones(`ID_CLIENTE`, `ID_ADMINISTRADOR`, `ESTATUS`, `FECHA_CONTACTO`, `FECHA_RESPUESTA`, `MSJ_CLIENTE`,`MSJ_ADMINISTRADOR`) VALUES (" + idUser + ",1, 0, '" + date + "', '1900-01-01', '" + description + "', '')";
             //Conexiones 
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -121,6 +121,36 @@ namespace LaLombriz.Modelos
             {
                 Console.WriteLine("Error " + e);
                 return false;
+            }
+        }
+        public virtual List<Cotizacion> getAllUserCotizacionModel(string strConnection, int idUser,int estatus)
+        {
+            List<Cotizacion> cotizacion = new List<Cotizacion>();
+            string query = "SELECT * FROM `cotizaciones` WHERE ID_CLIENTE = " + idUser + " AND ESTATUS = "+estatus+"";
+            MySqlConnection dbConnection = new MySqlConnection(strConnection);
+            MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
+            cmdDB.CommandTimeout = 60;
+            MySqlDataReader reader;
+            try
+            {
+                dbConnection.Open();
+                //Leemos los datos 
+                reader = cmdDB.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) //asignamos datos 
+                    {
+                        cotizacion.Add(new Cotizacion(Convert.ToInt32(reader.GetString(0)), Convert.ToInt32(reader.GetString(1)), reader.GetString(2), Convert.ToInt32(reader.GetString(3)), Convert.ToDateTime(reader.GetString(4)), Convert.ToDateTime(reader.GetString(5)), reader.GetString(6), reader.GetString(7)));
+                    }
+                }
+                dbConnection.Close();
+                return cotizacion;
+            }
+            catch (Exception e)
+            {
+                //Mensaje de error
+                Console.WriteLine("Error" + e);
+                return cotizacion;
             }
         }
 

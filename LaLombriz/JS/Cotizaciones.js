@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
-    $(".selected").removeClass("selected");
-    $("#user-link-cotizaciones").addClass("selected");
+    $(".selectedLinkOrders").removeClass("selectedLinkOrders");
+    $("#firstOption").addClass("selectedLinkOrders");
+
+    $(".selectedOptionOrders").removeClass("selectedOptionOrders");
+    $("#lkCreate").addClass("selectedOptionOrders");
 })

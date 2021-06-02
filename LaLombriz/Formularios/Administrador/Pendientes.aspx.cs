@@ -2,19 +2,15 @@
 using LaLombriz.Modelos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace LaLombriz.Formularios.Administrador
 {
     public partial class CPendientes : System.Web.UI.Page
     {
-        private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
+        private static string strConnection = "Server=sql512.main-hosting.eu; Database=u119388885_reposteria;Uid=u119388885_gio;Pwd=270299Gp$2018";
         private static int idUser;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,30 +38,15 @@ namespace LaLombriz.Formularios.Administrador
         }
         [WebMethod]
         [ScriptMethod(UseHttpGet = false)]
-        public static Boolean sendAnswer(string idCotizacion, string respuesta)
+        public static  Boolean sendAnswer(string idCotizacion, string respuesta)
         {
             string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            Usuario usuario = new Usuario();
-            Cotizacion cotizacion = new Cotizacion();
+            Usuario usuario = new Usuario(new UsuariosBD());
+            Cotizacion cotizacion = new Cotizacion(new CotizacionBD());
             bool isSaved = cotizacion.sendAnswer(strConnection,Convert.ToInt32(idCotizacion),respuesta,idUser,fecha);
             Cotizacion cotizacionInfor = cotizacion.getCotizacion(strConnection, Convert.ToInt32(idCotizacion));
             Usuario client = usuario.getUser(cotizacionInfor.IdCliente,strConnection);
-            if (isSaved)
-            {
-                bool isSend = cotizacion.sendEmail(client.Correo,respuesta,cotizacionInfor.Mensaje);
-                if (isSend)
-                {
-                    return isSend;
-                }
-                else
-                {
-                    return isSend;
-                }
-            }
-            else
-            {
-                return false; 
-            }
+            return isSaved;
         }
     }
 }

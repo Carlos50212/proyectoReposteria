@@ -60,9 +60,12 @@
     background-color: rebeccapurple;
     border-color: rebeccapurple;
 }
+<<<<<<< Updated upstream
 .selected {
     background-color: rebeccapurple;
 }
+=======
+>>>>>>> Stashed changes
 #menu-container {
     margin: 0px 10px;
 }

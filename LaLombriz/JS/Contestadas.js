@@ -33,10 +33,18 @@ $(document).ready(function () {
 
     $('#gridContestadas').on('click', '.btn-link', function (e) {
         e.preventDefault();
-        console.log(cotizacionFinal);
+        var cont = 0;
         var cotizacionId = $(e.target).data('cotizacion-id');
-        var idUsuario = cotizacionFinal[cotizacionId-1]['id_cliente'];
-        var idAdmin = cotizacionFinal[cotizacionId-1]['id_personal'];
+        for (const cotizacion in cotizacionFinal) {
+            var cotizacionTmp = cotizacionFinal[cont];
+            if (cotizacionTmp['id_cotizacion'] == cotizacionId) {
+                var idUsuario = cotizacionFinal[cont]['id_cliente'];
+                var idAdmin = cotizacionFinal[cont]['id_personal'];
+                break;
+            }
+            cont++;
+        }
+        
         getInfoCliente(idUsuario, idAdmin, cotizacionId);
 
         $('#modal-title-cotizacion-id').text(cotizacionId);
@@ -157,8 +165,14 @@ function buildModal(usuario, cotizacionId) {
     $('#txtEmailUser').val(usuarioFinal[0]['correo']);
     $('#txtPhoneUser').val(usuarioFinal[0]['telefono']);
 
-    $('#taMessage').val(cotizacionFinal[cotizacionId - 1]['mensaje']);
-    $('#taAnswer').val(cotizacionFinal[cotizacionId - 1]['respuesta']);
-
-
+    var cont = 0;
+    for (const cotizacion in cotizacionFinal) {
+        var cotizacionTmp = cotizacionFinal[cont];
+        if (cotizacionTmp['id_cotizacion'] == cotizacionId) {
+            $('#taMessage').val(cotizacionFinal[cont]['mensaje']);
+            $('#taAnswer').val(cotizacionFinal[cont]['respuesta']);
+            break;
+        }
+        cont++;
+    }
 }

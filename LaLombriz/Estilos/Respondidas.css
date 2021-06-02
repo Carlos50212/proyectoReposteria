@@ -1,0 +1,37 @@
+﻿#containerNotCotizaciones {
+    text-align: center;
+}
+.oneCotizacion {
+    width: 85%;
+    margin-top: 20px;
+    background-color: white;
+    overflow-x: scroll;
+}
+.containerOptionsCotizaciones {
+    display: flex;
+    padding-top: 10px;
+}
+.title {
+    width: 97%;
+    padding-left: 7px;
+}
+.cotizacionesContestadas-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.txStyleMessage {
+    width: 200px;
+}
+@media(min-width:992px) {
+    .cotizacionesContestadas-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .oneCotizacion {
+        overflow-x: hidden;
+    }
+}

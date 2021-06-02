@@ -187,6 +187,12 @@
     <Reference Include="Renci.SshNet, Version=2020.0.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2020.0.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
+    <Reference Include="SendGrid, Version=9.23.2.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.9.23.2\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="StarkbankEcdsa, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b2e6337a5d77bfbc, processorArchitecture=MSIL">
+      <HintPath>..\packages\starkbank-ecdsa.1.3.1\lib\net452\StarkbankEcdsa.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -223,6 +229,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -319,6 +326,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Estilos\Contestadas.css" />
     <Content Include="Estilos\CotizacionesAdmin.css" />
+    <Content Include="Estilos\CotizacionesUser.css" />
     <Content Include="Estilos\CotizacionStyles.css" />
     <Content Include="Estilos\CPendientes.css" />
     <Content Include="Estilos\fontawesome-free-5.15.2-web\attribution.js" />
@@ -1982,6 +1990,7 @@
     <Content Include="Estilos\PedidosStyles.css" />
     <Content Include="Estilos\RecoverStyles.css" />
     <Content Include="Estilos\RegistrarStyles.css" />
+    <Content Include="Estilos\Respondidas.css" />
     <Content Include="Estilos\VentasAdmin.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -2003,6 +2012,7 @@
     <Content Include="Formularios\Pedidos.aspx" />
     <Content Include="Formularios\Recuperacion.aspx" />
     <Content Include="Formularios\Registrar.aspx" />
+    <Content Include="Formularios\Respondidas.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -2070,10 +2080,18 @@
     <Content Include="Formularios\Administrador\PedidosMaster.master" />
     <Content Include="Formularios\Administrador\VentasMaster.master" />
     <Content Include="Formularios\Administrador\CotizacionesAdmin.master" />
+    <Content Include="Formularios\CotizacionesUsuario.master" />
+    <None Include="Properties\PublishProfiles\lalombriz - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lalombriz - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\lalombriz - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\lalombriz - Web Deploy3.pubxml" />
+    <None Include="Properties\PublishProfiles\misRecursos - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="JS\CancelOrders.js" />
+    <Content Include="JS\CCrear.js" />
     <Content Include="JS\Contestadas.js" />
     <Content Include="JS\Cotizaciones.js" />
+    <Content Include="JS\CotizacionesUser.js" />
     <Content Include="JS\CPendientes.js" />
     <Content Include="JS\Galeria.js" />
     <Content Include="JS\Index.js" />
@@ -2084,8 +2102,81 @@
     <Content Include="JS\NuevosPedidos.js" />
     <Content Include="JS\OldOrders.js" />
     <Content Include="JS\Pedidos.js" />
+    <Content Include="JS\Respondidas.js" />
     <Content Include="JS\VentasDia.js" />
     <Content Include="JS\VentasMes.js" />
+    <Content Include="Recursos\bienvenida.jpg" />
+    <Content Include="Recursos\btnCake.jpg" />
+    <Content Include="Recursos\btnMacarons.jpeg" />
+    <Content Include="Recursos\btnOther.jpg" />
+    <Content Include="Recursos\btnPack.jpg" />
+    <Content Include="Recursos\cart.png" />
+    <Content Include="Recursos\cotizacionOption.jpg" />
+    <Content Include="Recursos\delete.png" />
+    <Content Include="Recursos\download.png" />
+    <Content Include="Recursos\galeriaOption.jpg" />
+    <Content Include="Recursos\Galeria\imagen1.jpg" />
+    <Content Include="Recursos\Galeria\imagen10.jpg" />
+    <Content Include="Recursos\Galeria\imagen11.jpg" />
+    <Content Include="Recursos\Galeria\imagen2.jpg" />
+    <Content Include="Recursos\Galeria\imagen3.jpg" />
+    <Content Include="Recursos\Galeria\imagen4.jpg" />
+    <Content Include="Recursos\Galeria\imagen5.jpg" />
+    <Content Include="Recursos\Galeria\imagen6.jpg" />
+    <Content Include="Recursos\Galeria\imagen7.jpg" />
+    <Content Include="Recursos\Galeria\imagen8.jpg" />
+    <Content Include="Recursos\Galeria\imagen9.jpg" />
+    <Content Include="Recursos\imagen.png" />
+    <Content Include="Recursos\login\loginImage.jpg" />
+    <Content Include="Recursos\login\registrar.jpg" />
+    <Content Include="Recursos\logoFacebook.png" />
+    <Content Include="Recursos\logoInstagram.png" />
+    <Content Include="Recursos\logoMenu.png" />
+    <Content Include="Recursos\logoWhatsapp.png" />
+    <Content Include="Recursos\menu.png" />
+    <Content Include="Recursos\menuOption.jpg" />
+    <Content Include="Recursos\menuOptions.png" />
+    <Content Include="Recursos\Menu\Cheesecake_Sabor_Chocolate.jpg" />
+    <Content Include="Recursos\Menu\Cheesecake_Sabor_Mazapan.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_chocolate_con_glaseado_de_chocolate.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_chocolate_con_glaseado_de_frutos_rojos.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_vainilla_con_glaseado_de_chocolate.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_vainilla_con_glaseado_de_fresa.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_vainilla_con_glaseado_de_frutos_rojos.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_vainilla_con_glaseado_de_limon.jpg" />
+    <Content Include="Recursos\Menu\Cupcake_de_vainilla_con_glaseado_de_vainilla.jpg" />
+    <Content Include="Recursos\Menu\Galleta_decorada_sabor_chocolate.jpg" />
+    <Content Include="Recursos\Menu\Galleta_decorada_sabor_vainilla.jpg" />
+    <Content Include="Recursos\Menu\Gelatina_de_Chamoy_con_Mango.jpg" />
+    <Content Include="Recursos\Menu\Gelatina_de_Chocolate.jpg" />
+    <Content Include="Recursos\Menu\Gelatina_de_Mazapan.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Amarillo.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Azul.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Beige.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Blanco.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Cafe.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Naranja.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Rosa.jpg" />
+    <Content Include="Recursos\Menu\Macaron_Verde.jpg" />
+    <Content Include="Recursos\Menu\Paquete_1.jpg" />
+    <Content Include="Recursos\Menu\Paquete_2.jpg" />
+    <Content Include="Recursos\Menu\Paquete_3.jpg" />
+    <Content Include="Recursos\Menu\Paquete_4.jpg" />
+    <Content Include="Recursos\Menu\Paquete_5.jpg" />
+    <Content Include="Recursos\Menu\Pastel_de_Chocolate.jpg" />
+    <Content Include="Recursos\Menu\Pastel_de_Fresa.jpg" />
+    <Content Include="Recursos\Menu\Pastel_de_Menta.jpg" />
+    <Content Include="Recursos\Menu\Pastel_de_Nuez.jpg" />
+    <Content Include="Recursos\Menu\Pastel_de_Vainilla.jpg" />
+    <Content Include="Recursos\NotOldOrder.png" />
+    <Content Include="Recursos\NotOrder.png" />
+    <Content Include="Recursos\pedidosOption.jpg" />
+    <Content Include="Recursos\Promociones\promo1.png" />
+    <Content Include="Recursos\Promociones\promo2.png" />
+    <Content Include="Recursos\Promociones\promo3.png" />
+    <Content Include="Recursos\seeDetails.png" />
+    <Content Include="Recursos\stop.png" />
+    <Content Include="Recursos\subir.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2235,6 +2326,13 @@
     <Compile Include="Clases\Productos.cs" />
     <Compile Include="Clases\ProductosPedidos.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="Formularios\CotizacionesUsuario.master.cs">
+      <DependentUpon>CotizacionesUsuario.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\CotizacionesUsuario.master.designer.cs">
+      <DependentUpon>CotizacionesUsuario.master</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Galeria.aspx.cs">
       <DependentUpon>Galeria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2291,6 +2389,13 @@
     <Compile Include="Formularios\Registrar.aspx.designer.cs">
       <DependentUpon>Registrar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\Respondidas.aspx.cs">
+      <DependentUpon>Respondidas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Respondidas.aspx.designer.cs">
+      <DependentUpon>Respondidas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2325,7 +2430,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Recursos\" />
     <Folder Include="Views\myApi\" />
   </ItemGroup>
   <ItemGroup>
