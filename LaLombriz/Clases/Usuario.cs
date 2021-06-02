@@ -33,6 +33,10 @@ namespace LaLombriz.Clases
         public Usuario(UsuariosBD userBD, string nombre, string correo, string pass, string telefono)
         {
             this.userBD = userBD;
+            this.nombre = nombre;
+            this.correo = correo;
+            this.pass = pass;
+            this.telefono = telefono;
         }
         public Usuario(string correo, string pass) //constructor para inicio sesión
         {

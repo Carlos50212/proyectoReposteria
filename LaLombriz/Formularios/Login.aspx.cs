@@ -29,25 +29,18 @@ namespace LaLombriz.Formularios
         public void btnRecoverOnClick(object sender, EventArgs args)
         {
             string token = generateToken();
-            int idUser = getIdUser(txtRecoverPass.Text);
+            int idUser = getIdUser(txtRecoverPass.Text,txtRecoverPhone.Text);
             if (idUser > 0)
             {
-                if (sendEmail(token, txtRecoverPass.Text))
-                {
                     if (saveRecoverData(idUser, token))
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se le ha enviado un mensaje de verificación a su correo',showConfirmButton: true})</script>");
+                        Response.Redirect("Recuperacion.aspx?tk="+token);
+                    //Page.ClientScript.RegisterStartupScript(this.GetType(), "messageSuccess", "<script>Swal.fire({icon: 'success',title: 'Se guardo el token',showConfirmButton: true})</script>");
                     }
                     else
                     {
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
                     }
-
-                }
-                else
-                {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: 'ERROR',text: 'Lo sentimos, algo salió mal'})</script>");
-                }
             }
             else
             {
@@ -135,9 +128,9 @@ namespace LaLombriz.Formularios
             return sb.ToString();
         }
         //Metodo que regresa el id del usuario
-        private int getIdUser(string correo)
+        private int getIdUser(string correo, string phone)
         {
-            string query = "SELECT ID_USUARIO FROM `usuarios` WHERE CORREO='" + correo + "'";
+            string query = "SELECT ID_USUARIO FROM `usuarios` WHERE CORREO='" + correo + "' AND TELEFONO='"+phone+"'";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
             cmdDB.CommandTimeout = 60;
