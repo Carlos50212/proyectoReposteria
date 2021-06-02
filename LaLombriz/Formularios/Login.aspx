@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Iniciar Sesión - LaLombriz</title>
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -13,15 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-    <link href="../Estilos/LoginStyles.css" rel="stylesheet" />
-    <script src="../JS/LoginJS.js"> </script>
+    <link href="/Estilos/LoginStyles.css" rel="stylesheet" />
+    <script src="/JS/LoginJS.js"> </script>
 </head>
 <body>
     <form id="login" runat="server">
-        <video autoplay="autoplay" muted="muted" loop="loop" id="loginVideo">
-            <source src="../Recursos/login/login.mp4" type="video/mp4"/>
-        </video>
-        <div id="login-shadow">
+        <div id="fondoLogin">
             <div id="login-container">
                 <div id="header-login">
                     <h5>Iniciar sesión</h5>

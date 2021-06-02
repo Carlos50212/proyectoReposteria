@@ -1,10 +1,6 @@
 ﻿using LaLombriz.Modelos;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Web;
 
 namespace LaLombriz.Clases
 {
@@ -61,51 +57,18 @@ namespace LaLombriz.Clases
         {
             return this.cotizacionBD.sendAnswerModel(strConnection, idCotizacion, respuesta, idUser, fecha);
         }
-        public bool sendEmail(string to,string respuesta,string mensaje)
-        {
-            try
-            {
-                //Instanciamos de la clase mailmessage, el objeto servirá para agregar las partes de nuestro correo
-                MailMessage mail = new MailMessage();
-                //Indicamos el servidor de correo y puerto con el que trabaja gmail
-                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587)
-                {
-                    //Vuelve a nulo el valor de credenciales, esto permitirá usar nuestras propias credenciales
-                    UseDefaultCredentials = false,
-                    //Se indican las credenciales de la cuenta gmail que ocuparemos para enviar el correo
-                    Credentials = new System.Net.NetworkCredential("noreplylalombriz@gmail.com", "lalombrizAP"),
-                    //Método de entrega
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    //Habilitar seguridad en smtp
-                    EnableSsl = true,
-                };
-                //Creamos el correo
-                //Indicamos de donde viene el correo
-                mail.From = new MailAddress("noreplylalombriz@gmail.com");
-                //Indicamos dirección destino
-                mail.To.Add(to);
-                //Asunto
-                mail.Subject = "Respuesta cotización";
-                //Cuerpo
-                mail.Body = "En La Lombriz es un gusto procurar que nuestros clientes siempre reciban la mejor atención, el presente correo es para dar seguimiento a la cotización: \n"+mensaje+ "\n\n" +
-                    "A continuación, puede visualizar la respuesta que nuestro equipo le ha otorgado: \n" + respuesta+ "\n";
-                //Enviamos el email 
-                smtpServer.Send(mail);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR " + e);
-                return false;
-            }
-        }
-
         public virtual bool sendText(int idUser,string date,string description, string strConnection)
         {
             bool isSaved = this.cotizacionBD.sendTextModel(idUser, date, description, strConnection);
 
 
             return isSaved;
+        }
+
+        public virtual List<Cotizacion> getAllUserCotizacion(string strConnection,int idUser,int estatus)
+        {
+            List<Cotizacion> cotizacion = this.cotizacionBD.getAllUserCotizacionModel(strConnection, idUser,estatus);
+            return cotizacion;
         }
     }
 }

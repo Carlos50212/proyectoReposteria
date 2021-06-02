@@ -123,6 +123,7 @@ function sendDataAnswer(cotizacionId, answer) {
         contentType: "application/json",
         url: "Pendientes.aspx/sendAnswer",
         dataType: "json",
+        async: false,
         data: "{idCotizacion:'" + cotizacionId + "', respuesta:'" + answer + "'}",
         beforeSend: function () {
             Swal.fire({
@@ -134,7 +135,6 @@ function sendDataAnswer(cotizacionId, answer) {
             });
         },
         success: function (result) {
-            console.log("FUNCIONA");
             swal.close();
             Swal.fire({
                 icon: 'success',
@@ -144,7 +144,6 @@ function sendDataAnswer(cotizacionId, answer) {
             });
         },
         error: function (result) {
-            console.log("NO FUNCIONA"+result);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',

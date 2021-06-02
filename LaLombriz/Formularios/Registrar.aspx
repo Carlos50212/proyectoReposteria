@@ -14,15 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-    <link href="../Estilos/RegistrarStyles.css" rel="stylesheet" />
-    <script src="../JS/LoginJS.js"></script>
+    <link href="/Estilos/RegistrarStyles.css" rel="stylesheet" />
+    <script src="/JS/LoginJS.js"></script>
 </head>
 <body>
     <form id="newAccount" runat="server">
-        <video autoplay="autoplay" muted="muted" loop="loop" id="registerVideo">
-            <source src="../Recursos/login/registro.mp4" type="video/mp4"/>
-        </video>
-        <div id="create-shadow">
+        <div id="fondoRegistrar">
             <div id="create-container">
                 <div id="header-create">
                     <h5>Registrarse</h5>

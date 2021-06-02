@@ -1,0 +1,22 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Formularios/Site.Master" AutoEventWireup="true" CodeBehind="CotizacionesUsuario.master.cs" Inherits="LaLombriz.Formularios.CotizacionesUsuario" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="../Estilos/CotizacionesUser.css" rel="stylesheet" />
+
+    <div id="options-main-container">
+        <div id="optionsCotizaciones-container">
+            <ul class="allCotizacionList">
+                <li id="firstOption" class="listOptions">
+                    <a id="lkCreate" class="lkStyles" href="Cotizaciones.aspx">Crear</a>
+                </li>
+                <li id="secondOption" class="listOptions">
+                    <a id="lkContestadas" class="lkStyles" href="Respondidas.aspx">Respondidas</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="cotizacionesMaster-container">
+        <asp:ContentPlaceHolder ID="CotizacionesOptions" runat="server" />
+    </div>
+
+    <script src="../JS/CotizacionesUser.js"></script>
+</asp:Content>

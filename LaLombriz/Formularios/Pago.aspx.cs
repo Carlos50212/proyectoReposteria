@@ -1,25 +1,14 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using LaLombriz.Clases;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Services;
-using System.Web.Script.Serialization;
-using System.Web.Script.Services;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using MercadoPago.Client.Payment;
-using MercadoPago.Config;
-using MercadoPago.Resource.Payment;
 using System.Net;
 
 namespace LaLombriz.Formularios
 {
     public partial class Pago : System.Web.UI.Page
     {
-        private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
+        private static string strConnection = "Server=sql512.main-hosting.eu; Database=u119388885_reposteria;Uid=u119388885_gio;Pwd=270299Gp$2018";
         protected void Page_Load(object sender, EventArgs e)
         {
             string valor = "";

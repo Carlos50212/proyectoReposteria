@@ -1,17 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Collections;
 using System;
-using System.Windows;
 using LaLombriz.Clases;
 using System.Collections.Generic;
-using System.Net.Mail;
-using System.Linq;
 using System.Text;
-using System.Web.Services;
-using System.IO;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.Web.Script.Services;
 
 namespace LaLombriz.Formularios
 {
@@ -19,7 +11,7 @@ namespace LaLombriz.Formularios
     {
         private int contadorP = 1;
         private bool isCartOptionActivated = false;
-        private static string strConnection = "Server=localhost;Database=reposteria;Uid=gio;Pwd=270299GPS";
+        private static string strConnection = "Server=sql512.main-hosting.eu; Database=u119388885_reposteria;Uid=u119388885_gio;Pwd=270299Gp$2018";
         public static ArrayList listNewOrders = new ArrayList();
         private static List<string> productsName = new List<string>();
         private static List<string> descriptionProduct = new List<string>();

@@ -130,7 +130,7 @@ function buildModalDetails(details) {
     detailsContent = document.getElementById("productos-container");
 
     for (var i = 0; i < detailsFinal.length; i++) {
-        var content = "<b>Producto: " + (i + 1) + "</b><br><textarea class='form-control' id='txArea" + (i + 1) + "' rows='3'>Producto: " + detailsFinal[i]['nombre_producto'] + "\nTamaño: " + detailsFinal[i]['tamanio'] + "\nCantidad: " + detailsFinal[i]['cantidad'] + "\nDescripción: " + detailsFinal[i]['descripcion'] + "</textarea>";
+        var content = "<b>Producto: " + (i + 1) + "</b><br><textarea class='form-control' id='txArea" + (i + 1) + "' rows='3' readonly='readonly'>Producto: " + detailsFinal[i]['nombre_producto'] + "\nTamaño: " + detailsFinal[i]['tamanio'] + "\nCantidad: " + detailsFinal[i]['cantidad'] + "\nDescripción: " + detailsFinal[i]['descripcion'] + "</textarea>";
         const contentItem = detailsContent.innerHTML;
         detailsContent.innerHTML = contentItem+content;
     }

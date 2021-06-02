@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Pendientes" Language="C#" MasterPageFile="~/Formularios/Administrador/CotizacionesAdmin.master" AutoEventWireup="true" CodeBehind="Pendientes.aspx.cs" Inherits="LaLombriz.Formularios.Administrador.CPendientes" %>
+﻿<%@ Page Title="Pendientes" Language="C#" MasterPageFile="~/Formularios/Administrador/CotizacionesAdmin.master" AutoEventWireup="true" CodeBehind="Pendientes.aspx.cs" Inherits="LaLombriz.Formularios.Administrador.CPendientes" Async="true" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="CotizacionesOptions" runat="server">
 
     <link href="../../Estilos/CPendientes.css" rel="stylesheet" />

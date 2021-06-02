@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Cotizaciones" Language="C#" MasterPageFile="~/Formularios/Site.Master" AutoEventWireup="true" CodeBehind="Cotizaciones.aspx.cs" Inherits="LaLombriz.Formularios.Cotizaciones" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿<%@ Page Title="Cotizaciones" Language="C#" MasterPageFile="~/Formularios/CotizacionesUsuario.Master" AutoEventWireup="true" CodeBehind="Cotizaciones.aspx.cs" Inherits="LaLombriz.Formularios.Cotizaciones" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="CotizacionesOptions" runat="server">
     <link href="../Estilos/CotizacionStyles.css" rel="stylesheet" />
     <div id="cotizacion-container" class="row">
         <div id="text-container" class="col-xs-12 col-ms-12">
