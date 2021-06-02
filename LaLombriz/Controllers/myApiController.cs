@@ -49,14 +49,15 @@ namespace LaLombriz.Controllers
                 };
                 var client = new PaymentClient();
                 Payment payment = await client.CreateAsync(paymentRequest);
-                Console.WriteLine(payment.Status);
-                return Redirect("https://lalombriz.azurewebsites.net/Formularios/Pago.aspx" + "?status="+payment.Status); 
+                //Console.WriteLine(payment.Status);
+                return Redirect("https://lalombriz.azurewebsites.net/Formularios/Pago.aspx" + "?status=" + payment.Status);
                 //return Request.CreateResponse(HttpStatusCode.OK, payment.Status);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return Redirect("https://lalombriz.azurewebsites.net/Formularios/Inicio.aspx");
+                return Redirect("https://lalombriz.azurewebsites.net/Formularios/Pago.aspx" + "?status=error");
+
                 //return Request.CreateResponse(HttpStatusCode.OK, "Algo salió mal dentro del controlador :u");
             }
         }

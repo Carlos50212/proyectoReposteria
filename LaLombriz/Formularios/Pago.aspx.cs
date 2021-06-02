@@ -8,6 +8,7 @@ namespace LaLombriz.Formularios
 {
     public partial class Pago : System.Web.UI.Page
     {
+
         private static string strConnection = "Server=sql512.main-hosting.eu; Database=u119388885_reposteria;Uid=u119388885_gio;Pwd=270299Gp$2018";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,6 +18,10 @@ namespace LaLombriz.Formularios
             {
                 mensajeInicio.Text = "¡Gracias por tu compra!";
                 GuardarPedido();
+            }
+            if (valor == "error")
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Lo sentimos, tu pago no pudo ser procesado por el equipo de MercadoPago.'})</script>");
             }
             if(valor == null)
             {
@@ -169,7 +174,7 @@ namespace LaLombriz.Formularios
             fecha_creacion = DateTime.Today.ToString(); //Recuperamos fecha actual del sistema
             string[] datos_fecha = fecha_creacion.Split('/', ' '); //Fragmentamos la fecha
             fecha_creacion = datos_fecha[2] + "-" + datos_fecha[1] + "-" + datos_fecha[0]; //Nuevo formato de fecha
-            if (GuardarPedido(lastid, iduser, Session["FechaEntrega"].ToString(), fecha_creacion, Convert.ToDecimal(Session["Monto"]) ,0) == true)
+            if (false)
             {
                 //Lógica para guardar cada producto del pedido
                 int quantity = 0, a = 0, veces=0, identificador=0, oldquantity=0;
@@ -194,12 +199,16 @@ namespace LaLombriz.Formularios
             else
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "messageError", "<script>Swal.fire({icon: 'error',title: '¡Oops!',text: 'Lo sentimos, algo salió mal al procesar tu pedido.'})</script>");
+                mensajeInicio.Text = "Verifica tu pedido";
+                correo.Value = Session["CORREO_USUARIO"].ToString();
+                drawInterfaceCart();
+                cargarDatosAPI();
             }
 
         }
         public int RecuperarIDPedido()
         {
-            int contador = 0;
+            int contador = 0, num=0;
             string query = "SELECT DISTINCT ID_PEDIDO FROM `pedidos`";
             MySqlConnection dbConnection = new MySqlConnection(strConnection);
             MySqlCommand cmdDB = new MySqlCommand(query, dbConnection);
@@ -215,10 +224,11 @@ namespace LaLombriz.Formularios
                     while (reader.Read())
                     {
                         contador = Convert.ToInt32(reader.GetString(0));
+                        num++;
                     }
                 }
                 dbConnection.Close();
-                return contador;
+                return num++;
             }
             catch (Exception e)
             {
@@ -257,7 +267,7 @@ namespace LaLombriz.Formularios
                 return 0;
             }
         }
-        public bool GuardarPedido(int id_pedido, int id_usuario, string fe, string fc, decimal precio, int estatus)
+        public bool GuardarPedidoBD(int id_pedido, int id_usuario, string fe, string fc, decimal precio, int estatus)
         {
             string query = "INSERT INTO pedidos (`id_pedido`,`id_usuario`, `fecha_entrega`, `fecha_creacion`, `precio`, `estatus`) VALUES ('" + id_pedido + "','" + id_usuario + "','" + fe + "', '" + fc + "', '" + precio + "', '" + estatus + "')";
             //Conexiones 
